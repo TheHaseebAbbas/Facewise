@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "995917119411",
+    "project_id": "facewise-51ab4",
+    "storage_bucket": "facewise-51ab4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995917119411:android:4bc1ee8707704a923ed5c6",
+        "android_client_info": {
+          "package_name": "com.kuro.facewise"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "995917119411-46ejohn1aqu2uicul283ud9i9ojvu094.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhAjpjYANVnfcF3gA0lxgmiYeXuFPKlTk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "995917119411-46ejohn1aqu2uicul283ud9i9ojvu094.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
