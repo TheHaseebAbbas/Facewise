@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="textTitleSize" >@dimen/_18sdp</dimen>
+    <dimen name="textSubTitleSize" >@dimen/_16sdp</dimen>
+    <dimen name="textSize" >@dimen/_14sdp</dimen>
+</resources>

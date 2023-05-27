@@ -1,14 +1,250 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:overScrollMode="never"
+    android:scrollbars="none"
     tools:context=".presentation.auth.sign_in.SignInFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/textLetsSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Let's Sign In"
+            android:textColor="?colorOnSurface"
+            android:textSize="@dimen/textTitleSize"
+            android:fontFamily="@font/montserrat_bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textWelcomeBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:text="Welcome Back,"
+            android:textColor="?colorOnSurface"
+            android:fontFamily="@font/montserrat_medium"
+            android:textSize="@dimen/textSubTitleSize"
+            app:layout_constraintStart_toStartOf="@id/textLetsSignUp"
+            app:layout_constraintTop_toBottomOf="@id/textLetsSignUp" />
+
+        <TextView
+            android:id="@+id/textYouHaveBeenMissed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="You've been missed!"
+            android:fontFamily="@font/montserrat_medium"
+            android:textColor="?colorOnSurface"
+            android:textSize="@dimen/textSubTitleSize"
+            app:layout_constraintStart_toStartOf="@id/textLetsSignUp"
+            app:layout_constraintTop_toBottomOf="@id/textWelcomeBack" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etUserEmail"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:hint="Email"
+            app:boxStrokeColor="@color/blue"
+            app:boxStrokeWidth="1dp"
+            app:errorEnabled="true"
+            app:layout_constraintStart_toStartOf="@id/textLetsSignUp"
+            app:layout_constraintTop_toBottomOf="@id/textYouHaveBeenMissed">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textEmailAddress"
+                android:fontFamily="@font/montserrat_medium"
+                android:textSize="@dimen/textSize" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etUserPassword"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            app:boxStrokeColor="@color/blue"
+            app:boxStrokeWidth="1dp"
+            app:errorEnabled="true"
+            app:layout_constraintStart_toStartOf="@id/textLetsSignUp"
+            app:layout_constraintTop_toBottomOf="@id/etUserEmail"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPassword"
+                android:fontFamily="@font/montserrat_medium"
+                android:textSize="@dimen/textSize" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/cbRememberMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:buttonTint="@color/blue"
+            android:text="Remember Me"
+            android:textSize="@dimen/textSize"
+            android:textColor="?colorOnSurface"
+            android:fontFamily="@font/montserrat_medium"
+            app:layout_constraintStart_toStartOf="@id/etUserPassword"
+            app:layout_constraintTop_toBottomOf="@id/etUserPassword" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forgot_password"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/textSize"
+            android:fontFamily="@font/montserrat_medium"
+            android:textStyle="italic|bold"
+            app:layout_constraintBottom_toBottomOf="@id/cbRememberMe"
+            app:layout_constraintEnd_toEndOf="@id/etUserPassword"
+            app:layout_constraintTop_toTopOf="@id/cbRememberMe" />
+
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSignIn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:backgroundTint="@color/blue"
+            android:fontFamily="@font/montserrat_medium"
+            android:paddingVertical="@dimen/_10sdp"
+            android:text="Sign Up"
+            android:textAllCaps="false"
+            android:textSize="@dimen/textSize"
+            app:cornerRadius="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cbRememberMe" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/blue"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/btnSignIn"
+            app:layout_constraintEnd_toEndOf="@id/btnSignIn"
+            app:layout_constraintStart_toStartOf="@id/btnSignIn"
+            app:layout_constraintTop_toTopOf="@id/btnSignIn" />
+
+
+        <TextView
+            android:id="@+id/textByLoggingIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:gravity="center"
+            android:text="By logging in, you agree to our"
+            android:textColor="?colorOnSurface"
+            android:textSize="@dimen/textSize"
+            android:fontFamily="@font/montserrat_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnSignIn" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutTerms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textByLoggingIn">
+
+            <TextView
+                android:id="@+id/textTermsAndConditions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/terms_amp_conditions"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/textSize"
+                android:fontFamily="@font/montserrat_medium"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textAnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="&amp;"
+                android:textColor="?colorOnSurface"
+                android:fontFamily="@font/montserrat_medium"
+                android:textSize="@dimen/textSize"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/textTermsAndConditions"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textPrivacyPolicy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy_policy"
+                android:fontFamily="@font/montserrat_medium"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/textSize"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/textAnd"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/textOr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="Already Have An Account?"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSize"
+            app:layout_constraintBottom_toBottomOf="@+id/tvSignIn"
+            app:layout_constraintEnd_toStartOf="@id/tvSignIn"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvSignIn" />
+
+        <TextView
+            android:id="@+id/tvSignIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/sign_in"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/textSize"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textOr"
+            app:layout_constraintTop_toBottomOf="@+id/layoutTerms" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
