@@ -68,6 +68,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         binding.fabAdd click {
             isAllFabsVisible = if (!isAllFabsVisible!!) {
 
+                binding.viewBlur.visibility = View.VISIBLE
+
                 binding.fabCamera.show()
                 binding.fabGallery.show()
                 binding.textCamera.visibility = View.VISIBLE
@@ -77,6 +79,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
                 true
             } else {
+
+                binding.viewBlur.visibility = View.GONE
+
                 binding.fabCamera.hide()
                 binding.fabGallery.hide()
                 binding.textCamera.visibility = View.GONE
