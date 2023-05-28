@@ -56,4 +56,9 @@
         app:destination="@id/signInFragment"
         app:popUpTo="@id/mainFragment"
         app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/emotionRecognitionFragment"
+        android:name="com.kuro.facewise.presentation.emotion_recognition.EmotionRecognitionFragment"
+        android:label="fragment_emotion_recognition"
+        tools:layout="@layout/fragment_emotion_recognition" /><action android:id="@+id/action_global_emotionRecognitionFragment" app:destination="@id/emotionRecognitionFragment"/>
 </navigation>

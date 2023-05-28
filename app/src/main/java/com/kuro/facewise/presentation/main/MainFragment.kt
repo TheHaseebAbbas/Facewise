@@ -29,27 +29,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         _binding = FragmentMainBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
-        //setRecentEmotionProgressBars()
         setFloatingActionButtons()
         setListeners()
 
     }
 
     private fun setListeners() {
-
-        binding.cardRecentEmotion click {
-
-            /*if (binding.layoutEmotionDetails.layout.visibility == View.GONE) {
-                binding.layoutEmotionDetails.layout.visibility = View.VISIBLE
-                setRecentEmotionProgressBars()
-            } else binding.layoutEmotionDetails.layout.visibility = View.GONE
-
-            if (binding.ivArrowDown.visibility == View.GONE)
-                binding.ivArrowDown.visibility = View.VISIBLE
-            else binding.ivArrowDown.visibility = View.GONE*/
-
-
-        }
 
         binding.expandableCardLayout click {
             handleToggleSection(binding.ivArrowDown)
@@ -58,7 +43,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun setFloatingActionButtons() {
-        //binding.fabAdd.shrink()
 
         binding.fabCamera.visibility = View.GONE
         binding.fabGallery.visibility = View.GONE
@@ -77,8 +61,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 binding.cardTextCamera.visibility = View.VISIBLE
                 binding.textGallery.visibility = View.VISIBLE
 
-                //binding.fabAdd.extend()
-
                 rotateFab(binding.fabAdd,true)
 
                 true
@@ -90,8 +72,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 binding.fabGallery.hide()
                 binding.cardTextCamera.visibility = View.GONE
                 binding.textGallery.visibility = View.GONE
-
-                //binding.fabAdd.shrink()
 
                 rotateFab(binding.fabAdd,false)
 
