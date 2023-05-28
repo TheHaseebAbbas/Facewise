@@ -9,6 +9,8 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.TextView
+import androidx.core.widget.doAfterTextChanged
+import com.google.android.material.textfield.TextInputLayout
 
 fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
     val spannableString = SpannableString(this.text)
@@ -39,4 +41,16 @@ fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
     this.movementMethod =
         LinkMovementMethod.getInstance() // without LinkMovementMethod, link can not click
     this.setText(spannableString, TextView.BufferType.SPANNABLE)
+}
+
+fun addAfterTextChangeListener(vararg textInputLayouts: Pair<TextInputLayout, String>) {
+    for (textInputLayout in textInputLayouts) {
+        textInputLayout.first.editText!!.doAfterTextChanged {
+            if (it.toString().isBlank()) {
+                textInputLayout.first.error = textInputLayout.second
+            } else {
+                textInputLayout.first.error = null
+            }
+        }
+    }
 }

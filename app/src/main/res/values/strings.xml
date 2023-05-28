@@ -12,5 +12,12 @@
     <string name="sign_up"><u>Sign Up</u></string>
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="enter_a_name_please">Enter a name please</string>
+    <string name="enter_an_email_please">Enter an email please</string>
+    <string name="enter_a_password_please">Enter a password please</string>
+    <string name="enter_password_again_please">Enter password again please</string>
+    <string name="enter_a_valid_email_please">Enter a valid email please</string>
+    <string name="password_and_confirm_password_should_be_same">Password and Confirm Password should be same</string>
+    <string name="password_length_must_be_of_8_characters">Password length must be of 8 characters</string>
 
 </resources>

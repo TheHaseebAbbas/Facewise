@@ -3,6 +3,7 @@ package com.kuro.facewise.di
 import android.app.Application
 import android.content.Context
 import androidx.core.content.ContextCompat.createDeviceProtectedStorageContext
+import com.google.firebase.auth.FirebaseAuth
 import com.kuro.facewise.util.PrefsProvider
 import dagger.Module
 import dagger.Provides
@@ -20,5 +21,11 @@ class AppModule {
         application: Application
     ): PrefsProvider {
         return PrefsProvider(application.applicationContext.createDeviceProtectedStorageContext())
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAuth(): FirebaseAuth {
+        return FirebaseAuth.getInstance()
     }
 }

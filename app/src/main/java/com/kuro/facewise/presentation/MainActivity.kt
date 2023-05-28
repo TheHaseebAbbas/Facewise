@@ -3,10 +3,7 @@ package com.kuro.facewise.presentation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
 import com.kuro.facewise.R
 import com.kuro.facewise.util.PrefsProvider
 import com.kuro.facewise.util.constants.PrefsConstants
