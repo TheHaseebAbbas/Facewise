@@ -26,6 +26,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
         super.onViewCreated(view, savedInstanceState)
 
         setListeners()
+        findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
     }
 
     private fun setListeners() {
