@@ -13,5 +13,7 @@
     <color name="green">#4CAF50</color>  //Disgust
     <color name="neutral_gray">#9E9E9E</color>  //Neutral
 
+    <color name="blur">#D9FFFFFF</color>
+
 
 </resources>

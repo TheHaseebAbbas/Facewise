@@ -81,8 +81,8 @@ dependencies {
     // Viewpager dots indicator
     implementation "com.tbuonomo:dotsindicator:5.0"
 
-    //MPAndroidChart
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    //Loading SPinKit
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 
 
 }

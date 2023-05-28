@@ -1,6 +1,8 @@
 package com.kuro.facewise.presentation.main
 
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.View
@@ -27,27 +29,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         _binding = FragmentMainBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
-        //setRecentEmotionProgressBars()
         setFloatingActionButtons()
         setListeners()
 
     }
 
     private fun setListeners() {
-
-        binding.cardRecentEmotion click {
-
-            /*if (binding.layoutEmotionDetails.layout.visibility == View.GONE) {
-                binding.layoutEmotionDetails.layout.visibility = View.VISIBLE
-                setRecentEmotionProgressBars()
-            } else binding.layoutEmotionDetails.layout.visibility = View.GONE
-
-            if (binding.ivArrowDown.visibility == View.GONE)
-                binding.ivArrowDown.visibility = View.VISIBLE
-            else binding.ivArrowDown.visibility = View.GONE*/
-
-
-        }
 
         binding.expandableCardLayout click {
             handleToggleSection(binding.ivArrowDown)
@@ -56,11 +43,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun setFloatingActionButtons() {
-        binding.fabAdd.shrink()
 
         binding.fabCamera.visibility = View.GONE
         binding.fabGallery.visibility = View.GONE
-        binding.textCamera.visibility = View.GONE
+        binding.cardTextCamera.visibility = View.GONE
         binding.textGallery.visibility = View.GONE
 
         isAllFabsVisible = false
@@ -72,10 +58,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
                 binding.fabCamera.show()
                 binding.fabGallery.show()
-                binding.textCamera.visibility = View.VISIBLE
+                binding.cardTextCamera.visibility = View.VISIBLE
                 binding.textGallery.visibility = View.VISIBLE
 
-                binding.fabAdd.extend()
+                rotateFab(binding.fabAdd,true)
 
                 true
             } else {
@@ -84,10 +70,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
                 binding.fabCamera.hide()
                 binding.fabGallery.hide()
-                binding.textCamera.visibility = View.GONE
+                binding.cardTextCamera.visibility = View.GONE
                 binding.textGallery.visibility = View.GONE
 
-                binding.fabAdd.shrink()
+                rotateFab(binding.fabAdd,false)
+
                 false
             }
         }
@@ -203,6 +190,16 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             view.animate().setDuration(200).rotation(0f)
             false
         }
+    }
+
+    private fun rotateFab(v: View, rotate: Boolean) {
+        v.animate().setDuration(200)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    super.onAnimationEnd(animation)
+                }
+            })
+            .rotation(if (rotate) 135f else 0f)
     }
     override fun onDestroyView() {
         super.onDestroyView()
