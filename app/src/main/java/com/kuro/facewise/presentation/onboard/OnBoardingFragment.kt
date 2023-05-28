@@ -33,13 +33,6 @@ class OnBoardingFragment : Fragment(R.layout.fragment_on_boarding) {
         setListeners()
         handleBackPressed()
     }
-
-    override fun onStart() {
-        super.onStart()
-        if (prefsProvider.getBool(PrefsConstants.ONBOARDING_COMPLETED))
-            findNavController().navigate(R.id.action_onBoardingFragment_to_signInFragment)
-    }
-
     private fun setViewPager() {
         val adapter = OnBoardingViewPagerAdapter(this@OnBoardingFragment)
         binding.pager.adapter = adapter

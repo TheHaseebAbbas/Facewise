@@ -34,7 +34,7 @@
             android:id="@+id/textWelcomeBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_4sdp"
             android:fontFamily="@font/montserrat_medium"
             android:text="To Get Started,"
             android:textColor="?colorOnSurface"
@@ -46,7 +46,6 @@
             android:id="@+id/textYouHaveBeenMissed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4sdp"
             android:fontFamily="@font/montserrat_medium"
             android:text="Enter The Following Details!"
             android:textColor="?colorOnSurface"
@@ -56,10 +55,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/etUserName"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:hint="Name"
             app:boxStrokeColor="@color/blue"
             app:boxStrokeWidth="@dimen/_1sdp"
@@ -70,15 +69,15 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textPersonName|textCapWords"
                 android:fontFamily="@font/montserrat_medium"
+                android:inputType="textPersonName|textCapWords"
                 android:textSize="@dimen/textSize" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/etUserEmail"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email"
@@ -91,8 +90,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textEmailAddress"
                 android:fontFamily="@font/montserrat_medium"
+                android:inputType="textEmailAddress"
                 android:textSize="@dimen/textSize" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -100,7 +99,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/etUserPassword"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
@@ -114,15 +113,15 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textPassword"
                 android:fontFamily="@font/montserrat_medium"
+                android:inputType="textPassword"
                 android:textSize="@dimen/textSize" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/etUserConfirmPassword"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Confirm Password"
@@ -136,8 +135,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textPassword"
                 android:fontFamily="@font/montserrat_medium"
+                android:inputType="textPassword"
                 android:textSize="@dimen/textSize" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -146,35 +145,40 @@
             android:id="@+id/cbAgreeToTerms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/blue"
-            android:text="By clicking on this, you're agreeing to the Terms &amp; Conditions and Privacy Policy"
-            android:textSize="@dimen/textSize"
-            android:paddingStart="@dimen/_4sdp"
-            android:fontFamily="@font/montserrat_medium"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/etUserConfirmPassword" />
 
-        <com.google.android.material.button.MaterialButton
+        <TextView
+            android:id="@+id/txtAgreeToTerms"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="By clicking on this, you're agreeing to the Terms &amp; Conditions and Privacy Policy"
+            android:textSize="@dimen/textSize"
+            app:layout_constraintEnd_toEndOf="@id/etUserConfirmPassword"
+            app:layout_constraintStart_toEndOf="@id/cbAgreeToTerms"
+            app:layout_constraintTop_toTopOf="@id/cbAgreeToTerms" />
+
+        <Button
             android:id="@+id/btnSignUp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:backgroundTint="@color/blue"
+            android:layout_marginTop="@dimen/_8sdp"
             android:fontFamily="@font/montserrat_medium"
-            android:paddingVertical="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_12sdp"
             android:text="Sign Up"
             android:textAllCaps="false"
             android:textSize="@dimen/textSize"
-            app:cornerRadius="@dimen/_8sdp"
+            app:cornerRadius="@dimen/_2sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cbAgreeToTerms" />
+            app:layout_constraintTop_toBottomOf="@id/txtAgreeToTerms" />
 
         <ProgressBar
             android:id="@+id/progressBar"
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_gravity="center"
             android:indeterminateTint="@color/blue"
             android:visibility="invisible"
@@ -188,25 +192,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_medium"
-            android:text="Already Have An Account?"
-            android:textColor="@color/black"
+            android:text="Already Have An Account? "
+            android:textColor="?colorOnSurface"
             android:textSize="@dimen/textSize"
-            app:layout_constraintBottom_toBottomOf="@+id/tvSignIn"
-            app:layout_constraintEnd_toStartOf="@id/tvSignIn"
+            app:layout_constraintBottom_toBottomOf="@+id/btnSignIn"
+            app:layout_constraintEnd_toStartOf="@id/btnSignIn"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvSignIn" />
+            app:layout_constraintTop_toTopOf="@+id/btnSignIn" />
 
-        <TextView
-            android:id="@+id/tvSignIn"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSignIn"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16sdp"
-            android:padding="@dimen/_8sdp"
-            android:text="@string/sign_in"
-            android:textColor="@color/blue"
+            android:fontFamily="@font/montserrat_medium"
+            android:paddingVertical="@dimen/_8sdp"
+            android:text="SignIn"
             android:textSize="@dimen/textSize"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textOr"
             app:layout_constraintTop_toBottomOf="@+id/btnSignUp" />
