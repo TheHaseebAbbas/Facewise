@@ -1,14 +1,278 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.main.MainFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/textFacewise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16sdp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="@string/app_name"
+        android:textColor="?colorOnSurface"
+        android:textSize="@dimen/textTitleSize"
+        app:layout_constraintBottom_toTopOf="@id/scrollView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <ImageView
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="@dimen/_24sdp"
+        android:layout_margin="@dimen/_16sdp"
+        android:src="@drawable/user_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textFacewise">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardRecentEmotion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_16sdp"
+                app:cardCornerRadius="@dimen/_8sdp"
+                app:cardElevation="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/nestedScrollView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/expandableCardLayout"
+                        android:layout_width="match_parent"
+                        android:background="?selectableItemBackground"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="@dimen/_16sdp">
+
+                        <TextView
+                            android:id="@+id/tvUserName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_16sdp"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:maxLines="1"
+                            android:text="Ali Hamza"
+                            android:textColor="?colorOnSurface"
+                            android:textSize="@dimen/textSubTitleSize"
+                            app:layout_constraintEnd_toStartOf="@+id/ivArrowDown"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textRecentRecognized"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:maxLines="1"
+                            android:text="Recent Recognized Emotion"
+                            android:textColor="?colorOnSurface"
+                            android:textSize="@dimen/textSize"
+                            app:layout_constraintEnd_toEndOf="@id/tvUserName"
+                            app:layout_constraintStart_toStartOf="@id/tvUserName"
+                            app:layout_constraintTop_toBottomOf="@id/tvUserName" />
+
+                        <TextView
+                            android:id="@+id/textDate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:text="Date"
+                            android:textColor="?colorOnSurface"
+                            android:textSize="@dimen/smallTextSize"
+                            app:layout_constraintEnd_toStartOf="@+id/textColon1"
+                            app:layout_constraintHorizontal_weight="1"
+                            app:layout_constraintStart_toStartOf="@id/tvUserName"
+                            app:layout_constraintTop_toBottomOf="@id/textRecentRecognized" />
+
+                        <TextView
+                            android:id="@+id/textColon1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:gravity="center"
+                            android:text=":"
+                            android:textColor="?colorOnSurface"
+                            android:textSize="@dimen/textSize"
+                            app:layout_constraintBottom_toBottomOf="@id/textDate"
+                            app:layout_constraintEnd_toStartOf="@+id/tvRecentEmotionDate"
+                            app:layout_constraintHorizontal_weight="1"
+                            app:layout_constraintStart_toEndOf="@+id/textDate"
+                            app:layout_constraintTop_toTopOf="@id/textDate" />
+
+                        <TextView
+                            android:id="@+id/tvRecentEmotionDate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:text="28 May 2023"
+                            android:textColor="?colorOnSurface"
+                            android:textSize="@dimen/smallTextSize"
+                            app:layout_constraintEnd_toEndOf="@id/tvUserName"
+                            app:layout_constraintHorizontal_weight="3"
+                            app:layout_constraintStart_toEndOf="@+id/textColon1"
+                            app:layout_constraintTop_toTopOf="@id/textDate" />
+
+                        <TextView
+                            android:id="@+id/textEmotion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:text="Emotion"
+                            android:textColor="?colorOnSurface"
+                            android:textSize="@dimen/smallTextSize"
+                            app:layout_constraintStart_toStartOf="@id/tvUserName"
+                            app:layout_constraintTop_toBottomOf="@id/textDate" />
+
+                        <TextView
+                            android:id="@+id/textColon2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:text=":"
+                            android:textColor="?colorOnSurface"
+                            android:textSize="@dimen/textSize"
+                            app:layout_constraintEnd_toEndOf="@id/textColon1"
+                            app:layout_constraintStart_toStartOf="@id/textColon1"
+                            app:layout_constraintTop_toTopOf="@id/textEmotion" />
+
+                        <TextView
+                            android:id="@+id/tvRecentEmotion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:text="Happy"
+                            android:textColor="?colorOnSurface"
+                            android:textSize="@dimen/smallTextSize"
+                            app:layout_constraintStart_toStartOf="@id/tvRecentEmotionDate"
+                            app:layout_constraintTop_toTopOf="@id/textEmotion" />
+
+                        <ImageView
+                            android:id="@+id/ivArrowDown"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:layout_marginEnd="@dimen/_16sdp"
+                            android:src="@drawable/arrow_down_icon"
+                            app:layout_constraintBottom_toBottomOf="@id/tvUserName"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tvUserName"
+                            app:tint="?colorOnSurface" />
+
+                        <include
+                            android:id="@+id/layoutEmotionDetails"
+                            layout="@layout/emotion_details_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="@id/tvUserName"
+                            app:layout_constraintStart_toStartOf="@id/tvUserName"
+                            app:layout_constraintTop_toBottomOf="@id/textEmotion" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.core.widget.NestedScrollView>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/fabAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:backgroundTint="@color/blue"
+                android:text="Add Image"
+                android:textColor="@color/white"
+                app:icon="@drawable/add_icon"
+                app:iconTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:backgroundTint="@color/blue"
+                app:fabSize="normal"
+                app:layout_constraintBottom_toTopOf="@+id/fabAdd"
+                app:layout_constraintEnd_toEndOf="@+id/fabAdd"
+                app:srcCompat="@drawable/camera_icon"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/textCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="Camera"
+                android:textColor="?colorOnSurface"
+                android:textSize="@dimen/smallTextSize"
+                app:layout_constraintBottom_toBottomOf="@+id/fabCamera"
+                app:layout_constraintEnd_toStartOf="@+id/fabCamera"
+                app:layout_constraintTop_toTopOf="@+id/fabCamera" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:backgroundTint="@color/blue"
+                app:fabSize="normal"
+                app:layout_constraintBottom_toTopOf="@+id/fabCamera"
+                app:layout_constraintEnd_toEndOf="@+id/fabCamera"
+                app:layout_constraintStart_toStartOf="@+id/fabCamera"
+                app:srcCompat="@drawable/gallery_icon"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/textGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="Gallery"
+                android:textColor="?colorOnSurface"
+                android:textSize="@dimen/smallTextSize"
+                app:layout_constraintBottom_toBottomOf="@+id/fabGallery"
+                app:layout_constraintEnd_toStartOf="@+id/fabGallery"
+                app:layout_constraintTop_toTopOf="@+id/fabGallery" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,7 +9,11 @@
         android:id="@+id/signInFragment"
         android:name="com.kuro.facewise.presentation.auth.sign_in.SignInFragment"
         android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in" />
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.kuro.facewise.presentation.auth.sign_up.SignUpFragment"

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/layout">
+
+    <TextView
+        android:id="@+id/textAngry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Angry"
+        android:textColor="?colorOnSurface"
+        android:textSize="@dimen/smallTextSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/angryLinearProgress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:indicatorColor="@color/red"
+        app:indicatorSize="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@id/textAngry"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textAngry"
+        app:layout_constraintStart_toStartOf="@id/surpriseLinearProgress"
+        app:layout_constraintTop_toTopOf="@id/textAngry"
+        app:showAnimationBehavior="outward"
+        app:trackColor="@color/gray"
+        app:trackCornerRadius="4dp" />
+
+    <TextView
+        android:id="@+id/textDisgust"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Disgust"
+        android:textColor="?colorOnSurface"
+        android:textSize="@dimen/smallTextSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textAngry" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/disgustLinearProgress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:indicatorColor="@color/green"
+        app:indicatorSize="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@id/textDisgust"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textDisgust"
+        app:layout_constraintStart_toStartOf="@id/surpriseLinearProgress"
+        app:layout_constraintTop_toTopOf="@id/textDisgust"
+        app:showAnimationBehavior="outward"
+        app:trackColor="@color/gray"
+        app:trackCornerRadius="4dp" />
+
+    <TextView
+        android:id="@+id/textFear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Fear"
+        android:textColor="?colorOnSurface"
+        android:textSize="@dimen/smallTextSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textDisgust" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/fearLinearProgress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:indicatorColor="@color/orange"
+        app:indicatorSize="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@id/textFear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textFear"
+        app:layout_constraintStart_toStartOf="@id/surpriseLinearProgress"
+        app:layout_constraintTop_toTopOf="@id/textFear"
+        app:showAnimationBehavior="outward"
+        app:trackColor="@color/gray"
+        app:trackCornerRadius="4dp" />
+
+    <TextView
+        android:id="@+id/textHappy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Happy"
+        android:textColor="?colorOnSurface"
+        android:textSize="@dimen/smallTextSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textFear" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/happyLinearProgress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:indicatorColor="@color/yellow"
+        app:indicatorSize="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@id/textHappy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textHappy"
+        app:layout_constraintStart_toStartOf="@id/surpriseLinearProgress"
+        app:layout_constraintTop_toTopOf="@id/textHappy"
+        app:showAnimationBehavior="outward"
+        app:trackColor="@color/gray"
+        app:trackCornerRadius="4dp" />
+
+    <TextView
+        android:id="@+id/textNeutral"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Neutral"
+        android:textColor="?colorOnSurface"
+        android:textSize="@dimen/smallTextSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textHappy" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/neutralLinearProgress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:indicatorColor="@color/neutral_gray"
+        app:indicatorSize="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@id/textNeutral"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textNeutral"
+        app:layout_constraintStart_toStartOf="@id/surpriseLinearProgress"
+        app:layout_constraintTop_toTopOf="@id/textNeutral"
+        app:showAnimationBehavior="outward"
+        app:trackColor="@color/gray"
+        app:trackCornerRadius="4dp" />
+
+    <TextView
+        android:id="@+id/textSad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Sad"
+        android:textColor="?colorOnSurface"
+        android:textSize="@dimen/smallTextSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textNeutral" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/sadLinearProgress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:indicatorColor="@color/blue"
+        app:indicatorSize="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@id/textSad"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textSad"
+        app:layout_constraintStart_toStartOf="@id/surpriseLinearProgress"
+        app:layout_constraintTop_toTopOf="@id/textSad"
+        app:showAnimationBehavior="outward"
+        app:trackColor="@color/gray"
+        app:trackCornerRadius="4dp" />
+
+    <TextView
+        android:id="@+id/textSurprise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Surprise"
+        android:textColor="?colorOnSurface"
+        android:textSize="@dimen/smallTextSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textSad" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/surpriseLinearProgress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_4sdp"
+        app:indicatorColor="@color/purple"
+        app:indicatorSize="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@id/textSurprise"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textSurprise"
+        app:layout_constraintTop_toTopOf="@id/textSurprise"
+        app:showAnimationBehavior="outward"
+        app:trackColor="@color/gray"
+        app:trackCornerRadius="4dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

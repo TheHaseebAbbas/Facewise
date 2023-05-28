@@ -3,6 +3,7 @@ package com.kuro.facewise.presentation.auth.sign_in
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentSignInBinding
 import com.kuro.facewise.databinding.FragmentSignUpBinding
@@ -16,6 +17,8 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _binding = FragmentSignInBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
+
+        findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
     }
 
     override fun onDestroyView() {

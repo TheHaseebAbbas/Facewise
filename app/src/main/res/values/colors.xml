@@ -2,6 +2,16 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="blue">#0478ED</color>
+
+    <color name="blue">#0478ED</color>   //Sad
     <color name="gray">#D9DCE1</color>
+
+    <color name="yellow">#FFEB3B</color> //Happy
+    <color name="orange">#FFA500</color> //Fear
+    <color name="red">#FF0000</color>    //Anger
+    <color name="purple">#9C27B0</color> //Surprise
+    <color name="green">#4CAF50</color>  //Disgust
+    <color name="neutral_gray">#9E9E9E</color>  //Neutral
+
+
 </resources>

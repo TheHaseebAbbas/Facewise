@@ -80,4 +80,9 @@ dependencies {
 
     // Viewpager dots indicator
     implementation "com.tbuonomo:dotsindicator:5.0"
+
+    //MPAndroidChart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+
 }
