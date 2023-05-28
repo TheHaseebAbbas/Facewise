@@ -2,9 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainFragmentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.main.MainFragment">
+
 
     <TextView
         android:id="@+id/textFacewise"
@@ -40,6 +42,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textFacewise">
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,6 +50,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardRecentEmotion"
@@ -67,8 +71,8 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/expandableCardLayout"
                         android:layout_width="match_parent"
-                        android:background="?selectableItemBackground"
                         android:layout_height="match_parent"
+                        android:background="?selectableItemBackground"
                         android:paddingBottom="@dimen/_16sdp">
 
                         <TextView
@@ -77,7 +81,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/_16sdp"
                             android:ellipsize="end"
-                            android:fontFamily="@font/montserrat_medium"
+                            android:fontFamily="@font/montserrat_semibold"
                             android:maxLines="1"
                             android:text="Ali Hamza"
                             android:textColor="?colorOnSurface"
@@ -204,75 +208,201 @@
 
             </androidx.cardview.widget.CardView>
 
-
-            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                android:id="@+id/fabAdd"
-                android:layout_width="wrap_content"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardAyahOfDay"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/_16sdp"
-                android:layout_marginBottom="@dimen/_16sdp"
-                android:backgroundTint="@color/blue"
-                android:text="Add Image"
-                android:textColor="@color/white"
-                app:icon="@drawable/add_icon"
-                app:iconTint="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:layout_margin="@dimen/_16sdp"
+                app:cardCornerRadius="@dimen/_8sdp"
+                app:cardElevation="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardRecentEmotion">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabCamera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_16sdp"
-                android:backgroundTint="@color/blue"
-                app:fabSize="normal"
-                app:layout_constraintBottom_toTopOf="@+id/fabAdd"
-                app:layout_constraintEnd_toEndOf="@+id/fabAdd"
-                app:srcCompat="@drawable/camera_icon"
-                app:tint="@color/white" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_16sdp"
+                    android:background="?selectableItemBackground">
 
-            <TextView
-                android:id="@+id/textCamera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_8sdp"
-                android:fontFamily="@font/montserrat_medium"
-                android:text="Camera"
-                android:textColor="?colorOnSurface"
-                android:textSize="@dimen/smallTextSize"
-                app:layout_constraintBottom_toBottomOf="@+id/fabCamera"
-                app:layout_constraintEnd_toStartOf="@+id/fabCamera"
-                app:layout_constraintTop_toTopOf="@+id/fabCamera" />
+                    <TextView
+                        android:id="@+id/textSeekAllahGuidance"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_16sdp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:maxLines="1"
+                        android:text="Seek Allah's Guidance"
+                        android:textColor="?colorOnSurface"
+                        android:textSize="@dimen/textSubTitleSize"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabGallery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_16sdp"
-                android:backgroundTint="@color/blue"
-                app:fabSize="normal"
-                app:layout_constraintBottom_toTopOf="@+id/fabCamera"
-                app:layout_constraintEnd_toEndOf="@+id/fabCamera"
-                app:layout_constraintStart_toStartOf="@+id/fabCamera"
-                app:srcCompat="@drawable/gallery_icon"
-                app:tint="@color/white" />
+                    <TextView
+                        android:id="@+id/tvAyahOfDayArabic"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:gravity="start"
+                        android:text="يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ وَكُونُوا مَعَ الصَّادِقِينَ."
+                        android:textColor="?colorOnSurface"
+                        android:textSize="@dimen/textSubTitleSize"
+                        app:layout_constraintEnd_toEndOf="@id/textSeekAllahGuidance"
+                        app:layout_constraintStart_toStartOf="@id/textSeekAllahGuidance"
+                        app:layout_constraintTop_toBottomOf="@id/textSeekAllahGuidance" />
 
-            <TextView
-                android:id="@+id/textGallery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_8sdp"
-                android:fontFamily="@font/montserrat_medium"
-                android:text="Gallery"
-                android:textColor="?colorOnSurface"
-                android:textSize="@dimen/smallTextSize"
-                app:layout_constraintBottom_toBottomOf="@+id/fabGallery"
-                app:layout_constraintEnd_toStartOf="@+id/fabGallery"
-                app:layout_constraintTop_toTopOf="@+id/fabGallery" />
+                    <TextView
+                        android:id="@+id/textAyahTranslation"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:text="Translation"
+                        android:textColor="?colorOnSurface"
+                        android:textSize="@dimen/textSize"
+                        app:layout_constraintEnd_toEndOf="@id/textSeekAllahGuidance"
+                        app:layout_constraintStart_toStartOf="@id/textSeekAllahGuidance"
+                        app:layout_constraintTop_toBottomOf="@id/tvAyahOfDayArabic" />
+
+                    <TextView
+                        android:id="@+id/textAyahOfDayTranslation"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:text="Translation"
+                        android:textColor="?colorOnSurface"
+                        android:textSize="@dimen/textSize"
+                        app:layout_constraintEnd_toEndOf="@id/textSeekAllahGuidance"
+                        app:layout_constraintStart_toStartOf="@id/textSeekAllahGuidance"
+                        app:layout_constraintTop_toBottomOf="@id/tvAyahOfDayArabic" />
+
+                    <TextView
+                        android:id="@+id/tvAyahOfDayTranslation"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:text="O you who believe! be careful of (your duty to) Allah and be with the true ones."
+                        android:gravity="start"
+                        android:textColor="?colorOnSurface"
+                        android:textSize="@dimen/textSize"
+                        app:layout_constraintEnd_toEndOf="@id/textAyahOfDayTranslation"
+                        app:layout_constraintStart_toStartOf="@id/textAyahOfDayTranslation"
+                        app:layout_constraintTop_toBottomOf="@id/textAyahOfDayTranslation" />
+
+                    <TextView
+                        android:id="@+id/tvAyahOfDayReference"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:text="(Surah Tawbah 9:119)"
+                        android:gravity="center"
+                        android:textColor="?colorOnSurface"
+                        android:textSize="@dimen/textSize"
+                        app:layout_constraintEnd_toEndOf="@id/tvAyahOfDayTranslation"
+                        app:layout_constraintStart_toStartOf="@id/tvAyahOfDayTranslation"
+                        app:layout_constraintTop_toBottomOf="@id/tvAyahOfDayTranslation" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnShareAyahOfDay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:text="Share"
+                        android:backgroundTint="@color/gray"
+                        android:textColor="@color/blue"
+                        app:cornerRadius="@dimen/_20sdp"
+                        android:fontFamily="@font/montserrat_bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvAyahOfDayReference"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <View
+        android:id="@+id/viewBlur"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="?colorControlHighlight"/>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fabAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:backgroundTint="@color/blue"
+        android:text="Add Image"
+        android:textColor="@color/white"
+        app:icon="@drawable/add_icon"
+        app:iconTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:backgroundTint="@color/blue"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toTopOf="@+id/fabAdd"
+        app:layout_constraintEnd_toEndOf="@+id/fabAdd"
+        app:srcCompat="@drawable/camera_icon"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/textCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Camera"
+        android:textColor="?colorOnSurface"
+        android:textSize="@dimen/smallTextSize"
+        app:layout_constraintBottom_toBottomOf="@+id/fabCamera"
+        app:layout_constraintEnd_toStartOf="@+id/fabCamera"
+        app:layout_constraintTop_toTopOf="@+id/fabCamera" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabGallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:backgroundTint="@color/blue"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toTopOf="@+id/fabCamera"
+        app:layout_constraintEnd_toEndOf="@+id/fabCamera"
+        app:layout_constraintStart_toStartOf="@+id/fabCamera"
+        app:srcCompat="@drawable/gallery_icon"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/textGallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Gallery"
+        android:textColor="?colorOnSurface"
+        android:textSize="@dimen/smallTextSize"
+        app:layout_constraintBottom_toBottomOf="@+id/fabGallery"
+        app:layout_constraintEnd_toStartOf="@+id/fabGallery"
+        app:layout_constraintTop_toTopOf="@+id/fabGallery" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
