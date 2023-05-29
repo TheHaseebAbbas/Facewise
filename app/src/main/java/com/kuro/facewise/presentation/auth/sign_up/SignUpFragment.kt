@@ -3,20 +3,17 @@ package com.kuro.facewise.presentation.auth.sign_up
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentSignUpBinding
 import com.kuro.facewise.util.addAfterTextChangeListener
 import com.kuro.facewise.util.click
 import com.kuro.facewise.util.makeLinks
-import com.kuro.facewise.util.showLongToast
+import com.kuro.facewise.util.showLongSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -43,40 +40,42 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     private fun setObservers() {
         lifecycleScope.launch {
             viewModel.state.collectLatest {
-                repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    if (it.isLoading) return@repeatOnLifecycle
-                    if (it.isSuccess) {
-                        findNavController().navigate(R.id.action_signUpFragment_to_mainFragment)
-                    }
-                    if (it.error != null) {
-                        handleSignUpError(it.error)
-                    }
+                binding.isLoading = it.isLoading
+                if (it.isLoading) return@collectLatest
+                if (it.isSuccess) {
+                    findNavController().navigate(R.id.action_signUpFragment_to_mainFragment)
+                }
+                if (it.error != null) {
+                    handlingErrors(it.error)
                 }
             }
         }
     }
 
-    private fun handleSignUpError(error: LoginError) {
+    private fun handlingErrors(error: SignUpError) {
         when (error) {
-            is LoginError.InvalidConfirmPassword ->
+            is SignUpError.InvalidConfirmPasswordError ->
                 binding.etUserConfirmPassword.error = error.message?.asString(requireContext())
 
-            is LoginError.InvalidEmail ->
+            is SignUpError.InvalidEmailError ->
                 binding.etUserEmail.error = error.message?.asString(requireContext())
 
-            is LoginError.InvalidName ->
+            is SignUpError.InvalidNameError ->
                 binding.etUserName.error = error.message?.asString(requireContext())
 
-            is LoginError.InvalidPassword ->
+            is SignUpError.InvalidPasswordError ->
                 binding.etUserPassword.error = error.message?.asString(requireContext())
 
-            is LoginError.ServerError ->
-                showLongToast(error.message!!.asString(requireContext()))
+            is SignUpError.ServerError ->
+                binding.root.showLongSnackBar(error.message!!.asString(requireContext()))
 
-            is LoginError.NotMatchPassword -> {
+            is SignUpError.MatchPasswordError -> {
                 binding.etUserPassword.error = error.message?.asString(requireContext())
                 binding.etUserConfirmPassword.error = error.message?.asString(requireContext())
             }
+
+            is SignUpError.TermsAndConditionsError ->
+                binding.root.showLongSnackBar(error.message!!.asString(requireContext()))
         }
     }
 

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="isLoading"
             type="boolean" />
@@ -13,8 +14,6 @@
             type="com.kuro.facewise.presentation.auth.sign_up.SignUpViewModel" />
 
         <import type="android.view.View" />
-
-
     </data>
 
     <ScrollView
@@ -86,8 +85,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text="@={viewModel.userName}"
                     android:inputType="textPersonName|textCapWords"
+                    android:text="@={viewModel.userName}"
                     android:textSize="@dimen/textSize" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -108,8 +107,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text="@={viewModel.userEmail}"
                     android:inputType="textEmailAddress"
+                    android:text="@={viewModel.userEmail}"
                     android:textSize="@dimen/textSize" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -131,9 +130,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@={viewModel.userPassword}"
                     android:fontFamily="@font/montserrat_medium"
                     android:inputType="textPassword"
+                    android:text="@={viewModel.userPassword}"
                     android:textSize="@dimen/textSize" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -154,9 +153,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@={viewModel.userConfirmPassword}"
                     android:fontFamily="@font/montserrat_medium"
                     android:inputType="textPassword"
+                    android:text="@={viewModel.userConfirmPassword}"
                     android:textSize="@dimen/textSize" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -165,6 +164,7 @@
                 android:id="@+id/cbAgreeToTerms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="@={viewModel.isTermsAndConditionsChecked}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/etUserConfirmPassword" />
 
@@ -188,9 +188,10 @@
                 android:fontFamily="@font/montserrat_medium"
                 android:paddingVertical="@dimen/_12sdp"
                 android:text="Sign Up"
-                android:visibility="@{isLoading?View.INVISIBLE:View.VISIBLE}"
                 android:textAllCaps="false"
+                android:textColor="@color/white"
                 android:textSize="@dimen/textSize"
+                android:visibility="@{isLoading?View.INVISIBLE:View.VISIBLE}"
                 app:cornerRadius="@dimen/_2sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

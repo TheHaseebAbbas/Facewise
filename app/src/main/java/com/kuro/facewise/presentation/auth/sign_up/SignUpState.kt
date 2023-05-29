@@ -1,21 +1,19 @@
 package com.kuro.facewise.presentation.auth.sign_up
 
-import com.google.firebase.auth.FirebaseUser
 import com.kuro.facewise.util.UiText
 
 data class SignUpState(
     val isSuccess: Boolean = false,
     val isLoading: Boolean = false,
-    val isNew: Boolean = false,
-    val user: FirebaseUser? = null,
-    val error: LoginError? = null
+    val error: SignUpError? = null
 )
 
-sealed class LoginError {
-    class InvalidName(val message: UiText?) : LoginError()
-    class InvalidEmail(val message: UiText?) : LoginError()
-    class InvalidPassword(val message: UiText?) : LoginError()
-    class InvalidConfirmPassword(val message: UiText?) : LoginError()
-    class NotMatchPassword(val message: UiText?) : LoginError()
-    class ServerError(val message: UiText?) : LoginError()
+sealed class SignUpError {
+    class InvalidNameError(val message: UiText?) : SignUpError()
+    class InvalidEmailError(val message: UiText?) : SignUpError()
+    class InvalidPasswordError(val message: UiText?) : SignUpError()
+    class InvalidConfirmPasswordError(val message: UiText?) : SignUpError()
+    class MatchPasswordError(val message: UiText?) : SignUpError()
+    class ServerError(val message: UiText?) : SignUpError()
+    class TermsAndConditionsError(val message: UiText?) : SignUpError()
 }

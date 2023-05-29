@@ -22,10 +22,4 @@ class AppModule {
     ): PrefsProvider {
         return PrefsProvider(application.applicationContext.createDeviceProtectedStorageContext())
     }
-
-    @Provides
-    @Singleton
-    fun provideFirebaseAuth(): FirebaseAuth {
-        return FirebaseAuth.getInstance()
-    }
 }

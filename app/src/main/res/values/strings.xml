@@ -19,5 +19,6 @@
     <string name="enter_a_valid_email_please">Enter a valid email please</string>
     <string name="password_and_confirm_password_should_be_same">Password and Confirm Password should be same</string>
     <string name="password_length_must_be_of_8_characters">Password length must be of 8 characters</string>
+    <string name="agree_to_our_terms_conditions_and_privacy_policy"><![CDATA[Agree to our Terms & Conditions and Privacy Policy]]></string>
 
 </resources>
