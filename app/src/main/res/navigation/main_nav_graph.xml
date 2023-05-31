@@ -61,4 +61,9 @@
         android:name="com.kuro.facewise.presentation.emotion_recognition.EmotionRecognitionFragment"
         android:label="fragment_emotion_recognition"
         tools:layout="@layout/fragment_emotion_recognition" /><action android:id="@+id/action_global_emotionRecognitionFragment" app:destination="@id/emotionRecognitionFragment"/>
+    <fragment
+        android:id="@+id/emotionResultFragment"
+        android:name="com.kuro.facewise.presentation.emotion_recognition.EmotionResultFragment"
+        android:label="fragment_emotion_result"
+        tools:layout="@layout/fragment_emotion_result" /><action android:id="@+id/action_global_emotionResultFragment" app:destination="@id/emotionResultFragment"/>
 </navigation>

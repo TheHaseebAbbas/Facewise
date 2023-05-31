@@ -12,6 +12,7 @@ import android.view.animation.Transformation
 import android.widget.Toast
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentMainBinding
 import com.kuro.facewise.util.click
@@ -20,7 +21,7 @@ import com.kuro.facewise.util.click
 class MainFragment : Fragment(R.layout.fragment_main) {
     private var _binding: FragmentMainBinding? = null
 
-    var isAllFabsVisible: Boolean? = null
+    private var isAllFabsVisible: Boolean? = null
     private val binding
         get() = _binding!!
 
@@ -28,6 +29,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _binding = FragmentMainBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
+
+        findNavController().navigate(R.id.action_global_emotionResultFragment)
 
         setFloatingActionButtons()
         setListeners()
