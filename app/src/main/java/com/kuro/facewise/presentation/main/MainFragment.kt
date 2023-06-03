@@ -1,37 +1,82 @@
 package com.kuro.facewise.presentation.main
 
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentMainBinding
 import com.kuro.facewise.util.click
+import com.kuro.facewise.util.constants.AppConstants
+import com.kuro.facewise.util.showLongToast
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import java.io.File
 
-
+@AndroidEntryPoint
 class MainFragment : Fragment(R.layout.fragment_main) {
-    private var _binding: FragmentMainBinding? = null
 
-    var isAllFabsVisible: Boolean? = null
+    private val viewModel by viewModels<MainViewModel>()
+
+    private var _binding: FragmentMainBinding? = null
     private val binding
         get() = _binding!!
+
+    private var imageUri: Uri? = null
+
+    private val openCamera = registerForActivityResult(
+        ActivityResultContracts.TakePicture()
+    ) { result ->
+        result?.let {
+            showLongToast(imageUri!!.toString())
+        }
+    }
+
+    private val chooseImage = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            result.data?.let {
+                viewModel.onEvent(MainEvent.OnImageResult(it.data!!))
+                showLongToast(imageUri!!.toString())
+            }
+        }
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _binding = FragmentMainBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
-        setFloatingActionButtons()
-        setListeners()
+        binding.viewModel = viewModel
 
+        setObservers()
+        setListeners()
+    }
+
+    private fun setObservers() {
+        lifecycleScope.launch {
+            viewModel.state.collectLatest {
+                binding.areAllFabVisible = it.areAllFabVisible
+                imageUri = it.imageUri
+            }
+        }
     }
 
     private fun setListeners() {
@@ -40,50 +85,23 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             handleToggleSection(binding.ivArrowDown)
             setRecentEmotionProgressBars()
         }
-    }
-
-    private fun setFloatingActionButtons() {
-
-        binding.fabCamera.visibility = View.GONE
-        binding.fabGallery.visibility = View.GONE
-        binding.cardTextCamera.visibility = View.GONE
-        binding.textGallery.visibility = View.GONE
-
-        isAllFabsVisible = false
 
         binding.fabAdd click {
-            isAllFabsVisible = if (!isAllFabsVisible!!) {
-
-                binding.viewBlur.visibility = View.VISIBLE
-
-                binding.fabCamera.show()
-                binding.fabGallery.show()
-                binding.cardTextCamera.visibility = View.VISIBLE
-                binding.textGallery.visibility = View.VISIBLE
-
-                rotateFab(binding.fabAdd,true)
-
-                true
-            } else {
-
-                binding.viewBlur.visibility = View.GONE
-
-                binding.fabCamera.hide()
-                binding.fabGallery.hide()
-                binding.cardTextCamera.visibility = View.GONE
-                binding.textGallery.visibility = View.GONE
-
-                rotateFab(binding.fabAdd,false)
-
-                false
-            }
+            viewModel.onEvent(MainEvent.OnMainFabClick)
         }
 
         binding.fabCamera click {
-            Toast.makeText(context, "Camera", Toast.LENGTH_SHORT).show()
+            viewModel.onEvent(MainEvent.OnMainFabClick)
+            viewModel.onEvent(MainEvent.OnImageResult(createImageUri()))
+            openCamera.launch(imageUri!!)
         }
         binding.fabGallery click {
-            Toast.makeText(context, "Gallery", Toast.LENGTH_SHORT).show()
+            viewModel.onEvent(MainEvent.OnMainFabClick)
+            val intent =
+                Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+            chooseImage.launch(intent)
         }
     }
 
@@ -104,7 +122,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             progressAnimation.duration = 1000
             progressAnimation.start()
         }
-
     }
 
     private fun handleToggleSection(view: View) {
@@ -123,12 +140,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private fun expand(v: View, animListener: AnimListener) {
         val a = expandAction(v)
         a.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation) {}
             override fun onAnimationEnd(animation: Animation) {
                 animListener.onFinish()
             }
 
-            override fun onAnimationRepeat(animation: Animation) {}
+            override fun onAnimationRepeat(animation: Animation?) = Unit
+            override fun onAnimationStart(animation: Animation?) = Unit
         })
         v.startAnimation(a)
     }
@@ -182,25 +199,25 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     interface AnimListener {
         fun onFinish()
     }
-    private fun toggleArrow(view: View): Boolean {
-        return if (view.rotation == 0f) {
-            view.animate().setDuration(200).rotation(180f)
-            true
-        } else {
-            view.animate().setDuration(200).rotation(0f)
-            false
-        }
+
+    private fun toggleArrow(view: View): Boolean = if (view.rotation == 0f) {
+        view.animate().setDuration(200).rotation(180f)
+        true
+    } else {
+        view.animate().setDuration(200).rotation(0f)
+        false
     }
 
-    private fun rotateFab(v: View, rotate: Boolean) {
-        v.animate().setDuration(200)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    super.onAnimationEnd(animation)
-                }
-            })
-            .rotation(if (rotate) 135f else 0f)
+    private fun createImageUri(): Uri {
+        val image = File(requireActivity().applicationContext.filesDir, AppConstants.KEY_TEMP_IMAGE)
+        return FileProvider.getUriForFile(
+            requireActivity().applicationContext,
+            AppConstants.KEY_FILE_PROVIDER_AUTHORITY,
+            image
+        )
     }
+
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
