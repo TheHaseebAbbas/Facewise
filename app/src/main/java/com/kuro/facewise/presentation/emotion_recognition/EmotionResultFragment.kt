@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
@@ -14,6 +17,7 @@ import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentEmotionRecognitionBinding
 import com.kuro.facewise.databinding.FragmentEmotionResultBinding
 import com.kuro.facewise.util.click
+import com.kuro.facewise.util.showPopUpMenu
 
 class EmotionResultFragment : Fragment(R.layout.fragment_emotion_result) {
     private var _binding: FragmentEmotionResultBinding? = null
@@ -35,7 +39,11 @@ class EmotionResultFragment : Fragment(R.layout.fragment_emotion_result) {
             description.isEnabled = false
             isDrawHoleEnabled = true
             legend.isEnabled = true
+            legend.isWordWrapEnabled=true
+            legend.textSize=14F
+            legend.textColor=requireActivity().getColor(R.color.black)
             this.centerText = "Emotion Result"
+
             this.setDrawEntryLabels(false)
             animateY(1000)
         }
@@ -83,6 +91,10 @@ class EmotionResultFragment : Fragment(R.layout.fragment_emotion_result) {
     }
 
     private fun setListeners() {
+        binding.ivProfile click {
+            findNavController().showPopUpMenu(it)
+        }
+
 
     }
 

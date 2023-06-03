@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,40 +18,347 @@
         android:textColor="?colorOnSurface"
         android:textSize="@dimen/textTitleSize"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <ImageView
+        android:id="@+id/ivProfile"
         android:layout_width="@dimen/_24sdp"
         android:layout_height="@dimen/_24sdp"
         android:layout_margin="@dimen/_16sdp"
         android:src="@drawable/user_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardRecentEmotion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_16sdp"
-        app:cardCornerRadius="@dimen/_8sdp"
-        app:cardElevation="@dimen/_8sdp"
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textFacewise">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-      <androidx.constraintlayout.widget.ConstraintLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent">
-          <com.github.mikephil.charting.charts.PieChart
-              android:id="@+id/pcEmotionResult"
-              android:layout_width="0dp"
-              android:layout_height="@dimen/_300sdp"
-              app:layout_constraintTop_toTopOf="parent"
-              app:layout_constraintBottom_toBottomOf="parent"
-              app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintEnd_toEndOf="parent"/>
 
-      </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardRecognizedEmotion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:cardElevation="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/_16sdp"
+                >
+                <TextView
+                    android:id="@+id/textEmotionRecognize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="Emotion Recognized"
+                    android:textColor="?colorOnSurface"
+                    android:textSize="@dimen/textSubTitleSize"
+                    android:fontFamily="@font/montserrat_medium"/>
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pcEmotionResult"
+                    android:layout_width="0dp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_height="@dimen/_300sdp"
+                    app:layout_constraintTop_toBottomOf="@id/textEmotionRecognize"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardAyahOfDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:cardElevation="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardRecognizedEmotion">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?selectableItemBackground"
+                android:paddingBottom="@dimen/_16sdp">
+
+                <TextView
+                    android:id="@+id/textSeekAllahGuidance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_16sdp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:maxLines="1"
+                    android:text="Relevant Ayat"
+                    android:textColor="?colorOnSurface"
+                    android:textSize="@dimen/textSubTitleSize"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvAyahOfDayArabic"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:gravity="start"
+                    android:text="يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ وَكُونُوا مَعَ الصَّادِقِينَ."
+                    android:textColor="?colorOnSurface"
+                    android:textSize="@dimen/textSubTitleSize"
+                    app:layout_constraintEnd_toEndOf="@id/textSeekAllahGuidance"
+                    app:layout_constraintStart_toStartOf="@id/textSeekAllahGuidance"
+                    app:layout_constraintTop_toBottomOf="@id/textSeekAllahGuidance" />
+
+                <TextView
+                    android:id="@+id/textAyahTranslation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:text="Translation"
+                    android:textColor="?colorOnSurface"
+                    android:textSize="@dimen/textSize"
+                    app:layout_constraintEnd_toEndOf="@id/textSeekAllahGuidance"
+                    app:layout_constraintStart_toStartOf="@id/textSeekAllahGuidance"
+                    app:layout_constraintTop_toBottomOf="@id/tvAyahOfDayArabic" />
+
+                <TextView
+                    android:id="@+id/textAyahOfDayTranslation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:text="Translation"
+                    android:textColor="?colorOnSurface"
+                    android:textSize="@dimen/textSize"
+                    app:layout_constraintEnd_toEndOf="@id/textSeekAllahGuidance"
+                    app:layout_constraintStart_toStartOf="@id/textSeekAllahGuidance"
+                    app:layout_constraintTop_toBottomOf="@id/tvAyahOfDayArabic" />
+
+                <TextView
+                    android:id="@+id/tvAyahOfDayTranslation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:gravity="start"
+                    android:text="O you who believe! be careful of (your duty to) Allah and be with the true ones."
+                    android:textColor="?colorOnSurface"
+                    android:textSize="@dimen/textSize"
+                    app:layout_constraintEnd_toEndOf="@id/textAyahOfDayTranslation"
+                    app:layout_constraintStart_toStartOf="@id/textAyahOfDayTranslation"
+                    app:layout_constraintTop_toBottomOf="@id/textAyahOfDayTranslation" />
+
+                <TextView
+                    android:id="@+id/tvAyahOfDayReference"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:gravity="center"
+                    android:text="(Surah Tawbah 9:119)"
+                    android:textColor="?colorOnSurface"
+                    android:textSize="@dimen/textSize"
+                    app:layout_constraintEnd_toEndOf="@id/tvAyahOfDayTranslation"
+                    app:layout_constraintStart_toStartOf="@id/tvAyahOfDayTranslation"
+                    app:layout_constraintTop_toBottomOf="@id/tvAyahOfDayTranslation" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnShareAyahOfDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:backgroundTint="@color/gray"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="Share"
+                    android:textColor="@color/blue"
+                    app:cornerRadius="@dimen/_20sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvAyahOfDayReference" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardHadithOfDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:cardElevation="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardAyahOfDay">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?selectableItemBackground"
+                android:paddingBottom="@dimen/_16sdp">
+
+                <TextView
+                    android:id="@+id/textHadithOfDay"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_16sdp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:maxLines="1"
+                    android:text="Relevant Hadith"
+                    android:textColor="?colorOnSurface"
+                    android:textSize="@dimen/textSubTitleSize"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/tvHadithOfDay"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:gravity="start"
+                    android:text="O you who believe! be careful of (your duty to) Allah and be with the true ones."
+                    android:textColor="?colorOnSurface"
+                    android:textSize="@dimen/textSize"
+                    app:layout_constraintEnd_toEndOf="@id/textHadithOfDay"
+                    app:layout_constraintStart_toStartOf="@id/textHadithOfDay"
+                    app:layout_constraintTop_toBottomOf="@id/textHadithOfDay" />
+
+                <TextView
+                    android:id="@+id/tvHadithOfDayReference"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:gravity="center"
+                    android:text="(Surah Tawbah 9:119)"
+                    android:textColor="?colorOnSurface"
+                    android:textSize="@dimen/textSize"
+                    app:layout_constraintEnd_toEndOf="@id/tvHadithOfDay"
+                    app:layout_constraintStart_toStartOf="@id/tvHadithOfDay"
+                    app:layout_constraintTop_toBottomOf="@id/tvHadithOfDay" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnShareHadithOfDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:backgroundTint="@color/gray"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="Share"
+                    android:textColor="@color/blue"
+                    app:cornerRadius="@dimen/_20sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvHadithOfDayReference" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardIslamicIncidenceOfDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:cardElevation="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardHadithOfDay">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?selectableItemBackground"
+                android:paddingBottom="@dimen/_16sdp">
+
+
+                <TextView
+                    android:id="@+id/textIslamicIncidenceOfDay"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_16sdp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:maxLines="1"
+                    android:text="Relevant Islamic Incident"
+                    android:textColor="?colorOnSurface"
+                    android:textSize="@dimen/textSubTitleSize"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvIslamicIncidenceOfDay"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:gravity="start"
+                    android:text="The Liberation of Makkah: When Prophet Muhammad (pbuh) and his companions successfully conquered Makkah without bloodshed, it brought immense joy and happiness to the Muslims and the people of Makkah. This incident teaches forgiveness, mercy, and the eventual triumph of truth over falsehood."
+                    android:textColor="?colorOnSurface"
+                    android:textSize="@dimen/textSize"
+                    app:layout_constraintEnd_toEndOf="@id/textIslamicIncidenceOfDay"
+                    app:layout_constraintStart_toStartOf="@id/textIslamicIncidenceOfDay"
+                    app:layout_constraintTop_toBottomOf="@id/textIslamicIncidenceOfDay" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnShareIslamicIncidentOfDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:backgroundTint="@color/gray"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="Share"
+                    android:textColor="@color/blue"
+                    app:cornerRadius="@dimen/_20sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvIslamicIncidenceOfDay" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
