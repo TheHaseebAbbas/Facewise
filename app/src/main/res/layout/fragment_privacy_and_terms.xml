@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:fillViewport="true"
+    android:overScrollMode="ifContentScrolls"
+    android:scrollbars="none"
     tools:context=".presentation.privacy_and_terms.PrivacyAndTermsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,11 +19,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_bold"
-            android:text="FaceWise Privacy Policy"
             android:textSize="@dimen/textTitleSize"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/facewise_privacy_policy_tittle" />
 
         <TextView
             android:id="@+id/tvPrivacyAndTerms"
@@ -29,13 +31,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16sdp"
             android:fontFamily="@font/montserrat_medium"
-            android:text="FaceWise Privacy Policy"
+            android:textIsSelectable="true"
             android:textSize="@dimen/textSize"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvPrivacyAndTermsHeading" />
+            app:layout_constraintTop_toBottomOf="@id/tvPrivacyAndTermsHeading"
+            tools:text="@string/facewise_privacy_policy" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </ScrollView>

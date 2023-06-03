@@ -34,7 +34,11 @@
         android:id="@+id/mainFragment"
         android:name="com.kuro.facewise.presentation.main.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_emotionRecognitionFragment"
+            app:destination="@id/emotionRecognitionFragment" />
+    </fragment>
     <fragment
         android:id="@+id/onBoardingFragment"
         android:name="com.kuro.facewise.presentation.onboard.OnBoardingFragment"
@@ -60,7 +64,9 @@
         android:id="@+id/emotionRecognitionFragment"
         android:name="com.kuro.facewise.presentation.emotion_recognition.EmotionRecognitionFragment"
         android:label="fragment_emotion_recognition"
-        tools:layout="@layout/fragment_emotion_recognition" /><action android:id="@+id/action_global_emotionRecognitionFragment" app:destination="@id/emotionRecognitionFragment"/>
+        tools:layout="@layout/fragment_emotion_recognition" >
+
+    </fragment>
     <fragment
         android:id="@+id/emotionResultFragment"
         android:name="com.kuro.facewise.presentation.emotion_recognition.EmotionResultFragment"
@@ -70,5 +76,11 @@
         android:id="@+id/privacyAndTermsFragment"
         android:name="com.kuro.facewise.presentation.privacy_and_terms.PrivacyAndTermsFragment"
         android:label="fragment_privacy_and_terms"
-        tools:layout="@layout/fragment_privacy_and_terms" /><action android:id="@+id/action_global_privacyAndTermsFragment" app:destination="@id/privacyAndTermsFragment"/>
+        tools:layout="@layout/fragment_privacy_and_terms" >
+        <argument
+            android:name="stringResTitleId"
+            app:argType="reference" />
+        <argument android:name="stringResBodyId"
+            app:argType="reference" />
+    </fragment><action android:id="@+id/action_global_privacyAndTermsFragment" app:destination="@id/privacyAndTermsFragment"/>
 </navigation>

@@ -1,6 +1,5 @@
 package com.kuro.facewise.presentation.main
 
-
 import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Intent
@@ -18,11 +17,13 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentMainBinding
 import com.kuro.facewise.util.click
 import com.kuro.facewise.util.constants.AppConstants
 import com.kuro.facewise.util.showLongToast
+import com.kuro.facewise.util.showPopUpMenu
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -79,7 +80,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun setListeners() {
-
         binding.expandableCardLayout click {
             handleToggleSection(binding.ivArrowDown)
             setRecentEmotionProgressBars()
@@ -101,6 +101,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 }
             chooseImage.launch(intent)
+        }
+        binding.ivUserProfile click {
+            findNavController().showPopUpMenu(it)
         }
     }
 
@@ -215,7 +218,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             image
         )
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

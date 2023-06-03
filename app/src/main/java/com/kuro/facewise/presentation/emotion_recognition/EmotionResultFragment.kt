@@ -39,9 +39,9 @@ class EmotionResultFragment : Fragment(R.layout.fragment_emotion_result) {
             description.isEnabled = false
             isDrawHoleEnabled = true
             legend.isEnabled = true
-            legend.isWordWrapEnabled=true
-            legend.textSize=14F
-            legend.textColor=requireActivity().getColor(R.color.black)
+            legend.isWordWrapEnabled = true
+            legend.textSize = 14F
+            legend.textColor = requireActivity().getColor(R.color.black)
             this.centerText = "Emotion Result"
 
             this.setDrawEntryLabels(false)
@@ -87,7 +87,7 @@ class EmotionResultFragment : Fragment(R.layout.fragment_emotion_result) {
 
         val data = PieData(dataSet)
         binding.pcEmotionResult.data = data
-        binding.pcEmotionResult.highlightValue(maxIndex.toFloat(),0)
+        binding.pcEmotionResult.highlightValue(maxIndex.toFloat(), 0)
     }
 
     private fun setListeners() {
