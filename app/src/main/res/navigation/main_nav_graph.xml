@@ -65,5 +65,10 @@
         android:id="@+id/emotionResultFragment"
         android:name="com.kuro.facewise.presentation.emotion_recognition.EmotionResultFragment"
         android:label="fragment_emotion_result"
-        tools:layout="@layout/fragment_emotion_result" />
+        tools:layout="@layout/fragment_emotion_result" /><action android:id="@+id/action_global_emotionResultFragment" app:destination="@id/emotionResultFragment"/>
+    <fragment
+        android:id="@+id/privacyAndTermsFragment"
+        android:name="com.kuro.facewise.presentation.privacy_and_terms.PrivacyAndTermsFragment"
+        android:label="fragment_privacy_and_terms"
+        tools:layout="@layout/fragment_privacy_and_terms" /><action android:id="@+id/action_global_privacyAndTermsFragment" app:destination="@id/privacyAndTermsFragment"/>
 </navigation>

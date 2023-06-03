@@ -1,5 +1,7 @@
 package com.kuro.facewise.util
 
+import android.app.Activity
+import android.content.Context
 import android.text.Selection
 import android.text.Spannable
 import android.text.SpannableString
@@ -7,10 +9,16 @@ import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.view.MenuItem
 import android.view.View
+import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.MenuRes
 import androidx.core.widget.doAfterTextChanged
+import androidx.navigation.NavController
 import com.google.android.material.textfield.TextInputLayout
+import com.kuro.facewise.R
 
 fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
     val spannableString = SpannableString(this.text)
@@ -54,3 +62,4 @@ fun addAfterTextChangeListener(vararg textInputLayouts: Pair<TextInputLayout, St
         }
     }
 }
+
