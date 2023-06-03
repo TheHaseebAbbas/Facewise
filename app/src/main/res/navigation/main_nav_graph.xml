@@ -82,5 +82,11 @@
             app:argType="reference" />
         <argument android:name="stringResBodyId"
             app:argType="reference" />
-    </fragment><action android:id="@+id/action_global_privacyAndTermsFragment" app:destination="@id/privacyAndTermsFragment"/>
+    </fragment>
+    <action android:id="@+id/action_global_privacyAndTermsFragment" app:destination="@id/privacyAndTermsFragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.kuro.facewise.presentation.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" /><action android:id="@+id/action_global_profileFragment" app:destination="@id/profileFragment"/>
 </navigation>

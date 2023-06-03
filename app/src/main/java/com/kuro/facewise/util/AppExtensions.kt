@@ -55,7 +55,7 @@ fun NavController.showPopUpMenu(view: View) {
         setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.profile -> {
-                    Toast.makeText(view.context, "Profile", Toast.LENGTH_SHORT).show()
+                    navigate(R.id.action_global_profileFragment)
                 }
 
                 R.id.privacyPolicy -> {
@@ -68,6 +68,12 @@ fun NavController.showPopUpMenu(view: View) {
                 }
 
                 R.id.termsCondition -> {
+                    navigate(
+                        MainNavGraphDirections.actionGlobalPrivacyAndTermsFragment(
+                            stringResTitleId = R.string.facewise_terms_conditions_title,
+                            stringResBodyId = R.string.facewise_terms_codition
+                        )
+                    )
 
                 }
 
