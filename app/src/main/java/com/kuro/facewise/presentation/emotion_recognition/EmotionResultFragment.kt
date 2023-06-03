@@ -1,60 +1,94 @@
 package com.kuro.facewise.presentation.emotion_recognition
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.utils.ColorTemplate
 import com.kuro.facewise.R
+import com.kuro.facewise.databinding.FragmentEmotionRecognitionBinding
+import com.kuro.facewise.databinding.FragmentEmotionResultBinding
+import com.kuro.facewise.util.click
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class EmotionResultFragment : Fragment(R.layout.fragment_emotion_result) {
+    private var _binding: FragmentEmotionResultBinding? = null
 
-/**
- * A simple [Fragment] subclass.
- * Use the [EmotionResultFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class EmotionResultFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private val binding
+        get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        _binding = FragmentEmotionResultBinding.bind(view)
+        super.onViewCreated(view, savedInstanceState)
+        setupPieChart()
+
+        setListeners()
+    }
+
+    private fun setupPieChart() {
+        binding.pcEmotionResult.apply {
+            setUsePercentValues(true)
+            description.isEnabled = false
+            isDrawHoleEnabled = true
+            legend.isEnabled = true
+            this.centerText = "Emotion Result"
+            this.setDrawEntryLabels(false)
+            animateY(1000)
         }
+        populatePieChart()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_emotion_result, container, false)
+    private fun populatePieChart() {
+        val emotions = listOf(
+            "Happy",
+            "Sad",
+            "Anger",
+            "Surprise",
+            "Disgust",
+            "Neutral",
+            "Fear"
+        )
+
+        val percentages = listOf(2f, 2f, 2f, 2f, 2f, 88f, 2f)
+        val maxElement = percentages.maxByOrNull { it }
+        val maxIndex = percentages.indexOf(maxElement)
+
+        val entries = ArrayList<PieEntry>()
+        for (i in emotions.indices) {
+            entries.add(PieEntry(percentages[i], emotions[i]))
+        }
+
+        val dataSet = PieDataSet(entries, "")
+        dataSet.apply {
+            colors = listOf(
+                requireActivity().resources.getColor(R.color.happyYellow, null),
+                requireActivity().resources.getColor(R.color.sadBlue, null),
+                requireActivity().resources.getColor(R.color.angryRed, null),
+                requireActivity().resources.getColor(R.color.surprisePurple, null),
+                requireActivity().resources.getColor(R.color.disgustGreen, null),
+                requireActivity().resources.getColor(R.color.neutralGray, null),
+                requireActivity().resources.getColor(R.color.fearOrange, null),
+            )
+            this.valueTextColor = Color.TRANSPARENT
+            valueTextSize = 12f
+        }
+
+        val data = PieData(dataSet)
+        binding.pcEmotionResult.data = data
+        binding.pcEmotionResult.highlightValue(maxIndex.toFloat(),0)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment EmotionResultFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            EmotionResultFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun setListeners() {
+
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }
