@@ -62,16 +62,26 @@
         app:popUpToInclusive="true" />
     <fragment
         android:id="@+id/emotionRecognitionFragment"
-        android:name="com.kuro.facewise.presentation.emotion_recognition.EmotionRecognitionFragment"
+        android:name="com.kuro.facewise.presentation.emotion.emotion_recognition.EmotionRecognitionFragment"
         android:label="fragment_emotion_recognition"
         tools:layout="@layout/fragment_emotion_recognition" >
-
+        <argument android:name="imageUri"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_emotionRecognitionFragment_to_emotionResultFragment"
+            app:destination="@id/emotionResultFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/emotionResultFragment"
-        android:name="com.kuro.facewise.presentation.emotion_recognition.EmotionResultFragment"
+        android:name="com.kuro.facewise.presentation.emotion.emotion_result.EmotionResultFragment"
         android:label="fragment_emotion_result"
-        tools:layout="@layout/fragment_emotion_result" /><action android:id="@+id/action_global_emotionResultFragment" app:destination="@id/emotionResultFragment"/>
+        tools:layout="@layout/fragment_emotion_result" >
+        <argument
+            android:name="emotionResponse"
+            app:argType="com.kuro.facewise.domain.model.EmotionResponse" />
+    </fragment>
     <fragment
         android:id="@+id/privacyAndTermsFragment"
         android:name="com.kuro.facewise.presentation.privacy_and_terms.PrivacyAndTermsFragment"

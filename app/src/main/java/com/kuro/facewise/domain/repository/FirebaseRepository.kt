@@ -9,4 +9,5 @@ interface FirebaseRepository {
     suspend fun signUp(name: String, email: String, password: String): Flow<Resource<Unit>>
 
     suspend fun signIn(email: String, password: String): Flow<Resource<Unit>>
+
 }

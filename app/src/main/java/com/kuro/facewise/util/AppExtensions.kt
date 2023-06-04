@@ -55,7 +55,7 @@ fun NavController.showPopUpMenu(view: View) {
         setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.profile -> {
-                    navigate(R.id.action_global_profileFragment)
+                    navigate(MainNavGraphDirections.actionGlobalProfileFragment())
                 }
 
                 R.id.privacyPolicy -> {

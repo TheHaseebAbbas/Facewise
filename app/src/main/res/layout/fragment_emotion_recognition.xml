@@ -1,94 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.emotion_recognition.EmotionRecognitionFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/textFacewise"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_16sdp"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="@string/app_name"
-        android:textColor="?colorOnSurface"
-        android:textSize="@dimen/textTitleSize"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="@dimen/_24sdp"
-        android:layout_height="@dimen/_24sdp"
-        android:layout_margin="@dimen/_16sdp"
-        android:src="@drawable/user_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <variable
+            name="imageUri"
+            type="String" />
 
-    <ImageView
-        android:id="@+id/ivImageForScanning"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="@dimen/_16sdp"
-        android:src="@drawable/islamic_incident_1"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_chainStyle="spread" />
+        <variable
+            name="isLoading"
+            type="boolean" />
 
-    <Button
-        android:id="@+id/btnScanImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:backgroundTint="@color/gray"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Scan"
-        android:textColor="@color/blue"
-        app:cornerRadius="@dimen/_20sdp"
-        app:icon="@drawable/scan_icon"
-        app:iconTint="@color/blue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline" />
+        <import type="android.view.View" />
+    </data>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.emotion.emotion_recognition.EmotionRecognitionFragment">
 
-    <com.github.ybq.android.spinkit.SpinKitView
-        android:id="@+id/spin_kit"
-        style="@style/SpinKitView.WanderingCubes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:SpinKit_Color="@color/blue"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@id/btnScanImage"
-        app:layout_constraintEnd_toEndOf="@id/btnScanImage"
-        app:layout_constraintTop_toTopOf="@id/btnScanImage"
-        app:layout_constraintBottom_toBottomOf="@id/btnScanImage"/>
+        <TextView
+            android:id="@+id/textFacewise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16sdp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="@string/app_name"
+            android:textColor="?colorOnSurface"
+            android:textSize="@dimen/textTitleSize"
+            app:layout_constraintBottom_toBottomOf="@id/ivUserProfile"
+            app:layout_constraintEnd_toStartOf="@id/ivUserProfile"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivUserProfile" />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:lottie_autoPlay="true"
-        android:scaleType="fitXY"
-        android:layout_margin="@dimen/_16sdp"
-        app:lottie_loop="true"
-        app:lottie_speed="0.6"
-        app:lottie_rawRes="@raw/scanning_animation"
-        app:layout_constraintStart_toStartOf="@id/ivImageForScanning"
-        app:layout_constraintEnd_toEndOf="@id/ivImageForScanning"
-        app:layout_constraintTop_toTopOf="@id/ivImageForScanning"
-        app:layout_constraintBottom_toBottomOf="@id/ivImageForScanning"/>
+        <ImageView
+            android:id="@+id/ivUserProfile"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_margin="@dimen/_16sdp"
+            android:src="@drawable/user_icon"
+            app:layout_constraintBottom_toTopOf="@id/ivImageForScanning"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/ivImageForScanning"
+            setImageFromUri="@{imageUri}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/_16sdp"
+            android:scaleType="centerInside"
+            android:src="@drawable/islamic_incident_1"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivUserProfile"
+            app:layout_constraintVertical_chainStyle="spread" />
+
+        <Button
+            android:id="@+id/btnScanImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:backgroundTint="@color/gray"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Scan"
+            android:textColor="@color/blue"
+            android:visibility="@{isLoading?View.INVISIBLE:View.VISIBLE}"
+            app:cornerRadius="@dimen/_20sdp"
+            app:icon="@drawable/scan_icon"
+            app:iconTint="@color/blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guideline" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.75" />
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/spin_kit"
+            style="@style/SpinKitView.WanderingCubes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{isLoading?View.VISIBLE:View.GONE}"
+            app:SpinKit_Color="@color/blue"
+            app:layout_constraintBottom_toBottomOf="@id/btnScanImage"
+            app:layout_constraintEnd_toEndOf="@id/btnScanImage"
+            app:layout_constraintStart_toStartOf="@id/btnScanImage"
+            app:layout_constraintTop_toTopOf="@id/btnScanImage" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/_16sdp"
+            android:scaleType="fitXY"
+            android:visibility="@{isLoading?View.VISIBLE:View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@id/ivImageForScanning"
+            app:layout_constraintEnd_toEndOf="@id/ivImageForScanning"
+            app:layout_constraintStart_toStartOf="@id/ivImageForScanning"
+            app:layout_constraintTop_toTopOf="@id/ivImageForScanning"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/scanning_animation"
+            app:lottie_speed="0.6" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

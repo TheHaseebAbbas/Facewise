@@ -44,7 +44,13 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         ActivityResultContracts.TakePicture()
     ) { result ->
         result?.let {
-            showLongToast(imageUri!!.toString())
+            if (it) {
+                findNavController().navigate(
+                    MainFragmentDirections.actionMainFragmentToEmotionRecognitionFragment(
+                        imageUri = imageUri!!.toString()
+                    )
+                )
+            }
         }
     }
 
@@ -54,7 +60,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         if (result.resultCode == Activity.RESULT_OK) {
             result.data?.let {
                 viewModel.onEvent(MainEvent.OnImageResult(it.data!!))
-                showLongToast(imageUri!!.toString())
+                findNavController().navigate(
+                    MainFragmentDirections.actionMainFragmentToEmotionRecognitionFragment(
+                        imageUri = imageUri!!.toString()
+                    )
+                )
             }
         }
     }

@@ -1,40 +1,46 @@
-package com.kuro.facewise.presentation.emotion_recognition
+package com.kuro.facewise.presentation.emotion.emotion_result
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.github.mikephil.charting.components.Legend
+import androidx.navigation.fragment.navArgs
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.utils.ColorTemplate
 import com.kuro.facewise.R
-import com.kuro.facewise.databinding.FragmentEmotionRecognitionBinding
 import com.kuro.facewise.databinding.FragmentEmotionResultBinding
 import com.kuro.facewise.util.click
+import com.kuro.facewise.util.showLongSnackBar
 import com.kuro.facewise.util.showPopUpMenu
 
 class EmotionResultFragment : Fragment(R.layout.fragment_emotion_result) {
-    private var _binding: FragmentEmotionResultBinding? = null
 
+    private var _binding: FragmentEmotionResultBinding? = null
     private val binding
         get() = _binding!!
+
+    private val args: EmotionResultFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _binding = FragmentEmotionResultBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
         setupPieChart()
 
+        binding.root.showLongSnackBar(args.emotionResponse.dominantEmotion)
         setListeners()
+    }
+
+    private fun setListeners() {
+        binding.ivUserProfile click {
+            findNavController().showPopUpMenu(it)
+        }
     }
 
     private fun setupPieChart() {
         binding.pcEmotionResult.apply {
+            // setting values to pieChart
             setUsePercentValues(true)
             description.isEnabled = false
             isDrawHoleEnabled = true
@@ -42,37 +48,24 @@ class EmotionResultFragment : Fragment(R.layout.fragment_emotion_result) {
             legend.isWordWrapEnabled = true
             legend.textSize = 14F
             legend.textColor = requireActivity().getColor(R.color.black)
-            this.centerText = "Emotion Result"
+            centerText = args.emotionResponse.dominantEmotion.uppercase()
 
-            this.setDrawEntryLabels(false)
+            setDrawEntryLabels(false)
             animateY(1000)
-        }
-        populatePieChart()
-    }
 
-    private fun populatePieChart() {
-        val emotions = listOf(
-            "Happy",
-            "Sad",
-            "Anger",
-            "Surprise",
-            "Disgust",
-            "Neutral",
-            "Fear"
-        )
+            // populating values in pie chart
+            val emotion = args.emotionResponse.emotion
+            val emotions = listOf(
+                Pair("Happy", emotion.happy),
+                Pair("Sad", emotion.sad),
+                Pair("Anger", emotion.angry),
+                Pair("Surprise", emotion.surprise),
+                Pair("Disgust", emotion.disgust),
+                Pair("Neutral", emotion.neutral),
+                Pair("Fear", emotion.fear),
+            )
 
-        val percentages = listOf(2f, 2f, 2f, 2f, 2f, 88f, 2f)
-        val maxElement = percentages.maxByOrNull { it }
-        val maxIndex = percentages.indexOf(maxElement)
-
-        val entries = ArrayList<PieEntry>()
-        for (i in emotions.indices) {
-            entries.add(PieEntry(percentages[i], emotions[i]))
-        }
-
-        val dataSet = PieDataSet(entries, "")
-        dataSet.apply {
-            colors = listOf(
+            val emotionsColor = listOf(
                 requireActivity().resources.getColor(R.color.happyYellow, null),
                 requireActivity().resources.getColor(R.color.sadBlue, null),
                 requireActivity().resources.getColor(R.color.angryRed, null),
@@ -81,26 +74,27 @@ class EmotionResultFragment : Fragment(R.layout.fragment_emotion_result) {
                 requireActivity().resources.getColor(R.color.neutralGray, null),
                 requireActivity().resources.getColor(R.color.fearOrange, null),
             )
-            this.valueTextColor = Color.TRANSPARENT
-            valueTextSize = 12f
+
+            val maxElement = emotions.maxByOrNull { it.second }
+            val maxIndex = emotions.indexOf(maxElement)
+
+            val entries = ArrayList<PieEntry>()
+            for (i in emotions.indices) {
+                entries.add(PieEntry(emotions[i].second, emotions[i].first))
+            }
+
+            val dataSet = PieDataSet(entries, null).apply {
+                colors = emotionsColor
+                valueTextColor = Color.TRANSPARENT
+            }
+
+            data = PieData(dataSet)
+            highlightValue(maxIndex.toFloat(), 0)
         }
-
-        val data = PieData(dataSet)
-        binding.pcEmotionResult.data = data
-        binding.pcEmotionResult.highlightValue(maxIndex.toFloat(), 0)
-    }
-
-    private fun setListeners() {
-        binding.ivProfile click {
-            findNavController().showPopUpMenu(it)
-        }
-
-
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }

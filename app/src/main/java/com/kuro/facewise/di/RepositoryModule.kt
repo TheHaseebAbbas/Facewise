@@ -1,6 +1,8 @@
 package com.kuro.facewise.di
 
+import com.kuro.facewise.data.repository.FaceWiseRepositoryImpl
 import com.kuro.facewise.data.repository.FirebaseRepositoryImpl
+import com.kuro.facewise.domain.repository.FaceWiseRepository
 import com.kuro.facewise.domain.repository.FirebaseRepository
 import dagger.Binds
 import dagger.Module
@@ -13,4 +15,7 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindFirebaseRepository(firebaseRepositoryImpl: FirebaseRepositoryImpl): FirebaseRepository
+
+    @Binds
+    abstract fun bindFaceWiseRepository(faceWiseRepositoryImpl: FaceWiseRepositoryImpl): FaceWiseRepository
 }

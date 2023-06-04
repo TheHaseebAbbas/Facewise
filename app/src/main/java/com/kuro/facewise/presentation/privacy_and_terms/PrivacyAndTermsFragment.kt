@@ -25,8 +25,7 @@ class PrivacyAndTermsFragment : Fragment(R.layout.fragment_privacy_and_terms) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.tvPrivacyAndTermsHeading.text = getString(args.stringResTitleId)
-        binding.tvPrivacyAndTerms.text = Html.fromHtml(getString(args.stringResBodyId))
-
+        binding.tvPrivacyAndTerms.text = Html.fromHtml(getString(args.stringResBodyId), Html.FROM_HTML_MODE_COMPACT)
     }
 
     override fun onDestroyView() {
