@@ -1,150 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.profile.ProfileFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <View
-        android:id="@+id/profileBackground"
+    <data>
+
+        <variable
+            name="imageUri"
+            type="String" />
+
+        <variable
+            name="viewModel"
+            type="com.kuro.facewise.presentation.profile.ProfileViewModel" />
+
+        <variable
+            name="isLoading"
+            type="boolean" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_70sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/profile_background_view"
-        app:layout_constraintEnd_toEndOf="parent"/>
-    <FrameLayout
-        android:id="@+id/ivUpdateProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="@dimen/_16sdp"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="@dimen/_2sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profileBackground"
-        app:layout_constraintBottom_toBottomOf="@id/profileBackground">
+        android:layout_height="match_parent"
+        tools:context=".presentation.profile.ProfileFragment">
 
+        <View
+            android:id="@+id/profileBackground"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_70sdp"
+            android:background="@drawable/profile_background_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/ivProfileImage"
-            android:scaleType="centerCrop"
-            android:layout_width="@dimen/_85sdp"
-            android:layout_height="@dimen/_85sdp"
-            android:layout_gravity="center_horizontal"
-            android:tint="?colorOnSurface"
-            android:background="?colorSurface"
-            android:padding="2dp"
-            android:src="@drawable/ic_person"
-            app:shapeAppearanceOverlay="@style/RoundCornerImage"
-            app:strokeColor="?colorPrimary"
-            app:strokeWidth="1dp" />
-
-        <ImageView
+        <FrameLayout
+            android:id="@+id/ivUpdateProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|top"
-            android:layout_margin="@dimen/_2sdp"
-            android:background="@drawable/btn_edit_profile_image_bg"
-            android:padding="@dimen/_3sdp"
-            android:src="@drawable/ic_edit_profile_image"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/_16sdp"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/_2sdp"
+            app:layout_constraintBottom_toBottomOf="@id/profileBackground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profileBackground">
 
-            app:tint="@color/white" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivProfileImage"
+                setImageFromUri="@{imageUri}"
+                android:layout_width="@dimen/_85sdp"
+                android:layout_height="@dimen/_85sdp"
+                android:layout_gravity="center_horizontal"
+                android:background="?colorSurface"
+                android:padding="@dimen/_1sdp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_person"
+                app:shapeAppearanceOverlay="@style/RoundCornerImage"
+                app:strokeColor="?colorPrimary"
+                app:strokeWidth="@dimen/_1sdp" />
 
-    </FrameLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|top"
+                android:layout_margin="@dimen/_2sdp"
+                android:background="@drawable/btn_edit_profile_image_bg"
+                android:padding="@dimen/_3sdp"
+                android:src="@drawable/ic_edit_profile_image"
+                app:tint="@color/white" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etUserName"
-        style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:hint="Name"
-        app:boxStrokeColor="@color/blue"
-        app:boxStrokeWidth="@dimen/_1sdp"
-        app:errorEnabled="true"
-        android:layout_marginHorizontal="@dimen/_16sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivUpdateProfile">
+        </FrameLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etUserName"
+            style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/montserrat_medium"
-            android:inputType="textPersonName|textCapWords"
-            android:textSize="@dimen/textSize" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:hint="Name"
+            app:boxStrokeColor="@color/blue"
+            app:boxStrokeWidth="@dimen/_1sdp"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivUpdateProfile">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/montserrat_medium"
+                android:inputType="textPersonName|textCapWords"
+                android:text="@={viewModel.userName}"
+                android:textSize="@dimen/textSize" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etUserEmail"
-        style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Email"
-        app:boxStrokeColor="@color/blue"
-        app:boxStrokeWidth="@dimen/_1sdp"
-        app:errorEnabled="true"
-        android:clickable="false"
-        android:layout_marginHorizontal="@dimen/_16sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etUserName"
-        app:layout_constraintEnd_toEndOf="parent">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etUserEmail"
+            style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/montserrat_medium"
-            android:inputType="textEmailAddress"
-            android:textSize="@dimen/textSize" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:clickable="false"
+            android:enabled="false"
+            android:hint="Email"
+            app:boxStrokeColor="@color/blue"
+            app:boxStrokeWidth="@dimen/_1sdp"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etUserName">
 
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etUserPassword"
-        style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Click to Change Password"
-        app:boxStrokeColor="@color/blue"
-        app:boxStrokeWidth="@dimen/_1sdp"
-        app:errorEnabled="true"
-        android:layout_marginHorizontal="@dimen/_16sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etUserEmail"
-        app:layout_constraintEnd_toEndOf="parent">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/montserrat_medium"
+                android:inputType="textEmailAddress"
+                android:text="@{viewModel.userEmail}"
+                android:textSize="@dimen/textSize" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etUserPassword"
+            style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:hint="Password"
+            app:boxStrokeColor="@color/blue"
+            android:clickable="false"
+            android:enabled="false"
+            app:boxStrokeWidth="@dimen/_1sdp"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etUserEmail">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/montserrat_medium"
+                android:inputType="textPassword"
+                android:text="alihamza"
+                android:textSize="@dimen/textSize" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnChangePassword"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_medium"
-            android:inputType="textPassword"
-            android:text="alihamza"
-            android:textSize="@dimen/textSize" />
+            android:paddingVertical="@dimen/_8sdp"
+            android:text="Change Password"
+            android:textSize="@dimen/textSize"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etUserPassword"/>
 
-    </com.google.android.material.textfield.TextInputLayout>
-    <Button
-        android:id="@+id/btnSignUp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:fontFamily="@font/montserrat_medium"
-        android:paddingVertical="@dimen/_12sdp"
-        android:text="Update"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="@dimen/textSize"
-        app:cornerRadius="@dimen/_8sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_margin="@dimen/_16sdp"/>
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:fontFamily="@font/montserrat_medium"
+            android:paddingVertical="@dimen/_12sdp"
+            android:text="Update"
+            android:textAllCaps="false"
+            android:visibility="@{isLoading?View.INVISIBLE:View.VISIBLE}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize"
+            app:cornerRadius="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/spin_kit"
+            style="@style/SpinKitView.WanderingCubes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{isLoading?View.VISIBLE:View.GONE}"
+            app:SpinKit_Color="@color/blue"
+            app:layout_constraintBottom_toBottomOf="@id/btnUpdate"
+            app:layout_constraintEnd_toEndOf="@id/btnUpdate"
+            app:layout_constraintStart_toStartOf="@id/btnUpdate"
+            app:layout_constraintTop_toTopOf="@id/btnUpdate" />
 
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

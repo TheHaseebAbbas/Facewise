@@ -13,6 +13,14 @@
             name="viewModel"
             type="com.kuro.facewise.presentation.main.MainViewModel" />
 
+        <variable
+            name="userName"
+            type="String" />
+
+        <variable
+            name="profileImageUrl"
+            type="String" />
+
         <import type="android.view.View" />
     </data>
 
@@ -37,15 +45,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/ivUserProfile" />
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivUserProfile"
+            setImageFromUri="@{profileImageUrl}"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
             android:layout_margin="@dimen/_16sdp"
+            android:padding="@dimen/_1sdp"
+            android:scaleType="centerCrop"
             android:src="@drawable/user_icon"
             app:layout_constraintBottom_toTopOf="@id/scrollView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/RoundCornerImage"
+            app:strokeColor="?colorPrimary"
+            app:strokeWidth="@dimen/_1sdp" />
 
         <ScrollView
             android:id="@+id/scrollView"
@@ -63,6 +77,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_60sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -99,12 +114,13 @@
                                 android:ellipsize="end"
                                 android:fontFamily="@font/montserrat_semibold"
                                 android:maxLines="1"
-                                android:text="Ali Hamza"
+                                android:text="@{userName}"
                                 android:textColor="?colorOnSurface"
                                 android:textSize="@dimen/textSubTitleSize"
                                 app:layout_constraintEnd_toStartOf="@+id/ivArrowDown"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:text="Ali Hamza" />
 
                             <TextView
                                 android:id="@+id/textRecentRecognized"
@@ -324,7 +340,7 @@
                             app:layout_constraintStart_toStartOf="@id/tvAyahOfDayTranslation"
                             app:layout_constraintTop_toBottomOf="@id/tvAyahOfDayTranslation" />
 
-                        <com.google.android.material.button.MaterialButton
+                        <Button
                             android:id="@+id/btnShareAyahOfDay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -333,7 +349,6 @@
                             android:fontFamily="@font/montserrat_bold"
                             android:text="Share"
                             android:textColor="@color/blue"
-                            app:cornerRadius="@dimen/_20sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvAyahOfDayReference" />
@@ -403,7 +418,7 @@
                             app:layout_constraintStart_toStartOf="@id/tvHadithOfDay"
                             app:layout_constraintTop_toBottomOf="@id/tvHadithOfDay" />
 
-                        <com.google.android.material.button.MaterialButton
+                        <Button
                             android:id="@+id/btnShareHadithOfDay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -412,7 +427,6 @@
                             android:fontFamily="@font/montserrat_bold"
                             android:text="Share"
                             android:textColor="@color/blue"
-                            app:cornerRadius="@dimen/_20sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvHadithOfDayReference" />
@@ -428,6 +442,7 @@
                     android:layout_margin="@dimen/_16sdp"
                     app:cardCornerRadius="@dimen/_8sdp"
                     app:cardElevation="@dimen/_8sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cardHadithOfDay">
@@ -477,7 +492,7 @@
                             app:layout_constraintStart_toStartOf="@id/textIslamicIncidenceOfDay"
                             app:layout_constraintTop_toBottomOf="@id/textIslamicIncidenceOfDay" />
 
-                        <com.google.android.material.button.MaterialButton
+                        <Button
                             android:id="@+id/btnShareIslamicIncidentOfDay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -486,7 +501,6 @@
                             android:fontFamily="@font/montserrat_bold"
                             android:text="Share"
                             android:textColor="@color/blue"
-                            app:cornerRadius="@dimen/_20sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvIslamicIncidenceOfDay" />

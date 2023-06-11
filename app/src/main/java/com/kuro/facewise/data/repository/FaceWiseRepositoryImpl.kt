@@ -1,6 +1,7 @@
 package com.kuro.facewise.data.repository
 
 import android.net.Uri
+import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.gson.JsonObject
 import com.kuro.facewise.data.remote.FaceWiseApi
@@ -16,12 +17,11 @@ import javax.inject.Inject
 
 class FaceWiseRepositoryImpl @Inject constructor(
     private val api: FaceWiseApi,
-    private val storageReference: StorageReference
 ) : FaceWiseRepository {
     override fun getEmotions(imageUri: Uri): Flow<Resource<EmotionResponse>> = flow {
         emit(Resource.Loading())
         try {
-            val imageReference = storageReference.child("image")
+            val imageReference = FirebaseStorage.getInstance().reference.child("image")
 
             val result = imageReference
                 .putFile(imageUri).await()
@@ -40,7 +40,9 @@ class FaceWiseRepositoryImpl @Inject constructor(
         } catch (e: HttpException) {
             emit(Resource.Error(message = e.message ?: "An unknown error occurred."))
         } catch (e: IOException) {
-            emit(Resource.Error(message = "Couldn't reach server. Check your internet connection."))
+            emit(Resource.Error(message = e.message ?: "Couldn't reach server. Check your internet connection."))
+        } catch (e: Exception) {
+            emit(Resource.Error(message = e.message ?: "An Unknown Error occurred."))
         }
     }
 }

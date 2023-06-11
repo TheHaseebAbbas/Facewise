@@ -13,13 +13,13 @@ data class EmotionDto(
 ) {
     fun toEmotion(): Emotion {
         return Emotion(
-            angry = angry,
-            disgust = disgust,
-            fear = fear,
-            happy = happy,
-            neutral = neutral,
-            sad = sad,
-            surprise = surprise
+            angry = angry.toFloat(),
+            disgust = disgust.toFloat(),
+            fear = fear.toFloat(),
+            happy = happy.toFloat(),
+            neutral = neutral.toFloat(),
+            sad = sad.toFloat(),
+            surprise = surprise.toFloat()
         )
     }
 }

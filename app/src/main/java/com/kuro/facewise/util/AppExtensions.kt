@@ -6,7 +6,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
+import androidx.navigation.NavOptionsBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.kuro.facewise.MainNavGraphDirections
 import com.kuro.facewise.R
 
@@ -55,13 +58,13 @@ fun NavController.showPopUpMenu(view: View) {
         setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.profile -> {
-                    navigate(R.id.action_global_profileFragment)
+                    navigate(MainNavGraphDirections.actionGlobalProfileFragment())
                 }
 
                 R.id.privacyPolicy -> {
                     navigate(
                         MainNavGraphDirections.actionGlobalPrivacyAndTermsFragment(
-                            stringResTitleId = R.string.facewise_privacy_policy_tittle,
+                            stringResTitleId = R.string.facewise_privacy_policy_title,
                             stringResBodyId = R.string.facewise_privacy_policy
                         )
                     )
@@ -78,11 +81,19 @@ fun NavController.showPopUpMenu(view: View) {
                 }
 
                 R.id.aboutUs -> {
-
+                    navigate(
+                        MainNavGraphDirections.actionGlobalPrivacyAndTermsFragment(
+                            stringResTitleId = R.string.facewise_about_us_title,
+                            stringResBodyId = R.string.facewise_about_us
+                        )
+                    )
                 }
 
                 else -> {
                     //TODO
+                    FirebaseAuth.getInstance().signOut()
+                    navigate(MainNavGraphDirections.actionGlobalSignInFragment())
+                    graph.clear()
                 }
             }
             true

@@ -2,12 +2,12 @@ package com.kuro.facewise.presentation.auth.sign_up
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.kuro.facewise.MainNavGraphDirections
 import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentSignUpBinding
 import com.kuro.facewise.util.addAfterTextChangeListener
@@ -23,13 +23,20 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
     private val viewModel by viewModels<SignUpViewModel>()
 
-    private var _binding: FragmentSignUpBinding? = null
-    private val binding
-        get() = _binding!!
+    private lateinit var binding: FragmentSignUpBinding
+
+    private lateinit var savedStateHandle: SavedStateHandle
+
+    companion object {
+        const val IS_SIGN_UP_SUCCESSFUL = "IS_SIGN_UP_SUCCESSFUL"
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        _binding = DataBindingUtil.bind(view)
+        binding = FragmentSignUpBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
+
+        savedStateHandle = findNavController().previousBackStackEntry!!.savedStateHandle
+        savedStateHandle[IS_SIGN_UP_SUCCESSFUL] = false
 
         binding.viewModel = viewModel
 
@@ -43,13 +50,33 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                 binding.isLoading = it.isLoading
                 if (it.isLoading) return@collectLatest
                 if (it.isSuccess) {
-                    findNavController().navigate(R.id.action_signUpFragment_to_mainFragment)
+                    savedStateHandle[IS_SIGN_UP_SUCCESSFUL] = true
+                    findNavController().popBackStack()
                 }
                 if (it.error != null) {
                     handlingErrors(it.error)
                 }
             }
         }
+    }
+
+    private fun setListeners() {
+        setTermsConditionsAndPolicy()
+
+        binding.btnSignIn click {
+            findNavController().popBackStack()
+        }
+
+        binding.btnSignUp click {
+            viewModel.onEvent(SignUpEvent.OnSignUp)
+        }
+
+        addAfterTextChangeListener(
+            Pair(binding.etUserName, getString(R.string.enter_a_name_please)),
+            Pair(binding.etUserEmail, getString(R.string.enter_an_email_please)),
+            Pair(binding.etUserPassword, getString(R.string.enter_a_password_please)),
+            Pair(binding.etUserConfirmPassword, getString(R.string.enter_password_again_please)),
+        )
     }
 
     private fun handlingErrors(error: SignUpError) {
@@ -79,38 +106,24 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         }
     }
 
-    private fun setListeners() {
-        setTermsConditionsAndPolicy()
-
-        binding.btnSignIn click {
-            findNavController().popBackStack()
-        }
-
-        binding.btnSignUp click {
-            viewModel.onEvent(SignUpEvent.OnSignUp)
-        }
-
-        addAfterTextChangeListener(
-            Pair(binding.etUserName, getString(R.string.enter_a_name_please)),
-            Pair(binding.etUserEmail, getString(R.string.enter_an_email_please)),
-            Pair(binding.etUserPassword, getString(R.string.enter_a_password_please)),
-            Pair(binding.etUserConfirmPassword, getString(R.string.enter_password_again_please)),
-        )
-    }
-
     private fun setTermsConditionsAndPolicy() {
         binding.txtAgreeToTerms.makeLinks(
             Pair("Terms & Conditions", View.OnClickListener {
-                Toast.makeText(requireContext(), "Terms & Conditions", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(
+                    MainNavGraphDirections.actionGlobalPrivacyAndTermsFragment(
+                        R.string.facewise_terms_conditions_title,
+                        R.string.facewise_terms_codition
+                    )
+                )
             }),
             Pair("Privacy Policy", View.OnClickListener {
-                Toast.makeText(requireContext(), "Privacy Policy", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(
+                    MainNavGraphDirections.actionGlobalPrivacyAndTermsFragment(
+                        R.string.facewise_privacy_policy_title,
+                        R.string.facewise_privacy_policy
+                    )
+                )
             })
         )
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
@@ -18,25 +19,30 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentMainBinding
+import com.kuro.facewise.util.PrefsProvider
 import com.kuro.facewise.util.click
 import com.kuro.facewise.util.constants.AppConstants
-import com.kuro.facewise.util.showLongToast
+import com.kuro.facewise.util.constants.PrefsConstants
 import com.kuro.facewise.util.showPopUpMenu
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.io.File
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainFragment : Fragment(R.layout.fragment_main) {
 
+    @Inject
+    lateinit var prefsProvider: PrefsProvider
+
     private val viewModel by viewModels<MainViewModel>()
 
-    private var _binding: FragmentMainBinding? = null
-    private val binding
-        get() = _binding!!
+    private lateinit var binding: FragmentMainBinding
 
     private var imageUri: Uri? = null
 
@@ -44,7 +50,13 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         ActivityResultContracts.TakePicture()
     ) { result ->
         result?.let {
-            showLongToast(imageUri!!.toString())
+            if (it) {
+                findNavController().navigate(
+                    MainFragmentDirections.actionMainFragmentToEmotionRecognitionFragment(
+                        imageUri = imageUri!!.toString()
+                    )
+                )
+            }
         }
     }
 
@@ -54,20 +66,37 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         if (result.resultCode == Activity.RESULT_OK) {
             result.data?.let {
                 viewModel.onEvent(MainEvent.OnImageResult(it.data!!))
-                showLongToast(imageUri!!.toString())
+                findNavController().navigate(
+                    MainFragmentDirections.actionMainFragmentToEmotionRecognitionFragment(
+                        imageUri = imageUri!!.toString()
+                    )
+                )
             }
         }
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        _binding = FragmentMainBinding.bind(view)
+        binding = FragmentMainBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
+        handleNavigation()
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        binding.userName = currentUser?.displayName
+        binding.profileImageUrl = currentUser?.photoUrl.toString()
         binding.viewModel = viewModel
 
         setObservers()
         setListeners()
+
+    }
+
+    private fun handleNavigation() {
+        if (!prefsProvider.getBool(PrefsConstants.ONBOARDING_COMPLETED))
+            findNavController().navigate(MainFragmentDirections.actionGlobalOnBoardingFragment())
+        else if (FirebaseAuth.getInstance().currentUser == null) {
+            findNavController().navigate(MainFragmentDirections.actionGlobalSignInFragment())
+        }
     }
 
     private fun setObservers() {
@@ -80,11 +109,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun setListeners() {
-        binding.expandableCardLayout click {
-            handleToggleSection(binding.ivArrowDown)
-            setRecentEmotionProgressBars()
-        }
-
         binding.fabAdd click {
             viewModel.onEvent(MainEvent.OnMainFabClick)
         }
@@ -94,6 +118,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             viewModel.onEvent(MainEvent.OnImageResult(createImageUri()))
             openCamera.launch(imageUri!!)
         }
+
         binding.fabGallery click {
             viewModel.onEvent(MainEvent.OnMainFabClick)
             val intent =
@@ -102,8 +127,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 }
             chooseImage.launch(intent)
         }
+
         binding.ivUserProfile click {
             findNavController().showPopUpMenu(it)
+        }
+
+        binding.expandableCardLayout click {
+            handleToggleSection(binding.ivArrowDown)
+            setRecentEmotionProgressBars()
         }
     }
 
@@ -211,16 +242,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun createImageUri(): Uri {
-        val image = File(requireActivity().applicationContext.filesDir, AppConstants.KEY_TEMP_IMAGE)
+        val image = File(requireActivity().applicationContext.filesDir, AppConstants.KEY_EMOTION_RECOGNITION_TEMP_IMAGE)
         return FileProvider.getUriForFile(
             requireActivity().applicationContext,
             AppConstants.KEY_FILE_PROVIDER_AUTHORITY,
             image
         )
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

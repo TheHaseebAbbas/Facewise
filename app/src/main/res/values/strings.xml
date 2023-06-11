@@ -40,7 +40,7 @@
     If you have any questions about this Privacy Policy, the practices of this App, or your dealings with this App, please contact us at <b>facewiseapp@gmail.com</b>.\n\n]]>
 
 </string>
-    <string name="facewise_privacy_policy_tittle">FaceWise Privacy Policy</string>
+    <string name="facewise_privacy_policy_title">FaceWise Privacy Policy</string>
     <string name="facewise_terms_conditions_title">FaceWise Terms &amp; Conditions</string>
     <string name="facewise_terms_codition">
     <![CDATA[
@@ -85,6 +85,62 @@
     <b>Contacting Us</b><br><br>
 
     If you have any questions about these terms and conditions, the practices of the App, or your dealings with the App, please contact us at facewiseapp@gmail.com.
+    ]]>
+</string>
+
+
+    <string name="facewise_about_us_title">About Us</string>
+
+    <string name="facewise_about_us">
+    <![CDATA[
+    <b>Our Mission</b>
+    <br>
+    <br>
+    <p>
+        Welcome to our Emotion Recognition and Spiritual Guidance app! We are dedicated to providing a unique and meaningful experience for our users, combining advanced technology with spiritual wisdom from the Quran, Hadith, and Islamic incidents.
+    </p>
+<br>
+    <b>Emotion Recognition</b>
+    <br>
+    <br>
+    <p>
+        Using cutting-edge technology, our app allows you to analyze and recognize emotions from images captured by your device\'s camera or selected from your gallery. Our sophisticated algorithms identify a range of emotions, including anger, disgust, fear, happiness, sadness, surprise, and neutral. This feature can help you gain insights into your emotional state and facilitate self-reflection.
+    </p>
+<br>
+    <b>Spiritual Guidance</b>
+    <br>
+    <br>
+    <p>
+        Upon recognizing the user\'s emotion, our app provides personalized recommendations from the Quran, Hadith, and Islamic incidents. We carefully curate relevant verses, sayings of the Prophet Muhammad (peace be upon him), and inspiring Islamic stories to offer spiritual guidance and solace during challenging times. Our aim is to uplift your spirit, provide comfort, and guide you on your spiritual journey.
+    </p>
+<br>
+    <b>Why Choose Our App?</b>
+    <br>
+    <br>
+    <p>
+        <ul>
+            <li><b>Unique Integration:</b> We seamlessly blend technology and spirituality to offer a one-of-a-kind experience that caters to your emotional well-being and spiritual growth.</li>
+        <br>
+            <li><b>Personalized Recommendations:</b> Our app provides customized recommendations based on your detected emotion, ensuring the guidance you receive is relevant and meaningful to your specific situation.</li>
+            <br>
+            <li><b>Authentic Islamic Sources:</b> We diligently research and select authentic verses from the Quran, Hadith, and inspiring Islamic incidents, ensuring the information we provide is rooted in the teachings of Islam.</li>
+            <br>
+            <li><b>User-Friendly Interface:</b> Our app features a user-friendly interface that is easy to navigate, allowing you to quickly capture or select images and receive spiritual guidance effortlessly.</li>
+        <br>
+        </ul>
+    </p>
+
+    <p>
+        We are dedicated to continuously improving our app and enhancing the user experience. Your feedback and suggestions are invaluable to us, so please don\'t hesitate to reach out to us through the app or our website.
+    </p>
+<br>
+    <p>
+        Thank you for choosing our Emotion Recognition and Spiritual Guidance app. May it be a source of inspiration and enlightenment on your journey towards spiritual growth and emotional well-being.
+    </p>
+<br>
+    <p>
+        Barakallahu feekum (May Allah bless you all).
+    </p>
     ]]>
 </string>
 
