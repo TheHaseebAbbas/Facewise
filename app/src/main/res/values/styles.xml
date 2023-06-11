@@ -6,5 +6,10 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="MyDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+                <!--<item name="android:windowBackground">@android:color/transparent</item>-->
+        <!--<item name="android:windowBackground">@drawable/border_yellow</item>-->
+    </style>
+
 
 </resources>

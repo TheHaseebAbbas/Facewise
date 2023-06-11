@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
 import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentProfileBinding
+import com.kuro.facewise.presentation.profile.dialogs.ChangePasswordDialogFragment
 import com.kuro.facewise.util.ImageUtils
 import com.kuro.facewise.util.click
 import com.kuro.facewise.util.constants.AppConstants
@@ -112,6 +113,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
         binding.ivUpdateProfile click {
             showPopUpMenu()
+        }
+
+        binding.btnChangePassword click {
+            ChangePasswordDialogFragment().show(childFragmentManager,"ChangePasswordDialogFragment")
         }
     }
 

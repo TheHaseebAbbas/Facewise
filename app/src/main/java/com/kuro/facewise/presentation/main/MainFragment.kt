@@ -19,6 +19,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentMainBinding
 import com.kuro.facewise.util.PrefsProvider
@@ -84,6 +85,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         setObservers()
         setListeners()
+
     }
 
     private fun handleNavigation() {
