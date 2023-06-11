@@ -22,9 +22,5 @@ class ChangePasswordDialogFragment : DialogFragment(R.layout.fragment_change_pas
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentChangePasswordDialogBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
-
-
     }
-
-
 }

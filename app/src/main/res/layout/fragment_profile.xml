@@ -55,7 +55,7 @@
                 android:layout_height="@dimen/_85sdp"
                 android:layout_gravity="center_horizontal"
                 android:background="?colorSurface"
-                android:padding="2dp"
+                android:padding="@dimen/_1sdp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_person"
                 app:shapeAppearanceOverlay="@style/RoundCornerImage"

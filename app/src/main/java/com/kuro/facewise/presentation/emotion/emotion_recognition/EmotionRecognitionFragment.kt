@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.firebase.auth.FirebaseAuth
 import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentEmotionRecognitionBinding
 import com.kuro.facewise.util.ImageUtils
@@ -24,17 +25,16 @@ class EmotionRecognitionFragment : Fragment(R.layout.fragment_emotion_recognitio
 
     private val viewModel by viewModels<EmotionRecognitionViewModel>()
 
-    private var _binding: FragmentEmotionRecognitionBinding? = null
-    private val binding
-        get() = _binding!!
+    private lateinit var binding: FragmentEmotionRecognitionBinding
 
     private val args: EmotionRecognitionFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        _binding = FragmentEmotionRecognitionBinding.bind(view)
+        binding = FragmentEmotionRecognitionBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
         binding.imageUri = args.imageUri
+        binding.profileImageUrl = FirebaseAuth.getInstance().currentUser?.photoUrl.toString()
         setObservers()
         setListeners()
     }
@@ -45,7 +45,6 @@ class EmotionRecognitionFragment : Fragment(R.layout.fragment_emotion_recognitio
                 binding.isLoading = it.isLoading
                 if (it.isLoading) return@collectLatest
                 if (it.emotion != null) {
-                    // TODO
                     findNavController().navigate(
                         EmotionRecognitionFragmentDirections
                             .actionEmotionRecognitionFragmentToEmotionResultFragment(
@@ -73,10 +72,5 @@ class EmotionRecognitionFragment : Fragment(R.layout.fragment_emotion_recognitio
         binding.ivUserProfile click {
             findNavController().showPopUpMenu(it)
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

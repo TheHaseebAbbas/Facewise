@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
@@ -80,7 +81,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         handleNavigation()
 
-        binding.userName = FirebaseAuth.getInstance().currentUser!!.displayName
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        binding.userName = currentUser?.displayName
+        binding.profileImageUrl = currentUser?.photoUrl.toString()
         binding.viewModel = viewModel
 
         setObservers()

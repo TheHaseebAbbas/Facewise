@@ -5,12 +5,15 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.firebase.auth.FirebaseAuth
 import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentEmotionResultBinding
 import com.kuro.facewise.util.click
 import com.kuro.facewise.util.showLongSnackBar
 import com.kuro.facewise.util.showPopUpMenu
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EmotionResultFragment : Fragment(R.layout.fragment_emotion_result) {
 
     private lateinit var binding: FragmentEmotionResultBinding
@@ -22,7 +25,7 @@ class EmotionResultFragment : Fragment(R.layout.fragment_emotion_result) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.emotionResponse = args.emotionResponse
-        binding.root.showLongSnackBar(args.emotionResponse.dominantEmotion)
+        binding.profileImageUrl = FirebaseAuth.getInstance().currentUser?.photoUrl.toString()
         setListeners()
     }
 

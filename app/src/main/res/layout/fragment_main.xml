@@ -10,15 +10,15 @@
             type="boolean" />
 
         <variable
-            name="toggleArrow"
-            type="boolean" />
-
-        <variable
             name="viewModel"
             type="com.kuro.facewise.presentation.main.MainViewModel" />
 
         <variable
             name="userName"
+            type="String" />
+
+        <variable
+            name="profileImageUrl"
             type="String" />
 
         <import type="android.view.View" />
@@ -45,15 +45,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/ivUserProfile" />
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivUserProfile"
+            setImageFromUri="@{profileImageUrl}"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
             android:layout_margin="@dimen/_16sdp"
+            android:padding="@dimen/_1sdp"
+            android:scaleType="centerCrop"
             android:src="@drawable/user_icon"
             app:layout_constraintBottom_toTopOf="@id/scrollView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/RoundCornerImage"
+            app:strokeColor="?colorPrimary"
+            app:strokeWidth="@dimen/_1sdp" />
 
         <ScrollView
             android:id="@+id/scrollView"

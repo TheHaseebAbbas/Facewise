@@ -2,11 +2,11 @@ package com.kuro.facewise.util
 
 import android.graphics.Color
 import android.view.View
-import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -22,16 +22,13 @@ fun View.rotateFab(rotate: Boolean) {
 }
 
 @BindingAdapter("setImageFromUri")
-fun ImageView.setImageFromUri(uri: String) {
-    setImageURI(uri.toUri())
-}
-
-@BindingAdapter("setImageFromUri")
 fun ShapeableImageView.setImageFromUri(uri: String?) {
-    if (uri == null)
-        setImageResource(R.drawable.ic_person)
-    else
-        setImageURI(uri.toUri())
+    Glide.with(this)
+        .load(uri)
+        .placeholder(R.drawable.ic_person)
+        .error(R.drawable.ic_person)
+        .diskCacheStrategy(DiskCacheStrategy.DATA)
+        .into(this)
 }
 
 @BindingAdapter("setupPieChart")

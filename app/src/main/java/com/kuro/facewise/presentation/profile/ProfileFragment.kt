@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
 import androidx.activity.result.ActivityResult
@@ -42,6 +43,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     ) { result ->
         result?.let {
             if (it) {
+                Log.d("TAG", "$imageUri: ")
                 binding.imageUri = imageUri.toString()
             }
         }
@@ -52,6 +54,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     ) { result: ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK) {
             result.data?.let {
+                Log.d("TAG", "$imageUri: ")
                 viewModel.onEvent(ProfileEvent.OnImageResult(it.data))
                 binding.imageUri = imageUri.toString()
             }
@@ -63,8 +66,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewModel = viewModel
-
-//        binding.ivProfileImage.setImageURI(FirebaseAuth.getInstance().currentUser!!.photoUrl)
+        binding.imageUri = FirebaseAuth.getInstance().currentUser!!.photoUrl.toString()
 
         setObservers()
         setListeners()
@@ -105,6 +107,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                         requireActivity(),
                         ImageUtils.fileFromContentUri(requireActivity(), imageUri!!),
                     )
+                    Log.d("TAG", "$imageUri: ")
                     viewModel.onEvent(ProfileEvent.OnUpdateClicked(compressedImage.toUri()))
                 } else {
                     viewModel.onEvent(ProfileEvent.OnUpdateClicked(null))

@@ -26,11 +26,9 @@ class ProfileViewModel @Inject constructor(
 
     private val currentUser = FirebaseAuth.getInstance().currentUser
 
-    var userName = ObservableField(currentUser!!.displayName)
+    var userName = ObservableField(currentUser?.displayName)
 
-    //    var userEmail = ObservableField(currentUser!!.email)
     val userEmail = currentUser!!.email
-    var userPassword = ObservableField("")
 
     fun onEvent(event: ProfileEvent) {
         when (event) {
@@ -51,7 +49,7 @@ class ProfileViewModel @Inject constructor(
             viewModelScope.launch {
                 _state.emit(ProfileState(isLoading = true))
                 repository.updateProfile(
-                    name = userName.get()!!,
+                    name = userName.get()!!.trim(),
                     imageUri = uri
                 )
                     .collectLatest { result ->

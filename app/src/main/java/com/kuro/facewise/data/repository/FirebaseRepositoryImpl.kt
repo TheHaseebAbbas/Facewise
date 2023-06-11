@@ -31,6 +31,7 @@ class FirebaseRepositoryImpl @Inject constructor() : FirebaseRepository {
             if (authResult.user != null) {
                 val request = UserProfileChangeRequest.Builder()
                     .setDisplayName(name)
+                    .setPhotoUri(null)
                     .build()
                 val currentUser = firebaseAuth.currentUser!!
                 currentUser.updateProfile(request).await()
@@ -95,6 +96,7 @@ class FirebaseRepositoryImpl @Inject constructor() : FirebaseRepository {
         try {
             val currentUser = FirebaseAuth.getInstance().currentUser
             val firebaseStorage = FirebaseStorage.getInstance()
+            val request = UserProfileChangeRequest.Builder()
             if (currentUser != null) {
                 val reference = firebaseStorage
                     .reference
@@ -102,36 +104,23 @@ class FirebaseRepositoryImpl @Inject constructor() : FirebaseRepository {
                 if (imageUri != null) {
                     reference
                         .putFile(imageUri).await()
-                    Log.d("TAG", "updateProfile: if")
+                    request.photoUri = reference.downloadUrl.await()
                 } else {
-                    Log.d("TAG", "updateProfile: empty imageUri")
-                    firebaseStorage.getReferenceFromUrl(currentUser.photoUrl.toString())
-                        .delete()
-                        .addOnSuccessListener {
-
-                        }
-                        .addOnFailureListener {
-
-                        }.await()
-                    Log.d("TAG", "updateProfile: after on success")
+                    currentUser.photoUrl?.let {
+                        firebaseStorage.getReferenceFromUrl(it.toString())
+                            .delete()
+                            .await()
+                    }
+                    request.photoUri = null
                 }
-                val request = UserProfileChangeRequest.Builder()
-                reference.downloadUrl.addOnSuccessListener {
-                    Log.d("TAG", "updateProfile: success")
-                    request.displayName = name
-                    request.photoUri = it
-                }.addOnFailureListener {
-                    Log.d("TAG", "updateProfile: failure")
-                    request.displayName = name
-                }.await()
+                request.displayName = name
                 currentUser.updateProfile(request.build()).await()
-                Log.d("TAG", "updateProfile: ${currentUser.photoUrl}")
-                Log.d("TAG", "updateProfile: ${currentUser.displayName}")
                 emit(Resource.Success(Unit))
             } else {
                 emit(Resource.Error(message = "Couldn't update profile."))
             }
         } catch (exception: Exception) {
+            Log.d("TAG", "updateProfile: ${exception.localizedMessage}")
             emit(
                 Resource.Error(
                     message = exception.localizedMessage
