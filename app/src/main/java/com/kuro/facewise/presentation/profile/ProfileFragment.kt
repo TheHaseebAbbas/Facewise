@@ -1,6 +1,7 @@
 package com.kuro.facewise.presentation.profile
 
 import android.app.Activity
+import android.app.ProgressDialog.show
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -119,7 +120,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
         binding.btnChangePassword click {
-            ChangePasswordDialogFragment().show(childFragmentManager,"ChangePasswordDialogFragment")
+            ChangePasswordDialogFragment
+                .newInstance {
+                    binding.root.showLongSnackBar(it!!.asString(requireActivity()))
+                }
+                .show(childFragmentManager,"ChangePasswordDialogFragment")
         }
     }
 

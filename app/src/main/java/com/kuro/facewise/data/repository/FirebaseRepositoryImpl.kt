@@ -2,6 +2,8 @@ package com.kuro.facewise.data.repository
 
 import android.net.Uri
 import android.util.Log
+import com.google.firebase.auth.ActionCodeSettings
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
@@ -137,4 +139,64 @@ class FirebaseRepositoryImpl @Inject constructor() : FirebaseRepository {
         )
     }.flowOn(Dispatchers.IO)
 
+    override suspend fun updatePassword(
+        email: String,
+        oldPassword: String,
+        newPassword: String
+    ): Flow<Resource<Unit>> = flow {
+        emit(Resource.Loading())
+        try {
+            val currentUser = FirebaseAuth.getInstance().currentUser!!
+
+            val credential = EmailAuthProvider
+                .getCredential(email, oldPassword)
+
+            currentUser.reauthenticate(credential)
+                .addOnSuccessListener {
+                    Log.d("TAG", "updatePassword: success")
+                    currentUser.updatePassword(newPassword)
+                }
+                .await()
+            emit(Resource.Success(Unit))
+        } catch (exception: Exception) {
+            Log.d("TAG", "catch1: ${exception.localizedMessage}")
+            emit(
+                Resource.Error(
+                    message = exception.localizedMessage
+                        ?: "Couldn't update password."
+                )
+            )
+        }
+    }.catch { exception ->
+        Log.d("TAG", "catch2: ${exception.localizedMessage}")
+        emit(
+            Resource.Error(
+                message = exception.localizedMessage
+                    ?: "Couldn't update password."
+            )
+        )
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun sendPasswordResetEmail(email: String): Flow<Resource<Unit>> = flow {
+        emit(Resource.Loading())
+        try {
+            FirebaseAuth.getInstance()
+                .sendPasswordResetEmail(email).await()
+            emit(Resource.Success(Unit))
+        } catch (exception: Exception) {
+            emit(
+                Resource.Error(
+                    message = exception.localizedMessage
+                        ?: "Couldn't send password reset email."
+                )
+            )
+        }
+    }.catch { exception ->
+        emit(
+            Resource.Error(
+                message = exception.localizedMessage
+                    ?: "Couldn't send password reset email."
+            )
+        )
+    }.flowOn(Dispatchers.IO)
 }

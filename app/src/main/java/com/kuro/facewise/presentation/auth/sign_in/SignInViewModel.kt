@@ -27,7 +27,7 @@ class SignInViewModel @Inject constructor(
 
     fun onEvent(event: SignInEvent) {
         when (event) {
-            SignInEvent.OnSignIn -> requestSignIn()
+            SignInEvent.OnSignInClick -> requestSignIn()
         }
     }
 

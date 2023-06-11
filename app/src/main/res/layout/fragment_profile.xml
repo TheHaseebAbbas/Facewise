@@ -29,6 +29,8 @@
             android:id="@+id/profileBackground"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_70sdp"
+            android:layout_marginHorizontal="@dimen/_minus2sdp"
+            android:layout_marginTop="@dimen/_minus2sdp"
             android:background="@drawable/profile_background_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,10 +59,10 @@
                 android:background="?colorSurface"
                 android:padding="@dimen/_1sdp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_person"
                 app:shapeAppearanceOverlay="@style/RoundCornerImage"
-                app:strokeColor="?colorPrimary"
-                app:strokeWidth="@dimen/_1sdp" />
+                app:strokeColor="?colorOnSurface"
+                app:strokeWidth="@dimen/_1sdp"
+                tools:src="@drawable/user_icon" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -131,10 +133,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_16sdp"
-            android:hint="Password"
-            app:boxStrokeColor="@color/blue"
             android:clickable="false"
             android:enabled="false"
+            android:hint="Password"
+            app:boxStrokeColor="@color/blue"
             app:boxStrokeWidth="@dimen/_1sdp"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -156,31 +158,33 @@
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
             android:fontFamily="@font/montserrat_medium"
             android:paddingVertical="@dimen/_8sdp"
             android:text="Change Password"
             android:textSize="@dimen/textSize"
-            android:layout_marginHorizontal="@dimen/_16sdp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etUserPassword"/>
+            app:layout_constraintTop_toBottomOf="@+id/etUserPassword" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnUpdate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_24sdp"
             android:fontFamily="@font/montserrat_medium"
             android:paddingVertical="@dimen/_12sdp"
             android:text="Update"
             android:textAllCaps="false"
-            android:visibility="@{isLoading?View.INVISIBLE:View.VISIBLE}"
             android:textColor="@color/white"
             android:textSize="@dimen/textSize"
+            android:visibility="@{isLoading?View.INVISIBLE:View.VISIBLE}"
             app:cornerRadius="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="?colorOnSurface"
+            app:strokeWidth="@dimen/_1sdp" />
 
         <com.github.ybq.android.spinkit.SpinKitView
             android:id="@+id/spin_kit"

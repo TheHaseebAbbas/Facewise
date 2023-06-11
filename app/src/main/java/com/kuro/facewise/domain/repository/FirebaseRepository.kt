@@ -11,4 +11,8 @@ interface FirebaseRepository {
     suspend fun signIn(email: String, password: String): Flow<Resource<Unit>>
 
     suspend fun updateProfile(name: String, imageUri: Uri?): Flow<Resource<Unit>>
+
+    suspend fun updatePassword(email: String, oldPassword: String, newPassword: String): Flow<Resource<Unit>>
+
+    suspend fun sendPasswordResetEmail(email: String): Flow<Resource<Unit>>
 }

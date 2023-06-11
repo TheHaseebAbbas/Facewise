@@ -8,7 +8,7 @@
 
     <style name="MyDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
                 <!--<item name="android:windowBackground">@android:color/transparent</item>-->
-        <!--<item name="android:windowBackground">@drawable/border_yellow</item>-->
+        <!--<item name="android:windowBackground">@drawable/dialog_border</item>-->
     </style>
 
 

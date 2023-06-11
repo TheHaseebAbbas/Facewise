@@ -3,9 +3,10 @@
     android:color="?colorControlHighlight">
     <item>
         <shape android:shape="oval">
-            <solid android:color="@color/blue"/>
-            <stroke android:color="@color/white"
-                android:width="@dimen/_1sdp"/>
+            <solid android:color="@color/blue" />
+            <stroke
+                android:width="@dimen/_1sdp"
+                android:color="?colorOnSurface" />
         </shape>
     </item>
 

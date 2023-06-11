@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.kuro.facewise.MainNavGraphDirections
 import com.kuro.facewise.R
-import com.kuro.facewise.databinding.FragmentForgotPasswordDialogBinding
 import com.kuro.facewise.databinding.FragmentSignInBinding
 import com.kuro.facewise.presentation.auth.dialogs.ForgotPasswordDialogFragment
 import com.kuro.facewise.presentation.auth.sign_up.SignUpFragment
@@ -87,11 +86,15 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
         }
 
         binding.btnSignIn click {
-            viewModel.onEvent(SignInEvent.OnSignIn)
+            viewModel.onEvent(SignInEvent.OnSignInClick)
         }
 
         binding.tvForgotPassword click {
-            ForgotPasswordDialogFragment().show(childFragmentManager,"ForgotPasswordDialogFragment")
+            ForgotPasswordDialogFragment
+                .newInstance {
+                    binding.root.showLongSnackBar(it!!.asString(requireActivity()))
+                }
+                .show(childFragmentManager, "ForgotPasswordDialogFragment")
         }
 
         addAfterTextChangeListener(
