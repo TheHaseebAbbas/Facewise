@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.kuro.facewise.MainNavGraphDirections
 import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentOnBoardingBinding
 import com.kuro.facewise.presentation.onboard.adapter.OnBoardingViewPagerAdapter
@@ -18,21 +21,20 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class OnBoardingFragment : Fragment(R.layout.fragment_on_boarding) {
 
-    private var _binding: FragmentOnBoardingBinding? = null
-    private val binding
-        get() = _binding!!
+    private lateinit var binding: FragmentOnBoardingBinding
 
     @Inject
     lateinit var prefsProvider: PrefsProvider
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        _binding = FragmentOnBoardingBinding.bind(view)
+        binding = FragmentOnBoardingBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
         setViewPager()
         setListeners()
         handleBackPressed()
     }
+
     private fun setViewPager() {
         val adapter = OnBoardingViewPagerAdapter(this@OnBoardingFragment)
         binding.pager.adapter = adapter
@@ -61,7 +63,7 @@ class OnBoardingFragment : Fragment(R.layout.fragment_on_boarding) {
     }
 
     private fun onFinishOnBoarding() {
-        findNavController().navigate(R.id.action_onBoardingFragment_to_signInFragment)
+        findNavController().navigate(OnBoardingFragmentDirections.actionOnBoardingFragmentToSignInFragment())
         prefsProvider.setBool(PrefsConstants.ONBOARDING_COMPLETED, true)
     }
 
@@ -77,10 +79,5 @@ class OnBoardingFragment : Fragment(R.layout.fragment_on_boarding) {
                     }
                 }
             })
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

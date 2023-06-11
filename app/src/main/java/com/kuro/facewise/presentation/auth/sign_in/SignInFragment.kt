@@ -2,14 +2,14 @@ package com.kuro.facewise.presentation.auth.sign_in
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.kuro.facewise.MainNavGraphDirections
 import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentSignInBinding
+import com.kuro.facewise.presentation.auth.sign_up.SignUpFragment
 import com.kuro.facewise.util.addAfterTextChangeListener
 import com.kuro.facewise.util.click
 import com.kuro.facewise.util.makeLinks
@@ -23,12 +23,24 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
     private val viewModel by viewModels<SignInViewModel>()
 
-    private var _binding: FragmentSignInBinding? = null
-    private val binding
-        get() = _binding!!
+    private lateinit var binding: FragmentSignInBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val currentBackStackEntry = findNavController()
+            .currentBackStackEntry!!
+        currentBackStackEntry
+            .savedStateHandle
+            .getLiveData<Boolean>(SignUpFragment.IS_SIGN_UP_SUCCESSFUL)
+            .observe(currentBackStackEntry) {
+                if (it)
+                    findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToMainFragment())
+            }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        _binding = DataBindingUtil.bind(view)
+        binding = FragmentSignInBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewModel = viewModel
@@ -43,7 +55,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                 binding.isLoading = it.isLoading
                 if (it.isLoading) return@collectLatest
                 if (it.isSuccess) {
-                    findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
+                    findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToMainFragment())
                 }
                 if (it.error != null) {
                     handlingErrors(it.error)
@@ -85,17 +97,21 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
     private fun setTermsConditionsAndPolicy() {
         binding.tvTermsConditionsAndPolicy.makeLinks(
             Pair("Terms & Conditions", View.OnClickListener {
-                Toast.makeText(requireContext(), "Terms & Conditions", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(
+                    MainNavGraphDirections.actionGlobalPrivacyAndTermsFragment(
+                        R.string.facewise_terms_conditions_title,
+                        R.string.facewise_terms_codition
+                    )
+                )
             }),
             Pair("Privacy Policy", View.OnClickListener {
-                Toast.makeText(requireContext(), "Privacy Policy", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(
+                    MainNavGraphDirections.actionGlobalPrivacyAndTermsFragment(
+                        R.string.facewise_privacy_policy_tittle,
+                        R.string.facewise_privacy_policy
+                    )
+                )
             })
         )
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
 }

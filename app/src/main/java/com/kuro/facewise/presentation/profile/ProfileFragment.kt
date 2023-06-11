@@ -1,59 +1,159 @@
 package com.kuro.facewise.presentation.profile
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.text.Html
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.provider.MediaStore
 import android.view.View
-import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.Toast
-import androidx.navigation.fragment.navArgs
-import com.kuro.facewise.MainNavGraphDirections
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
+import androidx.core.net.toUri
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.FirebaseAuth
 import com.kuro.facewise.R
-import com.kuro.facewise.databinding.FragmentPrivacyAndTermsBinding
 import com.kuro.facewise.databinding.FragmentProfileBinding
-import com.kuro.facewise.presentation.privacy_and_terms.PrivacyAndTermsFragmentArgs
+import com.kuro.facewise.util.ImageUtils
 import com.kuro.facewise.util.click
+import com.kuro.facewise.util.constants.AppConstants
+import com.kuro.facewise.util.showLongSnackBar
+import dagger.hilt.android.AndroidEntryPoint
+import id.zelory.compressor.Compressor
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import java.io.File
 
-class ProfileFragment : Fragment(R.layout.fragment_profile){
-    private var _binding: FragmentProfileBinding? = null
-    private val binding
-        get() = _binding!!
+@AndroidEntryPoint
+class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
+    private val viewModel by viewModels<ProfileViewModel>()
+
+    private lateinit var binding: FragmentProfileBinding
+
+    private var imageUri: Uri? = null
+
+    private val openCamera = registerForActivityResult(
+        ActivityResultContracts.TakePicture()
+    ) { result ->
+        result?.let {
+            if (it) {
+                binding.imageUri = imageUri.toString()
+            }
+        }
+    }
+
+    private val chooseImage = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            result.data?.let {
+                viewModel.onEvent(ProfileEvent.OnImageResult(it.data))
+                binding.imageUri = imageUri.toString()
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        _binding = FragmentProfileBinding.bind(view)
+        binding = FragmentProfileBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
-binding.ivUpdateProfile click {
-    showPopUpMenu()
-}
+        binding.viewModel = viewModel
+
+//        binding.ivProfileImage.setImageURI(FirebaseAuth.getInstance().currentUser!!.photoUrl)
+
+        setObservers()
+        setListeners()
     }
-   private fun showPopUpMenu(){
-       PopupMenu(requireContext(),binding.ivUpdateProfile).apply {
-           inflate(R.menu.edit_profile_image_menu)
-           show()
-           setOnMenuItemClickListener {
-               when (it.itemId) {
-                   R.id.chooseImage -> {
-                       Toast.makeText(requireContext(),"Choose Image",Toast.LENGTH_SHORT).show()
-                   }
 
-                   R.id.takePhoto -> {
-                       Toast.makeText(requireContext(), "Take Photo", Toast.LENGTH_SHORT).show()
-                   }
+    private fun setObservers() {
+        lifecycleScope.launch {
+            viewModel.state.collectLatest {
+                imageUri = it.imageUri
+                binding.isLoading = it.isLoading
+                if (it.isLoading) return@collectLatest
+                if (it.isSuccess) {
+                    // TODO
+                    binding.root.showLongSnackBar("Updated.")
+                }
+                if (it.error != null) {
+                    handlingErrors(it.error)
+                }
+            }
+        }
+    }
 
-                   else -> {
-                       Toast.makeText(requireContext(), "Remove Photo", Toast.LENGTH_SHORT).show()
-                   }
-               }
-               true
-           }
-       }
-   }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun handlingErrors(error: ProfileError) {
+        when (error) {
+            is ProfileError.InvalidNameError ->
+                binding.etUserEmail.error = error.message?.asString(requireContext())
+
+            is ProfileError.ServerError ->
+                binding.root.showLongSnackBar(error.message!!.asString(requireContext()))
+        }
+    }
+
+    private fun setListeners() {
+        binding.btnUpdate click {
+            lifecycleScope.launch {
+                if (imageUri != null) {
+                    val compressedImage = Compressor.compress(
+                        requireActivity(),
+                        ImageUtils.fileFromContentUri(requireActivity(), imageUri!!),
+                    )
+                    viewModel.onEvent(ProfileEvent.OnUpdateClicked(compressedImage.toUri()))
+                } else {
+                    viewModel.onEvent(ProfileEvent.OnUpdateClicked(null))
+                }
+            }
+        }
+        binding.ivUpdateProfile click {
+            showPopUpMenu()
+        }
+    }
+
+    private fun showPopUpMenu() {
+        PopupMenu(requireContext(), binding.ivUpdateProfile).apply {
+            inflate(R.menu.edit_profile_image_menu)
+            show()
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.chooseImage -> {
+                        val intent =
+                            Intent(
+                                Intent.ACTION_PICK,
+                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                            ).apply {
+                                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            }
+                        chooseImage.launch(intent)
+                    }
+
+                    R.id.takePhoto -> {
+                        viewModel.onEvent(ProfileEvent.OnImageResult(createImageUri()))
+                        openCamera.launch(imageUri!!)
+                    }
+
+                    else -> {
+                        viewModel.onEvent(ProfileEvent.OnImageResult(null))
+                        binding.imageUri = imageUri.toString()
+                    }
+                }
+                true
+            }
+        }
+    }
+
+    private fun createImageUri(): Uri {
+        val image =
+            File(requireActivity().applicationContext.filesDir, AppConstants.KEY_PROFILE_TEMP_IMAGE)
+        return FileProvider.getUriForFile(
+            requireActivity().applicationContext,
+            AppConstants.KEY_FILE_PROVIDER_AUTHORITY,
+            image
+        )
     }
 }
