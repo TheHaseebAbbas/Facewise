@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
+import androidx.navigation.NavOptionsBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.kuro.facewise.MainNavGraphDirections
@@ -90,7 +92,8 @@ fun NavController.showPopUpMenu(view: View) {
                 else -> {
                     //TODO
                     FirebaseAuth.getInstance().signOut()
-                    navigate(graph.startDestinationId)
+                    navigate(MainNavGraphDirections.actionGlobalSignInFragment())
+                    graph.clear()
                 }
             }
             true

@@ -2,9 +2,12 @@ package com.kuro.facewise.util
 
 import android.graphics.Color
 import android.view.View
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
+import coil.load
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.github.mikephil.charting.charts.PieChart
@@ -14,6 +17,7 @@ import com.github.mikephil.charting.data.PieEntry
 import com.google.android.material.imageview.ShapeableImageView
 import com.kuro.facewise.R
 import com.kuro.facewise.domain.model.EmotionResponse
+import com.squareup.picasso.Picasso
 
 @BindingAdapter("rotateFab")
 fun View.rotateFab(rotate: Boolean) {
@@ -22,12 +26,15 @@ fun View.rotateFab(rotate: Boolean) {
 }
 
 @BindingAdapter("setImageFromUri")
+fun ImageView.setImageFromUri(uri: String?) {
+    setImageURI(uri?.toUri())
+}
+
+@BindingAdapter("setImageFromUri")
 fun ShapeableImageView.setImageFromUri(uri: String?) {
-    Glide.with(this)
+    Picasso.get()
         .load(uri)
-        .placeholder(R.drawable.ic_person)
-        .error(R.drawable.ic_person)
-        .diskCacheStrategy(DiskCacheStrategy.DATA)
+        .placeholder(R.drawable.user_icon)
         .into(this)
 }
 

@@ -90,7 +90,6 @@ dependencies {
     // For image compression
     implementation 'id.zelory:compressor:3.0.1'
 
-    // Glide Image Loading Library
-    implementation 'com.github.bumptech.glide:glide:4.14.2'
-    kapt 'com.github.bumptech.glide:compiler:4.14.2'
+    // Picasso for images
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

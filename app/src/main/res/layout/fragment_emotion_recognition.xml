@@ -56,19 +56,19 @@
             app:strokeColor="?colorPrimary"
             app:strokeWidth="@dimen/_1sdp" />
 
-        <com.google.android.material.imageview.ShapeableImageView
+        <ImageView
             android:id="@+id/ivImageForScanning"
             setImageFromUri="@{imageUri}"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="@dimen/_16sdp"
             android:scaleType="centerInside"
-            android:src="@drawable/islamic_incident_1"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivUserProfile"
-            app:layout_constraintVertical_chainStyle="spread" />
+            app:layout_constraintVertical_chainStyle="spread"
+            tools:src="@drawable/islamic_incident_1" />
 
         <Button
             android:id="@+id/btnScanImage"

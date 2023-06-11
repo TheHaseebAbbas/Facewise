@@ -7,7 +7,9 @@ import android.view.View
 import androidx.navigation.fragment.navArgs
 import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentPrivacyAndTermsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PrivacyAndTermsFragment : Fragment(R.layout.fragment_privacy_and_terms) {
 
     private lateinit var binding: FragmentPrivacyAndTermsBinding
@@ -22,4 +24,3 @@ class PrivacyAndTermsFragment : Fragment(R.layout.fragment_privacy_and_terms) {
         binding.tvPrivacyAndTerms.text = Html.fromHtml(getString(args.stringResBodyId), Html.FROM_HTML_MODE_COMPACT)
     }
 }
-
