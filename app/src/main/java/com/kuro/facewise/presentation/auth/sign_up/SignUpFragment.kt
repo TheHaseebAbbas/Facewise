@@ -119,7 +119,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
             Pair("Privacy Policy", View.OnClickListener {
                 findNavController().navigate(
                     MainNavGraphDirections.actionGlobalPrivacyAndTermsFragment(
-                        R.string.facewise_privacy_policy_tittle,
+                        R.string.facewise_privacy_policy_title,
                         R.string.facewise_privacy_policy
                     )
                 )

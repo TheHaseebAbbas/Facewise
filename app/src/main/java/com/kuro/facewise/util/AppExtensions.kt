@@ -62,7 +62,7 @@ fun NavController.showPopUpMenu(view: View) {
                 R.id.privacyPolicy -> {
                     navigate(
                         MainNavGraphDirections.actionGlobalPrivacyAndTermsFragment(
-                            stringResTitleId = R.string.facewise_privacy_policy_tittle,
+                            stringResTitleId = R.string.facewise_privacy_policy_title,
                             stringResBodyId = R.string.facewise_privacy_policy
                         )
                     )
@@ -79,7 +79,12 @@ fun NavController.showPopUpMenu(view: View) {
                 }
 
                 R.id.aboutUs -> {
-
+                    navigate(
+                        MainNavGraphDirections.actionGlobalPrivacyAndTermsFragment(
+                            stringResTitleId = R.string.facewise_about_us_title,
+                            stringResBodyId = R.string.facewise_about_us
+                        )
+                    )
                 }
 
                 else -> {
