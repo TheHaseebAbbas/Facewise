@@ -6,7 +6,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
@@ -20,18 +19,21 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentMainBinding
+import com.kuro.facewise.domain.model.EmotionResult
 import com.kuro.facewise.util.PrefsProvider
 import com.kuro.facewise.util.click
 import com.kuro.facewise.util.constants.AppConstants
 import com.kuro.facewise.util.constants.PrefsConstants
+import com.kuro.facewise.util.getSimpleDateFormat
+import com.kuro.facewise.util.showLongSnackBar
 import com.kuro.facewise.util.showPopUpMenu
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.io.File
+import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -45,6 +47,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private lateinit var binding: FragmentMainBinding
 
     private var imageUri: Uri? = null
+
+    private var emotionResult: EmotionResult? = null
 
     private val openCamera = registerForActivityResult(
         ActivityResultContracts.TakePicture()
@@ -86,6 +90,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         binding.profileImageUrl = currentUser?.photoUrl.toString()
         binding.viewModel = viewModel
 
+        viewModel.onEvent(MainEvent.OnGetLastEmotionResult)
+
         setObservers()
         setListeners()
 
@@ -104,6 +110,23 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             viewModel.state.collectLatest {
                 binding.areAllFabVisible = it.areAllFabVisible
                 imageUri = it.imageUri
+                if (it.lastEmotionResult != null) {
+                    emotionResult = it.lastEmotionResult
+                    binding.expandableCardLayout.isClickable = true
+                    binding.ivArrowDown.visibility = View.VISIBLE
+                    binding.time = getSimpleDateFormat().format(it.lastEmotionResult.time!!)
+                    binding.recentEmotion = it.lastEmotionResult.dominantEmotion.uppercase()
+                }
+                if (it.error != null) {
+                    binding.root.showLongSnackBar(it.error.asString(requireActivity()))
+                }
+
+                if (it.isLoading != null) {
+                    when (it.isLoading) {
+                        MainLoadingState.GetLastEmotionResultLoading -> Unit
+                        MainLoadingState.GetRandomDataLoading -> Unit // TODO
+                    }
+                }
             }
         }
     }
@@ -134,19 +157,37 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         binding.expandableCardLayout click {
             handleToggleSection(binding.ivArrowDown)
-            setRecentEmotionProgressBars()
+            setRecentEmotionProgressBars(
+                angry = emotionResult!!.angry,
+                disgust = emotionResult!!.disgust,
+                fear = emotionResult!!.fear,
+                happy = emotionResult!!.fear,
+                neutral = emotionResult!!.neutral,
+                sad = emotionResult!!.sad,
+                surprise = emotionResult!!.surprise
+            )
         }
+        binding.expandableCardLayout.isClickable = false
+        binding.ivArrowDown.visibility = View.INVISIBLE
     }
 
-    private fun setRecentEmotionProgressBars() {
+    private fun setRecentEmotionProgressBars(
+        angry: Int,
+        disgust: Int,
+        fear: Int,
+        happy: Int,
+        neutral: Int,
+        sad: Int,
+        surprise: Int,
+    ) {
         val progressBars = arrayOf(
-            Pair(binding.layoutEmotionDetails.angryLinearProgress, 65),
-            Pair(binding.layoutEmotionDetails.disgustLinearProgress, 36),
-            Pair(binding.layoutEmotionDetails.fearLinearProgress, 71),
-            Pair(binding.layoutEmotionDetails.happyLinearProgress, 88),
-            Pair(binding.layoutEmotionDetails.neutralLinearProgress, 44),
-            Pair(binding.layoutEmotionDetails.sadLinearProgress, 51),
-            Pair(binding.layoutEmotionDetails.surpriseLinearProgress, 78)
+            Pair(binding.layoutEmotionDetails.angryLinearProgress, if (angry == 0) 1 else angry),
+            Pair(binding.layoutEmotionDetails.disgustLinearProgress, if (disgust == 0) 1 else disgust),
+            Pair(binding.layoutEmotionDetails.fearLinearProgress, if (fear == 0) 1 else fear),
+            Pair(binding.layoutEmotionDetails.happyLinearProgress, if (happy == 0) 1 else happy),
+            Pair(binding.layoutEmotionDetails.neutralLinearProgress, if (neutral == 0) 1 else neutral),
+            Pair(binding.layoutEmotionDetails.sadLinearProgress, if (sad == 0) 1 else sad),
+            Pair(binding.layoutEmotionDetails.surpriseLinearProgress, if (surprise == 0) 1 else surprise)
         )
 
         for ((progressBar, progressValue) in progressBars) {
@@ -242,7 +283,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun createImageUri(): Uri {
-        val image = File(requireActivity().applicationContext.filesDir, AppConstants.KEY_EMOTION_RECOGNITION_TEMP_IMAGE)
+        val image = File(
+            requireActivity().applicationContext.filesDir,
+            AppConstants.KEY_EMOTION_RECOGNITION_TEMP_IMAGE
+        )
         return FileProvider.getUriForFile(
             requireActivity().applicationContext,
             AppConstants.KEY_FILE_PROVIDER_AUTHORITY,

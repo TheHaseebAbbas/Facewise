@@ -12,7 +12,6 @@ import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentEmotionResultBinding
 import com.kuro.facewise.domain.model.EmotionResult
 import com.kuro.facewise.util.click
-import com.kuro.facewise.util.getSimpleDateFormat
 import com.kuro.facewise.util.showLongSnackBar
 import com.kuro.facewise.util.showPopUpMenu
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,19 +36,21 @@ class EmotionResultFragment : Fragment(R.layout.fragment_emotion_result) {
         binding.emotionResponse = emotionResponse
         binding.profileImageUrl = FirebaseAuth.getInstance().currentUser?.photoUrl.toString()
         viewModel.onEvent(EmotionResultEvent.GetRelevantEmotionData(emotionResponse.dominantEmotion))
-        viewModel.onEvent(EmotionResultEvent.PutEmotionResult(
-            EmotionResult(
-                dominantEmotion = emotionResponse.dominantEmotion,
-                angry = emotionResponse.emotion.angry,
-                disgust = emotionResponse.emotion.disgust,
-                fear = emotionResponse.emotion.fear,
-                happy = emotionResponse.emotion.happy,
-                neutral = emotionResponse.emotion.neutral,
-                sad = emotionResponse.emotion.sad,
-                surprise = emotionResponse.emotion.surprise,
-                time = Date()
+        viewModel.onEvent(
+            EmotionResultEvent.PutEmotionResult(
+                EmotionResult(
+                    dominantEmotion = emotionResponse.dominantEmotion,
+                    angry = emotionResponse.emotion.angry.toInt(),
+                    disgust = emotionResponse.emotion.disgust.toInt(),
+                    fear = emotionResponse.emotion.fear.toInt(),
+                    happy = emotionResponse.emotion.happy.toInt(),
+                    neutral = emotionResponse.emotion.neutral.toInt(),
+                    sad = emotionResponse.emotion.sad.toInt(),
+                    surprise = emotionResponse.emotion.surprise.toInt(),
+                    time = Date()
+                )
             )
-        ))
+        )
 
         setObservers()
         setListeners()
@@ -60,16 +61,15 @@ class EmotionResultFragment : Fragment(R.layout.fragment_emotion_result) {
             viewModel.state.collectLatest {
                 if (it.isLoading != null) {
                     when (it.isLoading) {
-                        LoadingState.GetRelevantEmotionDataLoading -> {
-
+                        is EmotionResultLoadingState.GetRelevantEmotionDataLoading -> {
+                            binding.isLoading = it.isLoading.isLoading
                         }
-                        LoadingState.PutRecognisedEmotionLoading -> {
 
-                        }
+                        EmotionResultLoadingState.PutRecognisedEmotionLoading -> Unit
                     }
                 }
                 if (it.isSuccess) {
-                    binding.root.showLongSnackBar("Data uploaded.")
+                    // emotion data uploaded to the server
                 }
                 if (it.relevantEmotionData != null) {
                     binding.relevantEmotionData = it.relevantEmotionData

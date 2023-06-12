@@ -21,4 +21,6 @@ interface FirebaseRepository {
     suspend fun getRelevantEmotionData(emotion: String): Flow<Resource<RelevantEmotionData>>
 
     suspend fun putEmotionResult(emotionResult: EmotionResult): Flow<Resource<Unit>>
+
+    suspend fun getLastEmotionResult(): Flow<Resource<EmotionResult>>
 }

@@ -53,7 +53,7 @@ class EmotionRecognitionFragment : Fragment(R.layout.fragment_emotion_recognitio
                     )
                 }
                 if (it.error != null) {
-                    binding.root.showLongSnackBar(it.error)
+                    binding.root.showLongSnackBar(it.error.asString(requireActivity()))
                 }
             }
         }

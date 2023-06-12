@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kuro.facewise.domain.repository.FaceWiseRepository
 import com.kuro.facewise.util.Resource
+import com.kuro.facewise.util.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,7 +27,7 @@ class EmotionRecognitionViewModel @Inject constructor(
                     when (result) {
                         is Resource.Error -> {
                             _state.value = EmotionRecognitionState(
-                                error = result.message!!
+                                error = UiText.DynamicString(result.message!!)
                             )
                         }
 

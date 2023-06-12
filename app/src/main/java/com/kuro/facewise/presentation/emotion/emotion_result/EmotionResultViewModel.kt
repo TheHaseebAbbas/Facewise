@@ -3,16 +3,12 @@ package com.kuro.facewise.presentation.emotion.emotion_result
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kuro.facewise.domain.repository.FirebaseRepository
-import com.kuro.facewise.presentation.emotion.emotion_recognition.EmotionRecognitionEvent
-import com.kuro.facewise.presentation.emotion.emotion_recognition.EmotionRecognitionState
 import com.kuro.facewise.util.Resource
 import com.kuro.facewise.util.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,7 +26,7 @@ class EmotionResultViewModel @Inject constructor(
                 viewModelScope.launch {
                     _state.emit(
                         EmotionResultState(
-                            isLoading = LoadingState.GetRelevantEmotionDataLoading
+                            isLoading = EmotionResultLoadingState.GetRelevantEmotionDataLoading(isLoading = true)
                         )
                     )
                     repository.getRelevantEmotionData(event.emotion)
@@ -62,7 +58,7 @@ class EmotionResultViewModel @Inject constructor(
                 viewModelScope.launch {
                     _state.emit(
                         EmotionResultState(
-                            isLoading = LoadingState.PutRecognisedEmotionLoading
+                            isLoading = EmotionResultLoadingState.PutRecognisedEmotionLoading
                         )
                     )
                     repository.putEmotionResult(event.emotionResult)

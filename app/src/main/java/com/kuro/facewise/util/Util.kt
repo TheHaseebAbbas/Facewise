@@ -72,4 +72,4 @@ fun addAfterTextChangeListener(vararg textInputLayouts: Pair<TextInputLayout, St
     }
 }
 
-fun getSimpleDateFormat() = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
+fun getSimpleDateFormat() = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())

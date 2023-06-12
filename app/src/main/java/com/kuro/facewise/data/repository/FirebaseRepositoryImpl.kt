@@ -6,6 +6,7 @@ import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import com.kuro.facewise.domain.model.Ayah
 import com.kuro.facewise.domain.model.EmotionResult
@@ -253,29 +254,63 @@ class FirebaseRepositoryImpl @Inject constructor() : FirebaseRepository {
             )
         }.flowOn(Dispatchers.IO)
 
-    override suspend fun putEmotionResult(emotionResult: EmotionResult): Flow<Resource<Unit>> = flow {
-        emit(Resource.Loading())
-        try {
-            FirebaseFirestore.getInstance()
-                .collection(FirebaseConstants.KEY_COLLECTION_USERS)
-                .document(FirebaseAuth.getInstance().uid!!)
-                .collection(FirebaseConstants.KEY_COLLECTION_RECOGNIZED_EMOTION)
-                .document()
-                .set(emotionResult).await()
-            emit(Resource.Success(Unit))
-        } catch (exception: Exception) {
+    override suspend fun putEmotionResult(emotionResult: EmotionResult): Flow<Resource<Unit>> =
+        flow {
+            emit(Resource.Loading())
+            try {
+                FirebaseFirestore.getInstance()
+                    .collection(FirebaseConstants.KEY_COLLECTION_USERS)
+                    .document(FirebaseAuth.getInstance().uid!!)
+                    .collection(FirebaseConstants.KEY_COLLECTION_RECOGNIZED_EMOTION)
+                    .document()
+                    .set(emotionResult).await()
+                emit(Resource.Success(Unit))
+            } catch (exception: Exception) {
+                emit(
+                    Resource.Error(
+                        message = exception.localizedMessage
+                            ?: "Couldn't save result in database."
+                    )
+                )
+            }
+        }.catch { exception ->
             emit(
                 Resource.Error(
                     message = exception.localizedMessage
                         ?: "Couldn't save result in database."
                 )
             )
+        }.flowOn(Dispatchers.IO)
+
+    override suspend fun getLastEmotionResult(): Flow<Resource<EmotionResult>> = flow {
+        emit(Resource.Loading())
+        try {
+            val emotionResult = FirebaseFirestore.getInstance()
+                .collection(FirebaseConstants.KEY_COLLECTION_USERS)
+                .document(FirebaseAuth.getInstance().uid!!)
+                .collection(FirebaseConstants.KEY_COLLECTION_RECOGNIZED_EMOTION)
+                .orderBy(FirebaseConstants.KEY_PROPERTY_TIME, Query.Direction.DESCENDING)
+                .limit(1L)
+                .get()
+                .await()
+                .documents[0].toObject(EmotionResult::class.java)
+            Log.d("TAG", "getLastEmotionResult: $emotionResult")
+            emit(Resource.Success(emotionResult))
+        } catch (exception: Exception) {
+            Log.d("TAG", "getLastEmotionResult: ${exception.localizedMessage}")
+//            emit (
+//                Resource.Error(
+//                    message = exception.localizedMessage
+//                        ?: "Couldn't get Last Emotion details."
+//                )
+//            )
+            // TODO
         }
     }.catch { exception ->
         emit(
             Resource.Error(
                 message = exception.localizedMessage
-                    ?: "Couldn't save result in database."
+                    ?: "Couldn't get Last Emotion details."
             )
         )
     }.flowOn(Dispatchers.IO)

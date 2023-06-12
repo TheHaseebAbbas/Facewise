@@ -4,5 +4,6 @@ import android.net.Uri
 
 sealed class MainEvent {
     object OnMainFabClick : MainEvent()
-    class OnImageResult(val uri: Uri): MainEvent()
+    class OnImageResult(val uri: Uri) : MainEvent()
+    object OnGetLastEmotionResult : MainEvent()
 }

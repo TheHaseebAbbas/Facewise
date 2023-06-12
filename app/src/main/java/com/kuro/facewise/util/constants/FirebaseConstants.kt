@@ -7,4 +7,5 @@ object FirebaseConstants {
     const val KEY_COLLECTION_AYAHS = "ayahs"
     const val KEY_COLLECTION_AHADITH = "ahadith"
     const val KEY_COLLECTION_INCIDENTS = "incidents"
+    const val KEY_PROPERTY_TIME = "time"
 }

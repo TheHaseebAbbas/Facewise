@@ -21,6 +21,14 @@
             name="profileImageUrl"
             type="String" />
 
+        <variable
+            name="recentEmotion"
+            type="String" />
+
+        <variable
+            name="time"
+            type="String" />
+
         <import type="android.view.View" />
     </data>
 
@@ -128,7 +136,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_4sdp"
                                 android:ellipsize="end"
-                                android:fontFamily="@font/montserrat_regular"
+                                android:fontFamily="@font/montserrat_medium"
                                 android:maxLines="1"
                                 android:text="Recent Recognized Emotion"
                                 android:textColor="?colorOnSurface"
@@ -142,7 +150,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_4sdp"
-                                android:fontFamily="@font/montserrat_regular"
+                                android:fontFamily="@font/montserrat_medium"
                                 android:text="Date"
                                 android:textColor="?colorOnSurface"
                                 android:textSize="@dimen/smallTextSize"
@@ -155,7 +163,7 @@
                                 android:id="@+id/textColon1"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_regular"
+                                android:fontFamily="@font/montserrat_medium"
                                 android:gravity="center"
                                 android:text=":"
                                 android:textColor="?colorOnSurface"
@@ -171,7 +179,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/montserrat_medium"
-                                android:text="28 May 2023"
+                                android:text="@{time,default=__}"
                                 android:textColor="?colorOnSurface"
                                 android:textSize="@dimen/smallTextSize"
                                 app:layout_constraintEnd_toEndOf="@id/tvUserName"
@@ -183,7 +191,7 @@
                                 android:id="@+id/textEmotion"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_regular"
+                                android:fontFamily="@font/montserrat_medium"
                                 android:text="Emotion"
                                 android:textColor="?colorOnSurface"
                                 android:textSize="@dimen/smallTextSize"
@@ -194,7 +202,7 @@
                                 android:id="@+id/textColon2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_regular"
+                                android:fontFamily="@font/montserrat_medium"
                                 android:text=":"
                                 android:textColor="?colorOnSurface"
                                 android:textSize="@dimen/textSize"
@@ -204,12 +212,13 @@
 
                             <TextView
                                 android:id="@+id/tvRecentEmotion"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/montserrat_medium"
-                                android:text="Happy"
+                                android:text="@{recentEmotion,default=__}"
                                 android:textColor="?colorOnSurface"
                                 android:textSize="@dimen/smallTextSize"
+                                app:layout_constraintEnd_toEndOf="@+id/tvUserName"
                                 app:layout_constraintStart_toStartOf="@id/tvRecentEmotionDate"
                                 app:layout_constraintTop_toTopOf="@id/textEmotion" />
 

@@ -16,6 +16,12 @@
         <variable
             name="relevantEmotionData"
             type="com.kuro.facewise.domain.model.RelevantEmotionData" />
+
+        <variable
+            name="isLoading"
+            type="boolean" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -116,6 +122,19 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
 
+                <com.github.ybq.android.spinkit.SpinKitView
+                    android:id="@+id/spin_kit"
+                    style="@style/SpinKitView.WanderingCubes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/_16sdp"
+                    android:visibility="@{isLoading?View.VISIBLE:View.GONE}"
+                    app:SpinKit_Color="@color/blue"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cardRecognizedEmotion" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardAyahOfDay"
                     android:layout_width="match_parent"
@@ -123,6 +142,7 @@
                     android:layout_margin="@dimen/_16sdp"
                     app:cardCornerRadius="@dimen/_8sdp"
                     app:cardElevation="@dimen/_8sdp"
+                    android:visibility="@{isLoading?View.INVISIBLE:View.VISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cardRecognizedEmotion">
@@ -229,6 +249,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_16sdp"
+                    android:visibility="@{isLoading?View.INVISIBLE:View.VISIBLE}"
                     app:cardCornerRadius="@dimen/_8sdp"
                     app:cardElevation="@dimen/_8sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -310,6 +331,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_16sdp"
                     app:cardCornerRadius="@dimen/_8sdp"
+                    android:visibility="@{isLoading?View.INVISIBLE:View.VISIBLE}"
                     app:cardElevation="@dimen/_8sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
