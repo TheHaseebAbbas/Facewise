@@ -6,32 +6,33 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.Transformation
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.FileProvider
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentMainBinding
+import com.kuro.facewise.domain.model.EmotionResult
 import com.kuro.facewise.util.PrefsProvider
 import com.kuro.facewise.util.click
 import com.kuro.facewise.util.constants.AppConstants
 import com.kuro.facewise.util.constants.PrefsConstants
+import com.kuro.facewise.util.createImageUri
+import com.kuro.facewise.util.getSimpleDateFormat
+import com.kuro.facewise.util.shareImageFromView
+import com.kuro.facewise.util.showLongSnackBar
 import com.kuro.facewise.util.showPopUpMenu
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.io.File
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -175,16 +176,13 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         binding.expandableCardLayout.isClickable = false
         binding.ivArrowDown.visibility = View.INVISIBLE
         binding.btnShareAyahOfDay click {
-
-            shareImageFromView(binding.cardAyahOfDay,it)
+            shareImageFromView(binding.cardAyahOfDay, it)
         }
         binding.btnShareHadithOfDay click {
-
-            shareImageFromView(binding.cardHadithOfDay,it)
+            shareImageFromView(binding.cardHadithOfDay, it)
         }
         binding.btnShareIslamicIncidentOfDay click {
-
-            shareImageFromView(binding.cardIslamicIncidenceOfDay,it)
+            shareImageFromView(binding.cardIslamicIncidenceOfDay, it)
         }
     }
 
@@ -198,13 +196,34 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         surprise: Int,
     ) {
         val progressBars = arrayOf(
-            Pair(binding.layoutEmotionDetails.angryLinearProgress, if (angry == 0) 1 else angry),
-            Pair(binding.layoutEmotionDetails.disgustLinearProgress, if (disgust == 0) 1 else disgust),
-            Pair(binding.layoutEmotionDetails.fearLinearProgress, if (fear == 0) 1 else fear),
-            Pair(binding.layoutEmotionDetails.happyLinearProgress, if (happy == 0) 1 else happy),
-            Pair(binding.layoutEmotionDetails.neutralLinearProgress, if (neutral == 0) 1 else neutral),
-            Pair(binding.layoutEmotionDetails.sadLinearProgress, if (sad == 0) 1 else sad),
-            Pair(binding.layoutEmotionDetails.surpriseLinearProgress, if (surprise == 0) 1 else surprise)
+            Pair(
+                binding.layoutEmotionDetails.angryLinearProgress,
+                if (angry == 0) 1 else angry
+            ),
+            Pair(
+                binding.layoutEmotionDetails.disgustLinearProgress,
+                if (disgust == 0) 1 else disgust
+            ),
+            Pair(
+                binding.layoutEmotionDetails.fearLinearProgress,
+                if (fear == 0) 1 else fear
+            ),
+            Pair(
+                binding.layoutEmotionDetails.happyLinearProgress,
+                if (happy == 0) 1 else happy
+            ),
+            Pair(
+                binding.layoutEmotionDetails.neutralLinearProgress,
+                if (neutral == 0) 1 else neutral
+            ),
+            Pair(
+                binding.layoutEmotionDetails.sadLinearProgress,
+                if (sad == 0) 1 else sad
+            ),
+            Pair(
+                binding.layoutEmotionDetails.surpriseLinearProgress,
+                if (surprise == 0) 1 else surprise
+            )
         )
 
         for ((progressBar, progressValue) in progressBars) {
