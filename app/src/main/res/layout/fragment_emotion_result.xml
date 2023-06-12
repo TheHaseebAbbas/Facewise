@@ -101,6 +101,15 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+                        <ImageView
+                            android:id="@+id/btnShareEmotionResult"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:src="@drawable/ic_share"
+                            app:tint="?colorOnSurface"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            />
 
                         <com.github.mikephil.charting.charts.PieChart
                             android:id="@+id/pcEmotionResult"

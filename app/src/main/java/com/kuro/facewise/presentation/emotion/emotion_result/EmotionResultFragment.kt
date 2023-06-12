@@ -95,5 +95,8 @@ class EmotionResultFragment : Fragment(R.layout.fragment_emotion_result) {
         binding.btnShareRelevantIslamicIncident click {
             shareImageFromView(binding.cardRelevantIslamicIncidence,it)
         }
+        binding.btnShareEmotionResult click {
+            shareImageFromView(binding.cardRecognizedEmotion,it)
+        }
     }
 }
