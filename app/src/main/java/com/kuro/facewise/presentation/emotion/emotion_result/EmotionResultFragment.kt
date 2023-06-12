@@ -13,6 +13,7 @@ import com.kuro.facewise.databinding.FragmentEmotionResultBinding
 import com.kuro.facewise.domain.model.EmotionResult
 import com.kuro.facewise.util.click
 import com.kuro.facewise.util.getSimpleDateFormat
+import com.kuro.facewise.util.shareImageFromView
 import com.kuro.facewise.util.showLongSnackBar
 import com.kuro.facewise.util.showPopUpMenu
 import dagger.hilt.android.AndroidEntryPoint
@@ -84,6 +85,15 @@ class EmotionResultFragment : Fragment(R.layout.fragment_emotion_result) {
     private fun setListeners() {
         binding.ivUserProfile click {
             findNavController().showPopUpMenu(it)
+        }
+        binding.btnShareRelevantAyah click {
+            shareImageFromView(binding.cardRelevantAyah,it)
+        }
+        binding.btnShareRelevantHadith click {
+            shareImageFromView(binding.cardRelevantHadith,it)
+        }
+        binding.btnShareRelevantIslamicIncident click {
+            shareImageFromView(binding.cardRelevantIslamicIncidence,it)
         }
     }
 }

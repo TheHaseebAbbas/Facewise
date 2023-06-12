@@ -23,6 +23,7 @@ import com.kuro.facewise.presentation.profile.dialogs.ChangePasswordDialogFragme
 import com.kuro.facewise.util.ImageUtils
 import com.kuro.facewise.util.click
 import com.kuro.facewise.util.constants.AppConstants
+import com.kuro.facewise.util.createImageUri
 import com.kuro.facewise.util.showLongSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import id.zelory.compressor.Compressor
@@ -146,7 +147,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     }
 
                     R.id.takePhoto -> {
-                        viewModel.onEvent(ProfileEvent.OnImageResult(createImageUri()))
+                        viewModel.onEvent(ProfileEvent.OnImageResult(createImageUri(requireActivity().applicationContext, AppConstants.KEY_PROFILE_TEMP_IMAGE)))
                         openCamera.launch(imageUri!!)
                     }
 
@@ -158,15 +159,5 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 true
             }
         }
-    }
-
-    private fun createImageUri(): Uri {
-        val image =
-            File(requireActivity().applicationContext.filesDir, AppConstants.KEY_PROFILE_TEMP_IMAGE)
-        return FileProvider.getUriForFile(
-            requireActivity().applicationContext,
-            AppConstants.KEY_FILE_PROVIDER_AUTHORITY,
-            image
-        )
     }
 }

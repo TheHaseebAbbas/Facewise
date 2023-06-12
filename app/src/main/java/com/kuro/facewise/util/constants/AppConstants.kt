@@ -6,6 +6,8 @@ object AppConstants {
 
     const val KEY_PROFILE_TEMP_IMAGE = "profile.jpg"
 
+    const val KEY_SHARE_TEMP_IMAGE = "share_photo.png"
+
     const val KEY_FILE_PROVIDER_AUTHORITY = "com.kuro.facewise.fileProvider"
 
 }

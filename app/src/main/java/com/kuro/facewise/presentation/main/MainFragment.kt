@@ -27,6 +27,8 @@ import com.kuro.facewise.util.PrefsProvider
 import com.kuro.facewise.util.click
 import com.kuro.facewise.util.constants.AppConstants
 import com.kuro.facewise.util.constants.PrefsConstants
+import com.kuro.facewise.util.createImageUri
+import com.kuro.facewise.util.shareImageFromView
 import com.kuro.facewise.util.showPopUpMenu
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -115,7 +117,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         binding.fabCamera click {
             viewModel.onEvent(MainEvent.OnMainFabClick)
-            viewModel.onEvent(MainEvent.OnImageResult(createImageUri()))
+            viewModel.onEvent(
+                MainEvent.OnImageResult(
+                    createImageUri(
+                        requireActivity().applicationContext,
+                        AppConstants.KEY_EMOTION_RECOGNITION_TEMP_IMAGE
+                    )
+                )
+            )
             openCamera.launch(imageUri!!)
         }
 
@@ -135,6 +144,18 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         binding.expandableCardLayout click {
             handleToggleSection(binding.ivArrowDown)
             setRecentEmotionProgressBars()
+        }
+        binding.btnShareAyahOfDay click {
+
+            shareImageFromView(binding.cardAyahOfDay,it)
+        }
+        binding.btnShareHadithOfDay click {
+
+            shareImageFromView(binding.cardHadithOfDay,it)
+        }
+        binding.btnShareIslamicIncidentOfDay click {
+
+            shareImageFromView(binding.cardIslamicIncidenceOfDay,it)
         }
     }
 
@@ -239,14 +260,5 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     } else {
         view.animate().setDuration(200).rotation(0f)
         false
-    }
-
-    private fun createImageUri(): Uri {
-        val image = File(requireActivity().applicationContext.filesDir, AppConstants.KEY_EMOTION_RECOGNITION_TEMP_IMAGE)
-        return FileProvider.getUriForFile(
-            requireActivity().applicationContext,
-            AppConstants.KEY_FILE_PROVIDER_AUTHORITY,
-            image
-        )
     }
 }
