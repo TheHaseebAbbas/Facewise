@@ -107,6 +107,15 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+                        <ImageView
+                            android:id="@+id/btnShareEmotionResult"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:src="@drawable/ic_share"
+                            app:tint="?colorOnSurface"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            />
 
                         <com.github.mikephil.charting.charts.PieChart
                             android:id="@+id/pcEmotionResult"
@@ -136,7 +145,7 @@
                     app:layout_constraintTop_toBottomOf="@id/cardRecognizedEmotion" />
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardAyahOfDay"
+                    android:id="@+id/cardRelevantAyah"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_16sdp"
@@ -227,7 +236,7 @@
                             tools:text="(Surah Tawbah 9:119)" />
 
                         <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnShareAyahOfDay"
+                            android:id="@+id/btnShareRelevantAyah"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_8sdp"
@@ -245,7 +254,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardHadithOfDay"
+                    android:id="@+id/cardRelevantHadith"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_16sdp"
@@ -254,7 +263,7 @@
                     app:cardElevation="@dimen/_8sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cardAyahOfDay">
+                    app:layout_constraintTop_toBottomOf="@id/cardRelevantAyah">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -308,7 +317,7 @@
                             tools:text="(Surah Tawbah 9:119)" />
 
                         <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnShareHadithOfDay"
+                            android:id="@+id/btnShareRelevantHadith"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_8sdp"
@@ -326,7 +335,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardIslamicIncidenceOfDay"
+                    android:id="@+id/cardRelevantIslamicIncidence"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_16sdp"
@@ -336,7 +345,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cardHadithOfDay">
+                    app:layout_constraintTop_toBottomOf="@id/cardRelevantHadith">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -389,7 +398,7 @@
                             tools:text="The Liberation of Makkah: When Prophet Muhammad (pbuh) and his companions successfully conquered Makkah without bloodshed, it brought immense joy and happiness to the Muslims and the people of Makkah. This incident teaches forgiveness, mercy, and the eventual triumph of truth over falsehood." />
 
                         <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnShareIslamicIncidentOfDay"
+                            android:id="@+id/btnShareRelevantIslamicIncident"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_8sdp"

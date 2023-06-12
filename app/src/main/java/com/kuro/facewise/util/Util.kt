@@ -73,3 +73,41 @@ fun addAfterTextChangeListener(vararg textInputLayouts: Pair<TextInputLayout, St
 }
 
 fun getSimpleDateFormat() = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+
+fun shareImageFromView(cardView: View,btnShare:View){
+
+    btnShare.visibility = View.GONE
+
+    val widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(cardView.width, View.MeasureSpec.EXACTLY)
+    val heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(cardView.height, View.MeasureSpec.AT_MOST)
+    cardView.measure(widthMeasureSpec, heightMeasureSpec)
+    cardView.layout(0, 0, cardView.measuredWidth, cardView.measuredHeight)
+
+    val bitmap = Bitmap.createBitmap(cardView.width, cardView.height, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bitmap)
+    val background = cardView.background
+    background.draw(canvas)
+    cardView.draw(canvas)
+
+    btnShare.visibility = View.VISIBLE
+
+    val imageUri = createImageUri(cardView.context,AppConstants.KEY_SHARE_TEMP_IMAGE)
+
+    val outputStream = cardView.context.applicationContext.contentResolver.openOutputStream(imageUri)
+    bitmap.compress(Bitmap.CompressFormat.PNG,100,outputStream)
+    outputStream!!.close()
+
+    val shareIntent = Intent(Intent.ACTION_SEND)
+    shareIntent.type = "image/*"
+    shareIntent.putExtra(Intent.EXTRA_STREAM,imageUri)
+    startActivity(cardView.context,Intent.createChooser(shareIntent,"Share Image"),null)
+}
+
+fun createImageUri(applicationContext: Context, fileName: String): Uri {
+    val image = File(applicationContext.filesDir, fileName)
+    return FileProvider.getUriForFile(
+        applicationContext,
+        AppConstants.KEY_FILE_PROVIDER_AUTHORITY,
+        image
+    )
+}
