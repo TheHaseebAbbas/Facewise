@@ -1,5 +1,6 @@
 package com.kuro.facewise.domain.model
 
+import android.os.Message
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 

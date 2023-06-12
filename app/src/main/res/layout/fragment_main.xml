@@ -58,7 +58,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/RoundCornerImage"
-            app:strokeColor="?colorPrimary"
+            app:strokeColor="?colorOnSurface"
             app:strokeWidth="@dimen/_1sdp" />
 
         <ScrollView

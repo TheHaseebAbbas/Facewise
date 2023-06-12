@@ -12,6 +12,10 @@
         <variable
             name="emotionResponse"
             type="com.kuro.facewise.domain.model.EmotionResponse" />
+
+        <variable
+            name="relevantEmotionData"
+            type="com.kuro.facewise.domain.model.RelevantEmotionData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,7 +51,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/RoundCornerImage"
-            app:strokeColor="?colorPrimary"
+            app:strokeColor="?colorOnSurface"
             app:strokeWidth="@dimen/_1sdp" />
 
         <ScrollView
@@ -137,7 +141,7 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/montserrat_bold"
                             android:maxLines="1"
-                            android:text="Relevant Ayat"
+                            android:text="Relevant Ayah"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSubTitleSize"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -151,25 +155,13 @@
                             android:layout_marginTop="@dimen/_8sdp"
                             android:fontFamily="@font/montserrat_semibold"
                             android:gravity="start"
-                            android:text="يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ وَكُونُوا مَعَ الصَّادِقِينَ."
+                            android:text="@{relevantEmotionData.ayah.ayahArabic}"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSubTitleSize"
                             app:layout_constraintEnd_toEndOf="@id/textSeekAllahGuidance"
                             app:layout_constraintStart_toStartOf="@id/textSeekAllahGuidance"
-                            app:layout_constraintTop_toBottomOf="@id/textSeekAllahGuidance" />
-
-                        <TextView
-                            android:id="@+id/textAyahTranslation"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_4sdp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Translation"
-                            android:textColor="?colorOnSurface"
-                            android:textSize="@dimen/textSize"
-                            app:layout_constraintEnd_toEndOf="@id/textSeekAllahGuidance"
-                            app:layout_constraintStart_toStartOf="@id/textSeekAllahGuidance"
-                            app:layout_constraintTop_toBottomOf="@id/tvAyahOfDayArabic" />
+                            app:layout_constraintTop_toBottomOf="@id/textSeekAllahGuidance"
+                            tools:text="يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ وَكُونُوا مَعَ الصَّادِقِينَ." />
 
                         <TextView
                             android:id="@+id/textAyahOfDayTranslation"
@@ -191,26 +183,28 @@
                             android:layout_marginTop="@dimen/_4sdp"
                             android:fontFamily="@font/montserrat_medium"
                             android:gravity="start"
-                            android:text="O you who believe! be careful of (your duty to) Allah and be with the true ones."
+                            android:text="@{relevantEmotionData.ayah.ayahEnglish}"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSize"
                             app:layout_constraintEnd_toEndOf="@id/textAyahOfDayTranslation"
                             app:layout_constraintStart_toStartOf="@id/textAyahOfDayTranslation"
-                            app:layout_constraintTop_toBottomOf="@id/textAyahOfDayTranslation" />
+                            app:layout_constraintTop_toBottomOf="@id/textAyahOfDayTranslation"
+                            tools:text="O you who believe! be careful of (your duty to) Allah and be with the true ones." />
 
                         <TextView
                             android:id="@+id/tvAyahOfDayReference"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_4sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
                             android:fontFamily="@font/montserrat_semibold"
                             android:gravity="center"
-                            android:text="(Surah Tawbah 9:119)"
+                            android:text="@{relevantEmotionData.ayah.ayahReference}"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSize"
                             app:layout_constraintEnd_toEndOf="@id/tvAyahOfDayTranslation"
                             app:layout_constraintStart_toStartOf="@id/tvAyahOfDayTranslation"
-                            app:layout_constraintTop_toBottomOf="@id/tvAyahOfDayTranslation" />
+                            app:layout_constraintTop_toBottomOf="@id/tvAyahOfDayTranslation"
+                            tools:text="(Surah Tawbah 9:119)" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnShareAyahOfDay"
@@ -269,26 +263,28 @@
                             android:layout_marginTop="@dimen/_4sdp"
                             android:fontFamily="@font/montserrat_medium"
                             android:gravity="start"
-                            android:text="O you who believe! be careful of (your duty to) Allah and be with the true ones."
+                            android:text="@{relevantEmotionData.hadith.hadith}"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSize"
                             app:layout_constraintEnd_toEndOf="@id/textHadithOfDay"
                             app:layout_constraintStart_toStartOf="@id/textHadithOfDay"
-                            app:layout_constraintTop_toBottomOf="@id/textHadithOfDay" />
+                            app:layout_constraintTop_toBottomOf="@id/textHadithOfDay"
+                            tools:text="O you who believe! be careful of (your duty to) Allah and be with the true ones." />
 
                         <TextView
                             android:id="@+id/tvHadithOfDayReference"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_4sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
                             android:fontFamily="@font/montserrat_semibold"
                             android:gravity="center"
-                            android:text="(Surah Tawbah 9:119)"
+                            android:text="@{relevantEmotionData.hadith.hadithReference}"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSize"
                             app:layout_constraintEnd_toEndOf="@id/tvHadithOfDay"
                             app:layout_constraintStart_toStartOf="@id/tvHadithOfDay"
-                            app:layout_constraintTop_toBottomOf="@id/tvHadithOfDay" />
+                            app:layout_constraintTop_toBottomOf="@id/tvHadithOfDay"
+                            tools:text="(Surah Tawbah 9:119)" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnShareHadithOfDay"
@@ -342,18 +338,33 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
+                            android:id="@+id/tvIncidentReference"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:fontFamily="@font/montserrat_semibold"
+                            android:text="@{relevantEmotionData.incident.incidentReference}"
+                            android:textColor="?colorOnSurface"
+                            android:textSize="@dimen/textSize"
+                            app:layout_constraintEnd_toEndOf="@id/textIslamicIncidenceOfDay"
+                            app:layout_constraintStart_toStartOf="@id/textIslamicIncidenceOfDay"
+                            app:layout_constraintTop_toBottomOf="@id/textIslamicIncidenceOfDay"
+                            tools:text="Incident Reference" />
+
+                        <TextView
                             android:id="@+id/tvIslamicIncidenceOfDay"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_4sdp"
                             android:fontFamily="@font/montserrat_medium"
                             android:gravity="start"
-                            android:text="The Liberation of Makkah: When Prophet Muhammad (pbuh) and his companions successfully conquered Makkah without bloodshed, it brought immense joy and happiness to the Muslims and the people of Makkah. This incident teaches forgiveness, mercy, and the eventual triumph of truth over falsehood."
+                            android:text="@{relevantEmotionData.incident.incident}"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSize"
                             app:layout_constraintEnd_toEndOf="@id/textIslamicIncidenceOfDay"
                             app:layout_constraintStart_toStartOf="@id/textIslamicIncidenceOfDay"
-                            app:layout_constraintTop_toBottomOf="@id/textIslamicIncidenceOfDay" />
+                            app:layout_constraintTop_toBottomOf="@id/tvIncidentReference"
+                            tools:text="The Liberation of Makkah: When Prophet Muhammad (pbuh) and his companions successfully conquered Makkah without bloodshed, it brought immense joy and happiness to the Muslims and the people of Makkah. This incident teaches forgiveness, mercy, and the eventual triumph of truth over falsehood." />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnShareIslamicIncidentOfDay"

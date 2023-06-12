@@ -29,13 +29,17 @@ class FaceWiseRepositoryImpl @Inject constructor(
             if (result.task.isSuccessful) {
                 val emotion = api.getEmotion(
                     JsonObject().apply {
-                        this.addProperty(
+                        addProperty(
                             "img_path",
                             imageReference.downloadUrl.await().toString()
                         )
                     }
-                ).toEmotionResponse()
-                emit(Resource.Success(emotion))
+                )
+                if (emotion.message == null) {
+                    emit(Resource.Success(emotion.toEmotionResponse()))
+                } else {
+                    emit(Resource.Error(message = emotion.message))
+                }
             }
         } catch (e: HttpException) {
             emit(Resource.Error(message = e.message ?: "An unknown error occurred."))

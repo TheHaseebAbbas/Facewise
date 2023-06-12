@@ -26,6 +26,8 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
     val spannableString = SpannableString(this.text)
@@ -69,3 +71,5 @@ fun addAfterTextChangeListener(vararg textInputLayouts: Pair<TextInputLayout, St
         }
     }
 }
+
+fun getSimpleDateFormat() = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
