@@ -12,7 +12,7 @@ import com.kuro.facewise.domain.model.Ayah
 import com.kuro.facewise.domain.model.EmotionResult
 import com.kuro.facewise.domain.model.Hadith
 import com.kuro.facewise.domain.model.Incident
-import com.kuro.facewise.domain.model.RelevantEmotionData
+import com.kuro.facewise.domain.model.IslamicData
 import com.kuro.facewise.domain.repository.FirebaseRepository
 import com.kuro.facewise.util.Resource
 import com.kuro.facewise.util.constants.FirebaseConstants
@@ -206,7 +206,7 @@ class FirebaseRepositoryImpl @Inject constructor() : FirebaseRepository {
         )
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun getRelevantEmotionData(emotion: String): Flow<Resource<RelevantEmotionData>> =
+    override suspend fun getRelevantEmotionData(emotion: String): Flow<Resource<IslamicData>> =
         flow {
             emit(Resource.Loading())
             try {
@@ -230,7 +230,7 @@ class FirebaseRepositoryImpl @Inject constructor() : FirebaseRepository {
                     .documents[(0 until 30).random()].toObject(Incident::class.java)
                 emit(
                     Resource.Success(
-                        RelevantEmotionData(
+                        IslamicData(
                             ayah = ayah!!,
                             hadith = hadith!!,
                             incident = incident!!
@@ -311,6 +311,71 @@ class FirebaseRepositoryImpl @Inject constructor() : FirebaseRepository {
             Resource.Error(
                 message = exception.localizedMessage
                     ?: "Couldn't get Last Emotion details."
+            )
+        )
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun getRandomIslamicData(): Flow<Resource<IslamicData>> = flow {
+        emit(Resource.Loading())
+        try {
+            val emotionsList = listOf(
+                "angry",
+                "disgust",
+                "fear",
+                "happy",
+                "neutral",
+                "sad",
+                "surprise"
+            )
+            val ayahEmotion = emotionsList[(0 until 7).random()]
+            val hadithEmotion = emotionsList[(0 until 7).random()]
+            val incidentEmotion = emotionsList[(0 until 7).random()]
+            val ayahDocumentReference = FirebaseFirestore.getInstance()
+                .collection(FirebaseConstants.KEY_COLLECTION_EMOTION_DATABASE)
+                .document(ayahEmotion)
+            val hadithDocumentReference = FirebaseFirestore.getInstance()
+                .collection(FirebaseConstants.KEY_COLLECTION_EMOTION_DATABASE)
+                .document(hadithEmotion)
+            val incidentDocumentReference = FirebaseFirestore.getInstance()
+                .collection(FirebaseConstants.KEY_COLLECTION_EMOTION_DATABASE)
+                .document(incidentEmotion)
+            val ayah = ayahDocumentReference
+                .collection(FirebaseConstants.KEY_COLLECTION_AYAHS)
+                .get()
+                .await()
+                .documents[(0 until 30).random()].toObject(Ayah::class.java)
+            val hadith = hadithDocumentReference
+                .collection(FirebaseConstants.KEY_COLLECTION_AHADITH)
+                .get()
+                .await()
+                .documents[(0 until 30).random()].toObject(Hadith::class.java)
+            val incident = incidentDocumentReference
+                .collection(FirebaseConstants.KEY_COLLECTION_INCIDENTS)
+                .get()
+                .await()
+                .documents[(0 until 30).random()].toObject(Incident::class.java)
+            emit(
+                Resource.Success(
+                    IslamicData(
+                        ayah = ayah!!,
+                        hadith = hadith!!,
+                        incident = incident!!
+                    )
+                )
+            )
+        } catch (exception: Exception) {
+            emit(
+                Resource.Error(
+                    message = exception.localizedMessage
+                        ?: "Couldn't get islamic data."
+                )
+            )
+        }
+    }.catch { exception ->
+        emit(
+            Resource.Error(
+                message = exception.localizedMessage
+                    ?: "Couldn't get islamic data"
             )
         )
     }.flowOn(Dispatchers.IO)

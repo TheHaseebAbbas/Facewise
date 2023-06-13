@@ -92,4 +92,6 @@ dependencies {
 
     // Picasso for images
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.4.6'
 }

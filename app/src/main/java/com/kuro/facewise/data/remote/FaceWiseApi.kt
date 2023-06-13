@@ -13,6 +13,6 @@ interface FaceWiseApi {
     ): EmotionResponseDto
 
     companion object {
-        const val BASE_URL = "http://192.168.61.6:5000/"
+        const val BASE_URL = "http://192.168.100.20:5000/"
     }
 }

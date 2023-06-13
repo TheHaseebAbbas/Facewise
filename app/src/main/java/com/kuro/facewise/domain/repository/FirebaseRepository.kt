@@ -2,7 +2,7 @@ package com.kuro.facewise.domain.repository
 
 import android.net.Uri
 import com.kuro.facewise.domain.model.EmotionResult
-import com.kuro.facewise.domain.model.RelevantEmotionData
+import com.kuro.facewise.domain.model.IslamicData
 import com.kuro.facewise.util.Resource
 import kotlinx.coroutines.flow.Flow
 
@@ -18,9 +18,11 @@ interface FirebaseRepository {
 
     suspend fun sendPasswordResetEmail(email: String): Flow<Resource<Unit>>
 
-    suspend fun getRelevantEmotionData(emotion: String): Flow<Resource<RelevantEmotionData>>
+    suspend fun getRelevantEmotionData(emotion: String): Flow<Resource<IslamicData>>
 
     suspend fun putEmotionResult(emotionResult: EmotionResult): Flow<Resource<Unit>>
 
     suspend fun getLastEmotionResult(): Flow<Resource<EmotionResult>>
+
+    suspend fun getRandomIslamicData(): Flow<Resource<IslamicData>>
 }

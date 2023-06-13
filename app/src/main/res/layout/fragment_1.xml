@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_16sdp"
         android:fontFamily="@font/montserrat_bold"
-        android:text="Welcome to Facewise"
+        android:text="@string/welcome_to_facewise"
         android:textColor="?colorOnSurface"
         android:textSize="@dimen/_18ssp"
         app:layout_constraintBottom_toTopOf="@id/animation_view"
@@ -27,7 +27,7 @@
         android:id="@+id/animation_view"
         android:layout_width="@dimen/_250sdp"
         android:layout_height="@dimen/_250sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/txtSubtitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtWelcome"
@@ -36,14 +36,16 @@
         app:lottie_rawRes="@raw/animation_1" />
 
     <TextView
+        android:id="@+id/txtSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
         android:fontFamily="@font/montserrat_medium"
         android:gravity="center"
-        android:text="Get started by signing up or logging in to access the amazing features."
+        android:text="@string/get_started_by_signing_up_or_logging_in_to_access_the_amazing_features"
         android:textColor="?colorOnSurface"
         android:textSize="@dimen/_14ssp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/animation_view" />

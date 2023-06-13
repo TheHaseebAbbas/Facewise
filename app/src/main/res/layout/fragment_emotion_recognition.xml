@@ -70,14 +70,14 @@
             app:layout_constraintVertical_chainStyle="spread"
             tools:src="@drawable/islamic_incident_1" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnScanImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
             android:backgroundTint="@color/gray"
             android:fontFamily="@font/montserrat_bold"
-            android:text="Scan"
+            android:text="@string/recognize_emotion"
             android:textColor="@color/blue"
             android:visibility="@{isLoading?View.INVISIBLE:View.VISIBLE}"
             app:cornerRadius="@dimen/_20sdp"

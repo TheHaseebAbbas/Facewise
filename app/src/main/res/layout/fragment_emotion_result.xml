@@ -15,7 +15,7 @@
 
         <variable
             name="relevantEmotionData"
-            type="com.kuro.facewise.domain.model.RelevantEmotionData" />
+            type="com.kuro.facewise.domain.model.IslamicData" />
 
         <variable
             name="isLoading"
@@ -64,6 +64,7 @@
             android:id="@+id/scrollView"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:animateLayoutChanges="true"
             android:clipToPadding="false"
             android:fillViewport="true"
             android:scrollbars="none"
@@ -101,32 +102,36 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_medium"
-                            android:text="Emotion Recognized"
+                            android:text="@string/emotion_recognized"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSubTitleSize"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <ImageView
                             android:id="@+id/btnShareEmotionResult"
-                            android:layout_width="@dimen/_20sdp"
-                            android:layout_height="@dimen/_20sdp"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:background="@drawable/ripple"
+                            android:contentDescription="@string/share_recognized_emotion_result"
+                            android:padding="@dimen/_2sdp"
                             android:src="@drawable/ic_share"
-                            app:tint="?colorOnSurface"
-                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="@+id/textEmotionRecognize"
                             app:layout_constraintEnd_toEndOf="parent"
-                            />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="?colorOnSurface" />
 
                         <com.github.mikephil.charting.charts.PieChart
                             android:id="@+id/pcEmotionResult"
                             setupPieChart="@{emotionResponse}"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/_300sdp"
-                            android:layout_marginTop="@dimen/_16sdp"
+                            android:layout_marginTop="@dimen/_4sdp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/textEmotionRecognize" />
+                            app:layout_constraintTop_toBottomOf="@+id/btnShareEmotionResult" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
@@ -149,9 +154,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_16sdp"
+                    android:visibility="@{isLoading?View.GONE:View.VISIBLE}"
                     app:cardCornerRadius="@dimen/_8sdp"
                     app:cardElevation="@dimen/_8sdp"
-                    android:visibility="@{isLoading?View.INVISIBLE:View.VISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cardRecognizedEmotion">
@@ -170,7 +175,7 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/montserrat_bold"
                             android:maxLines="1"
-                            android:text="Relevant Ayah"
+                            android:text="@string/relevant_ayah"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSubTitleSize"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -198,7 +203,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_4sdp"
                             android:fontFamily="@font/montserrat_semibold"
-                            android:text="Translation"
+                            android:text="@string/translation"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSize"
                             app:layout_constraintEnd_toEndOf="@id/textSeekAllahGuidance"
@@ -242,7 +247,7 @@
                             android:layout_marginTop="@dimen/_8sdp"
                             android:backgroundTint="@color/gray"
                             android:fontFamily="@font/montserrat_bold"
-                            android:text="Share"
+                            android:text="@string/share"
                             android:textColor="@color/blue"
                             app:cornerRadius="@dimen/_20sdp"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -258,7 +263,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_16sdp"
-                    android:visibility="@{isLoading?View.INVISIBLE:View.VISIBLE}"
+                    android:visibility="@{isLoading?View.GONE:View.VISIBLE}"
                     app:cardCornerRadius="@dimen/_8sdp"
                     app:cardElevation="@dimen/_8sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -279,7 +284,7 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/montserrat_bold"
                             android:maxLines="1"
-                            android:text="Relevant Hadith"
+                            android:text="@string/relevant_hadith"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSubTitleSize"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -323,7 +328,7 @@
                             android:layout_marginTop="@dimen/_8sdp"
                             android:backgroundTint="@color/gray"
                             android:fontFamily="@font/montserrat_bold"
-                            android:text="Share"
+                            android:text="@string/share"
                             android:textColor="@color/blue"
                             app:cornerRadius="@dimen/_20sdp"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -339,8 +344,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_16sdp"
+                    android:visibility="@{isLoading?View.GONE:View.VISIBLE}"
                     app:cardCornerRadius="@dimen/_8sdp"
-                    android:visibility="@{isLoading?View.INVISIBLE:View.VISIBLE}"
                     app:cardElevation="@dimen/_8sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -361,7 +366,7 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/montserrat_bold"
                             android:maxLines="1"
-                            android:text="Relevant Islamic Incident"
+                            android:text="@string/relevant_islamic_incident"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSubTitleSize"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -404,7 +409,7 @@
                             android:layout_marginTop="@dimen/_8sdp"
                             android:backgroundTint="@color/gray"
                             android:fontFamily="@font/montserrat_bold"
-                            android:text="Share"
+                            android:text="@string/share"
                             android:textColor="@color/blue"
                             app:cornerRadius="@dimen/_20sdp"
                             app:layout_constraintEnd_toEndOf="parent"

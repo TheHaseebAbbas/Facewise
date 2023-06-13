@@ -11,7 +11,9 @@ import androidx.navigation.fragment.navArgs
 import com.google.firebase.auth.FirebaseAuth
 import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentEmotionRecognitionBinding
+import com.kuro.facewise.presentation.main.dialog.ConfirmationDialogFragment
 import com.kuro.facewise.util.ImageUtils
+import com.kuro.facewise.util.PrefsProvider
 import com.kuro.facewise.util.click
 import com.kuro.facewise.util.showLongSnackBar
 import com.kuro.facewise.util.showPopUpMenu
@@ -19,9 +21,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class EmotionRecognitionFragment : Fragment(R.layout.fragment_emotion_recognition) {
+
+    @Inject
+    lateinit var prefsProvider: PrefsProvider
 
     private val viewModel by viewModels<EmotionRecognitionViewModel>()
 
@@ -70,7 +76,13 @@ class EmotionRecognitionFragment : Fragment(R.layout.fragment_emotion_recognitio
             }
         }
         binding.ivUserProfile click {
-            findNavController().showPopUpMenu(it)
+            findNavController().showPopUpMenu(it) {
+                ConfirmationDialogFragment.newInstance {
+                    FirebaseAuth.getInstance().signOut()
+                    prefsProvider.clear()
+                    requireActivity().recreate()
+                }.show(childFragmentManager, "ConfirmationDialogFragment")
+            }
         }
     }
 }

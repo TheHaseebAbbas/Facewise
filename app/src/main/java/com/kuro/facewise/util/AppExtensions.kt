@@ -6,8 +6,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.NavOptions
-import androidx.navigation.NavOptionsBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.kuro.facewise.MainNavGraphDirections
@@ -51,7 +49,7 @@ fun View.showShortSnackBar(message: String) {
     Snackbar.make(this, message, Snackbar.LENGTH_SHORT).show()
 }
 
-fun NavController.showPopUpMenu(view: View) {
+fun NavController.showPopUpMenu(view: View, onLogout: () -> Unit = {}) {
     PopupMenu(view.context, view).apply {
         inflate(R.menu.profile_popup_menu)
         show()
@@ -90,10 +88,7 @@ fun NavController.showPopUpMenu(view: View) {
                 }
 
                 else -> {
-                    //TODO
-                    FirebaseAuth.getInstance().signOut()
-                    navigate(MainNavGraphDirections.actionGlobalSignInFragment())
-                    graph.clear()
+                    onLogout()
                 }
             }
             true

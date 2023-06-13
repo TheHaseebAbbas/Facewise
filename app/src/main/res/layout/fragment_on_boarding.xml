@@ -56,7 +56,7 @@
         android:focusable="true"
         android:fontFamily="@font/montserrat_medium"
         android:padding="@dimen/_6sdp"
-        android:text="Skip"
+        android:text="@string/skip"
         android:textColor="@color/blue"
         android:textSize="@dimen/_14ssp"
         android:textStyle="italic"

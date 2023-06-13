@@ -24,27 +24,22 @@ class EmotionResultViewModel @Inject constructor(
         when (event) {
             is EmotionResultEvent.GetRelevantEmotionData -> {
                 viewModelScope.launch {
-                    _state.emit(
-                        EmotionResultState(
-                            isLoading = EmotionResultLoadingState.GetRelevantEmotionDataLoading(isLoading = true)
-                        )
+                    _state.value = _state.value.copy(
+                        isLoading = true
                     )
                     repository.getRelevantEmotionData(event.emotion)
                         .collectLatest { result ->
                             when (result) {
                                 is Resource.Success -> {
-                                    _state.emit(
-                                        EmotionResultState(
-                                            relevantEmotionData = result.data
-                                        )
+                                    _state.value = _state.value.copy(
+                                        islamicData = result.data,
+                                        isLoading = false
                                     )
                                 }
 
                                 is Resource.Error -> {
-                                    _state.emit(
-                                        EmotionResultState(
-                                            error = UiText.DynamicString(result.message!!)
-                                        )
+                                    _state.value = _state.value.copy(
+                                        error = UiText.DynamicString(result.message!!)
                                     )
                                 }
 
@@ -56,11 +51,6 @@ class EmotionResultViewModel @Inject constructor(
 
             is EmotionResultEvent.PutEmotionResult -> {
                 viewModelScope.launch {
-                    _state.emit(
-                        EmotionResultState(
-                            isLoading = EmotionResultLoadingState.PutRecognisedEmotionLoading
-                        )
-                    )
                     repository.putEmotionResult(event.emotionResult)
                         .collectLatest { result ->
                             when (result) {

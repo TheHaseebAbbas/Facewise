@@ -1,4 +1,4 @@
-package com.kuro.facewise.presentation.auth.dialogs
+package com.kuro.facewise.presentation.auth.dialog
 
 import android.os.Bundle
 import android.view.View

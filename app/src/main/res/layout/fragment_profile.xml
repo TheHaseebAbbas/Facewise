@@ -72,7 +72,8 @@
                 android:background="@drawable/btn_edit_profile_image_bg"
                 android:padding="@dimen/_3sdp"
                 android:src="@drawable/ic_edit_profile_image"
-                app:tint="@color/white" />
+                app:tint="@color/white"
+                android:contentDescription="@string/change_profile_picture_either_from_gallery_or_camera_or_remove_picture" />
 
         </FrameLayout>
 
@@ -83,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_16sdp"
-            android:hint="Name"
+            android:hint="@string/name"
             app:boxStrokeColor="@color/blue"
             app:boxStrokeWidth="@dimen/_1sdp"
             app:errorEnabled="true"
@@ -109,7 +110,7 @@
             android:layout_marginHorizontal="@dimen/_16sdp"
             android:clickable="false"
             android:enabled="false"
-            android:hint="Email"
+            android:hint="@string/email"
             app:boxStrokeColor="@color/blue"
             app:boxStrokeWidth="@dimen/_1sdp"
             app:errorEnabled="true"
@@ -135,7 +136,7 @@
             android:layout_marginHorizontal="@dimen/_16sdp"
             android:clickable="false"
             android:enabled="false"
-            android:hint="Password"
+            android:hint="@string/password"
             app:boxStrokeColor="@color/blue"
             app:boxStrokeWidth="@dimen/_1sdp"
             app:errorEnabled="true"
@@ -148,7 +149,6 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/montserrat_medium"
                 android:inputType="textPassword"
-                android:text="alihamza"
                 android:textSize="@dimen/textSize" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -161,7 +161,7 @@
             android:layout_marginHorizontal="@dimen/_16sdp"
             android:fontFamily="@font/montserrat_medium"
             android:paddingVertical="@dimen/_8sdp"
-            android:text="Change Password"
+            android:text="@string/change_password"
             android:textSize="@dimen/textSize"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etUserPassword" />
@@ -174,7 +174,7 @@
             android:layout_marginBottom="@dimen/_24sdp"
             android:fontFamily="@font/montserrat_medium"
             android:paddingVertical="@dimen/_12sdp"
-            android:text="Update"
+            android:text="@string/update"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/textSize"

@@ -1,13 +1,14 @@
 package com.kuro.facewise.data.repository
 
 import android.net.Uri
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.google.gson.JsonObject
 import com.kuro.facewise.data.remote.FaceWiseApi
 import com.kuro.facewise.domain.model.EmotionResponse
 import com.kuro.facewise.domain.repository.FaceWiseRepository
 import com.kuro.facewise.util.Resource
+import com.kuro.facewise.util.constants.FirebaseConstants
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
@@ -21,7 +22,8 @@ class FaceWiseRepositoryImpl @Inject constructor(
     override fun getEmotions(imageUri: Uri): Flow<Resource<EmotionResponse>> = flow {
         emit(Resource.Loading())
         try {
-            val imageReference = FirebaseStorage.getInstance().reference.child("image")
+            val imageReference =
+                FirebaseStorage.getInstance().reference.child("${FirebaseConstants.KEY_COLLECTION_EMOTION}/${FirebaseAuth.getInstance().uid!!}")
 
             val result = imageReference
                 .putFile(imageUri).await()
@@ -44,7 +46,11 @@ class FaceWiseRepositoryImpl @Inject constructor(
         } catch (e: HttpException) {
             emit(Resource.Error(message = e.message ?: "An unknown error occurred."))
         } catch (e: IOException) {
-            emit(Resource.Error(message = e.message ?: "Couldn't reach server. Check your internet connection."))
+            emit(
+                Resource.Error(
+                    message = e.message ?: "Couldn't reach server. Check your internet connection."
+                )
+            )
         } catch (e: Exception) {
             emit(Resource.Error(message = e.message ?: "An Unknown Error occurred."))
         }

@@ -11,8 +11,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentEmotionResultBinding
 import com.kuro.facewise.domain.model.EmotionResult
+import com.kuro.facewise.presentation.main.dialog.ConfirmationDialogFragment
+import com.kuro.facewise.util.PrefsProvider
 import com.kuro.facewise.util.click
-import com.kuro.facewise.util.getSimpleDateFormat
 import com.kuro.facewise.util.shareImageFromView
 import com.kuro.facewise.util.showLongSnackBar
 import com.kuro.facewise.util.showPopUpMenu
@@ -20,9 +21,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.Date
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class EmotionResultFragment : Fragment(R.layout.fragment_emotion_result) {
+
+    @Inject
+    lateinit var prefsProvider: PrefsProvider
 
     val viewModel by viewModels<EmotionResultViewModel>()
 
@@ -61,20 +66,13 @@ class EmotionResultFragment : Fragment(R.layout.fragment_emotion_result) {
     private fun setObservers() {
         lifecycleScope.launch {
             viewModel.state.collectLatest {
-                if (it.isLoading != null) {
-                    when (it.isLoading) {
-                        is EmotionResultLoadingState.GetRelevantEmotionDataLoading -> {
-                            binding.isLoading = it.isLoading.isLoading
-                        }
+                binding.isLoading = it.isLoading
 
-                        EmotionResultLoadingState.PutRecognisedEmotionLoading -> Unit
-                    }
-                }
                 if (it.isSuccess) {
                     // emotion data uploaded to the server
                 }
-                if (it.relevantEmotionData != null) {
-                    binding.relevantEmotionData = it.relevantEmotionData
+                if (it.islamicData != null) {
+                    binding.relevantEmotionData = it.islamicData
                 }
                 if (it.error != null) {
                     binding.root.showLongSnackBar(it.error.asString(requireActivity()))
@@ -85,19 +83,25 @@ class EmotionResultFragment : Fragment(R.layout.fragment_emotion_result) {
 
     private fun setListeners() {
         binding.ivUserProfile click {
-            findNavController().showPopUpMenu(it)
+            findNavController().showPopUpMenu(it) {
+                ConfirmationDialogFragment.newInstance {
+                    FirebaseAuth.getInstance().signOut()
+                    prefsProvider.clear()
+                    requireActivity().recreate()
+                }.show(childFragmentManager, "ConfirmationDialogFragment")
+            }
         }
         binding.btnShareRelevantAyah click {
-            shareImageFromView(binding.cardRelevantAyah,it)
+            shareImageFromView(binding.cardRelevantAyah, it)
         }
         binding.btnShareRelevantHadith click {
-            shareImageFromView(binding.cardRelevantHadith,it)
+            shareImageFromView(binding.cardRelevantHadith, it)
         }
         binding.btnShareRelevantIslamicIncident click {
-            shareImageFromView(binding.cardRelevantIslamicIncidence,it)
+            shareImageFromView(binding.cardRelevantIslamicIncidence, it)
         }
         binding.btnShareEmotionResult click {
-            shareImageFromView(binding.cardRecognizedEmotion,it)
+            shareImageFromView(binding.cardRecognizedEmotion, it)
         }
     }
 }

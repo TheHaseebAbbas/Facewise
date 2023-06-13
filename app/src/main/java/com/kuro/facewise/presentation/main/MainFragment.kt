@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
@@ -21,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentMainBinding
 import com.kuro.facewise.domain.model.EmotionResult
+import com.kuro.facewise.presentation.main.dialog.ConfirmationDialogFragment
 import com.kuro.facewise.util.PrefsProvider
 import com.kuro.facewise.util.click
 import com.kuro.facewise.util.constants.AppConstants
@@ -33,6 +35,8 @@ import com.kuro.facewise.util.showPopUpMenu
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -82,49 +86,83 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         binding = FragmentMainBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
-        handleNavigation()
+        if (handleNavigation()) {
+            val currentUser = FirebaseAuth.getInstance().currentUser
+            binding.userName = currentUser?.displayName
+            binding.profileImageUrl = currentUser?.photoUrl.toString()
+            binding.viewModel = viewModel
 
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        binding.userName = currentUser?.displayName
-        binding.profileImageUrl = currentUser?.photoUrl.toString()
-        binding.viewModel = viewModel
+            viewModel.onEvent(MainEvent.OnGetLastEmotionResult)
+            getRandomIslamicDataOnNextDay()
 
-        viewModel.onEvent(MainEvent.OnGetLastEmotionResult)
-
-        setObservers()
-        setListeners()
-
-    }
-
-    private fun handleNavigation() {
-        if (!prefsProvider.getBool(PrefsConstants.ONBOARDING_COMPLETED))
-            findNavController().navigate(MainFragmentDirections.actionGlobalOnBoardingFragment())
-        else if (FirebaseAuth.getInstance().currentUser == null) {
-            findNavController().navigate(MainFragmentDirections.actionGlobalSignInFragment())
+            setObservers()
+            setListeners()
         }
     }
+
+    private fun getRandomIslamicDataOnNextDay() {
+        val currentDay = LocalDate.now()
+
+        if (prefsProvider.getString("lastIslamicDateDate").isNullOrEmpty()) {
+            prefsProvider.setString(
+                "lastIslamicDateDate",
+                currentDay.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
+            )
+            viewModel.onEvent(MainEvent.OnGetRandomIslamicData)
+        } else if (currentDay > LocalDate.parse(
+                prefsProvider.getString("lastIslamicDateDate")!!,
+                DateTimeFormatter.ofPattern("dd MMM yyyy")
+            )
+        ) {
+            prefsProvider.setString(
+                "lastIslamicDateDate",
+                currentDay.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
+            )
+            viewModel.onEvent(MainEvent.OnGetRandomIslamicData)
+        } else {
+
+            binding.randomEmotionData =
+                prefsProvider.getIslamicData(PrefsConstants.KEY_ISLAMIC_DATA)
+        }
+
+    }
+
+    private fun handleNavigation() =
+        if (!prefsProvider.getBool(PrefsConstants.ONBOARDING_COMPLETED)) {
+            findNavController().navigate(MainFragmentDirections.actionGlobalOnBoardingFragment())
+            false
+        } else if (FirebaseAuth.getInstance().currentUser == null) {
+            findNavController().navigate(MainFragmentDirections.actionGlobalSignInFragment())
+            false
+        } else {
+            true
+        }
+
 
     private fun setObservers() {
         lifecycleScope.launch {
             viewModel.state.collectLatest {
                 binding.areAllFabVisible = it.areAllFabVisible
                 imageUri = it.imageUri
+                binding.isLoading = it.isLoading
+                if (it.islamicData != null) {
+                    Log.d("TAG", "setObservers: ${it.islamicData}")
+                    binding.randomEmotionData = it.islamicData
+                    prefsProvider.setIslamicData(PrefsConstants.KEY_ISLAMIC_DATA, it.islamicData)
+                }
                 if (it.lastEmotionResult != null) {
+                    Log.d("TAG", "setObservers: ${it.lastEmotionResult}")
                     emotionResult = it.lastEmotionResult
                     binding.expandableCardLayout.isClickable = true
                     binding.ivArrowDown.visibility = View.VISIBLE
                     binding.time = getSimpleDateFormat().format(it.lastEmotionResult.time!!)
                     binding.recentEmotion = it.lastEmotionResult.dominantEmotion.uppercase()
+                } else {
+                    binding.time = getString(R.string.dashes)
+                    binding.recentEmotion = getString(R.string.dashes)
                 }
                 if (it.error != null) {
                     binding.root.showLongSnackBar(it.error.asString(requireActivity()))
-                }
-
-                if (it.isLoading != null) {
-                    when (it.isLoading) {
-                        MainLoadingState.GetLastEmotionResultLoading -> Unit
-                        MainLoadingState.GetRandomDataLoading -> Unit // TODO
-                    }
                 }
             }
         }
@@ -158,7 +196,13 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
 
         binding.ivUserProfile click {
-            findNavController().showPopUpMenu(it)
+            findNavController().showPopUpMenu(it) {
+                ConfirmationDialogFragment.newInstance {
+                    FirebaseAuth.getInstance().signOut()
+                    prefsProvider.clear()
+                    requireActivity().recreate()
+                }.show(childFragmentManager, "ConfirmationDialogFragment")
+            }
         }
 
         binding.expandableCardLayout click {
@@ -167,7 +211,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 angry = emotionResult!!.angry,
                 disgust = emotionResult!!.disgust,
                 fear = emotionResult!!.fear,
-                happy = emotionResult!!.fear,
+                happy = emotionResult!!.happy,
                 neutral = emotionResult!!.neutral,
                 sad = emotionResult!!.sad,
                 surprise = emotionResult!!.surprise

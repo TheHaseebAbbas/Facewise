@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.kuro.facewise.MainNavGraphDirections
 import com.kuro.facewise.R
 import com.kuro.facewise.databinding.FragmentSignInBinding
-import com.kuro.facewise.presentation.auth.dialogs.ForgotPasswordDialogFragment
+import com.kuro.facewise.presentation.auth.dialog.ForgotPasswordDialogFragment
 import com.kuro.facewise.presentation.auth.sign_up.SignUpFragment
 import com.kuro.facewise.util.addAfterTextChangeListener
 import com.kuro.facewise.util.click

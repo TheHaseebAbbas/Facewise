@@ -1,7 +1,6 @@
 package com.kuro.facewise.presentation.profile
 
 import android.app.Activity
-import android.app.ProgressDialog.show
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -11,7 +10,6 @@ import android.view.View
 import android.widget.PopupMenu
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -29,7 +27,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.io.File
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
@@ -81,7 +78,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 binding.isLoading = it.isLoading
                 if (it.isLoading) return@collectLatest
                 if (it.isSuccess) {
-                    // TODO
                     binding.root.showLongSnackBar("Updated.")
                 }
                 if (it.error != null) {
@@ -125,7 +121,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 .newInstance {
                     binding.root.showLongSnackBar(it!!.asString(requireActivity()))
                 }
-                .show(childFragmentManager,"ChangePasswordDialogFragment")
+                .show(childFragmentManager, "ChangePasswordDialogFragment")
         }
     }
 
@@ -147,7 +143,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     }
 
                     R.id.takePhoto -> {
-                        viewModel.onEvent(ProfileEvent.OnImageResult(createImageUri(requireActivity().applicationContext, AppConstants.KEY_PROFILE_TEMP_IMAGE)))
+                        viewModel.onEvent(
+                            ProfileEvent.OnImageResult(
+                                createImageUri(
+                                    requireActivity().applicationContext,
+                                    AppConstants.KEY_PROFILE_TEMP_IMAGE
+                                )
+                            )
+                        )
                         openCamera.launch(imageUri!!)
                     }
 

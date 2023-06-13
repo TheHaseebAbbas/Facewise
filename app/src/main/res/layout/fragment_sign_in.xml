@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="Let's Sign In"
+                android:text="@string/let_s_sign_in"
                 android:textColor="?colorOnSurface"
                 android:textSize="@dimen/textTitleSize"
                 app:layout_constraintStart_toStartOf="parent"
@@ -51,22 +51,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:fontFamily="@font/montserrat_medium"
-                android:text="Welcome Back,"
+                android:text="@string/welcome_back_nyou_ve_been_missed"
                 android:textColor="?colorOnSurface"
                 android:textSize="@dimen/textSubTitleSize"
                 app:layout_constraintStart_toStartOf="@id/textLetsSignUp"
                 app:layout_constraintTop_toBottomOf="@id/textLetsSignUp" />
-
-            <TextView
-                android:id="@+id/textYouHaveBeenMissed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_medium"
-                android:text="You've been missed!"
-                android:textColor="?colorOnSurface"
-                android:textSize="@dimen/textSubTitleSize"
-                app:layout_constraintStart_toStartOf="@id/textLetsSignUp"
-                app:layout_constraintTop_toBottomOf="@id/textWelcomeBack" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etUserEmail"
@@ -74,12 +63,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:hint="Email"
+                android:hint="@string/email"
                 app:boxStrokeColor="@color/blue"
                 app:boxStrokeWidth="1dp"
                 app:errorEnabled="true"
                 app:layout_constraintStart_toStartOf="@id/textLetsSignUp"
-                app:layout_constraintTop_toBottomOf="@id/textYouHaveBeenMissed">
+                app:layout_constraintTop_toBottomOf="@id/textWelcomeBack">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -96,7 +85,7 @@
                 style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
+                android:hint="@string/password"
                 app:boxStrokeColor="@color/blue"
                 app:boxStrokeWidth="1dp"
                 app:errorEnabled="true"
@@ -120,18 +109,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
-                android:text="@string/forgot_password"
+                android:text="@string/forgot_password_"
                 android:textSize="@dimen/textSize"
                 app:layout_constraintEnd_toEndOf="@id/etUserPassword"
                 app:layout_constraintTop_toBottomOf="@id/etUserPassword" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSignIn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
                 android:paddingVertical="@dimen/_12sdp"
-                android:text="Sign In"
+                android:text="@string/sign_in"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="@dimen/textSize"
@@ -139,15 +128,18 @@
                 app:cornerRadius="@dimen/_2sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvForgotPassword" />
+                app:layout_constraintTop_toBottomOf="@id/tvForgotPassword"
+                app:strokeColor="?colorOnSurface"
+                app:strokeWidth="@dimen/_1sdp" />
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:id="@+id/spin_kit"
+                style="@style/SpinKitView.WanderingCubes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:indeterminateTint="@color/blue"
                 android:visibility="@{isLoading?View.VISIBLE:View.INVISIBLE}"
+                app:SpinKit_Color="@color/blue"
                 app:layout_constraintBottom_toBottomOf="@id/btnSignIn"
                 app:layout_constraintEnd_toEndOf="@id/btnSignIn"
                 app:layout_constraintStart_toStartOf="@id/btnSignIn"
@@ -163,7 +155,7 @@
                 android:focusable="true"
                 android:fontFamily="@font/montserrat_medium"
                 android:gravity="center"
-                android:text="By logging in, you agree to our Terms &amp; Conditions and Privacy Policy"
+                android:text="@string/by_logging_in_you_agree_to_our_terms_amp_conditions_and_privacy_policy"
                 android:textColor="?colorOnSurface"
                 android:textSize="@dimen/textSize"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -175,7 +167,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
-                android:text="Don't Have An Account? "
+                android:text="@string/don_t_have_an_account"
                 android:textColor="?colorOnSurface"
                 android:textSize="@dimen/textSize"
                 app:layout_constraintBaseline_toBaselineOf="@id/btnSignUp"
@@ -191,7 +183,7 @@
                 android:layout_marginTop="@dimen/_16sdp"
                 android:fontFamily="@font/montserrat_medium"
                 android:paddingVertical="@dimen/_8sdp"
-                android:text="SignUp"
+                android:text="@string/signup"
                 android:textSize="@dimen/textSize"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textOr"

@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_16sdp"
         android:fontFamily="@font/montserrat_bold"
-        android:text="Inspirational Insights"
+        android:text="@string/inspirational_insights"
         android:textColor="?colorOnSurface"
         android:textSize="@dimen/_18ssp"
         app:layout_constraintBottom_toTopOf="@id/animation_view"
@@ -27,7 +27,7 @@
         android:id="@+id/animation_view"
         android:layout_width="@dimen/_250sdp"
         android:layout_height="@dimen/_250sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/txtSubtitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtInspirational"
@@ -36,14 +36,16 @@
         app:lottie_rawRes="@raw/animation_5" />
 
     <TextView
+        android:id="@+id/txtSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
         android:fontFamily="@font/montserrat_medium"
         android:gravity="center"
-        android:text="Here's an Ayah, Hadith, or Islamic incidence that corresponds to your current emotion. Reflect upon its wisdom and guidance."
+        android:text="@string/here_s_an_ayah_hadith_or_islamic_incidence_that_corresponds_to_your_current_emotion_reflect_upon_its_wisdom_and_guidance"
         android:textColor="?colorOnSurface"
         android:textSize="@dimen/_14ssp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/animation_view" />

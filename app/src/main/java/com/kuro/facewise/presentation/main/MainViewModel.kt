@@ -36,23 +36,46 @@ class MainViewModel @Inject constructor(
 
             MainEvent.OnGetLastEmotionResult -> {
                 viewModelScope.launch {
-                    _state.emit(MainState(isLoading = MainLoadingState.GetLastEmotionResultLoading))
                     repository.getLastEmotionResult()
                         .collectLatest { result ->
                             when (result) {
                                 is Resource.Error -> {
-                                    _state.emit(
-                                        MainState(
-                                            error = UiText.DynamicString(result.message!!)
-                                        )
+                                    _state.value = _state.value.copy(
+                                        error = UiText.DynamicString(result.message!!)
                                     )
                                 }
 
                                 is Resource.Success -> {
-                                    _state.emit(
-                                        MainState(
-                                            lastEmotionResult = result.data
-                                        )
+                                    _state.value = _state.value.copy(
+                                        lastEmotionResult = result.data
+                                    )
+                                }
+
+                                is Resource.Loading -> Unit
+                            }
+                        }
+                }
+            }
+
+            MainEvent.OnGetRandomIslamicData -> {
+                viewModelScope.launch {
+                    _state.value = _state.value.copy(
+                        isLoading = _state.value.isLoading.not()
+                    )
+                    repository.getRandomIslamicData()
+                        .collectLatest { result ->
+                            when (result) {
+                                is Resource.Error -> {
+                                    _state.value = _state.value.copy(
+                                        error = UiText.DynamicString(result.message!!),
+                                        isLoading = false
+                                    )
+                                }
+
+                                is Resource.Success -> {
+                                    _state.value = _state.value.copy(
+                                        islamicData = result.data,
+                                        isLoading = false
                                     )
                                 }
 

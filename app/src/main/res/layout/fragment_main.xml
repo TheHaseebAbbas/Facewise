@@ -29,6 +29,14 @@
             name="time"
             type="String" />
 
+        <variable
+            name="randomEmotionData"
+            type="com.kuro.facewise.domain.model.IslamicData" />
+
+        <variable
+            name="isLoading"
+            type="boolean" />
+
         <import type="android.view.View" />
     </data>
 
@@ -73,6 +81,7 @@
             android:id="@+id/scrollView"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:animateLayoutChanges="true"
             android:clipToPadding="false"
             android:fillViewport="true"
             android:overScrollMode="never"
@@ -138,7 +147,7 @@
                                 android:ellipsize="end"
                                 android:fontFamily="@font/montserrat_medium"
                                 android:maxLines="1"
-                                android:text="Recent Recognized Emotion"
+                                android:text="@string/recent_recognized_emotion"
                                 android:textColor="?colorOnSurface"
                                 android:textSize="@dimen/textSize"
                                 app:layout_constraintEnd_toEndOf="@id/tvUserName"
@@ -151,7 +160,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_4sdp"
                                 android:fontFamily="@font/montserrat_medium"
-                                android:text="Date"
+                                android:text="@string/date"
                                 android:textColor="?colorOnSurface"
                                 android:textSize="@dimen/smallTextSize"
                                 app:layout_constraintEnd_toStartOf="@+id/textColon1"
@@ -165,7 +174,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/montserrat_medium"
                                 android:gravity="center"
-                                android:text=":"
+                                android:text="@string/colon"
                                 android:textColor="?colorOnSurface"
                                 android:textSize="@dimen/textSize"
                                 app:layout_constraintBottom_toBottomOf="@id/textDate"
@@ -192,7 +201,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/montserrat_medium"
-                                android:text="Emotion"
+                                android:text="@string/emotion"
                                 android:textColor="?colorOnSurface"
                                 android:textSize="@dimen/smallTextSize"
                                 app:layout_constraintStart_toStartOf="@id/tvUserName"
@@ -203,7 +212,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/montserrat_medium"
-                                android:text=":"
+                                android:text="@string/colon"
                                 android:textColor="?colorOnSurface"
                                 android:textSize="@dimen/textSize"
                                 app:layout_constraintEnd_toEndOf="@id/textColon1"
@@ -227,6 +236,7 @@
                                 android:layout_width="@dimen/_15sdp"
                                 android:layout_height="@dimen/_15sdp"
                                 android:layout_marginEnd="@dimen/_16sdp"
+                                android:contentDescription="@string/click_to_expand_this_card_view_to_get_recently_detected_emotion_details"
                                 android:src="@drawable/arrow_down_icon"
                                 app:layout_constraintBottom_toBottomOf="@id/tvUserName"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -249,11 +259,25 @@
 
                 </androidx.cardview.widget.CardView>
 
+                <com.github.ybq.android.spinkit.SpinKitView
+                    android:id="@+id/spin_kit"
+                    style="@style/SpinKitView.WanderingCubes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/_16sdp"
+                    android:visibility="@{isLoading?View.VISIBLE:View.GONE}"
+                    app:SpinKit_Color="@color/blue"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cardRecentEmotion" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardAyahOfDay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_16sdp"
+                    android:visibility="@{isLoading?View.GONE:View.VISIBLE}"
                     app:cardCornerRadius="@dimen/_8sdp"
                     app:cardElevation="@dimen/_8sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -274,7 +298,7 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/montserrat_bold"
                             android:maxLines="1"
-                            android:text="Seek Allah's Guidance"
+                            android:text="@string/seek_allah_s_guidance"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSubTitleSize"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -288,25 +312,13 @@
                             android:layout_marginTop="@dimen/_8sdp"
                             android:fontFamily="@font/montserrat_semibold"
                             android:gravity="start"
-                            android:text="يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ وَكُونُوا مَعَ الصَّادِقِينَ."
+                            android:text="@{randomEmotionData.ayah.ayahArabic}"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSubTitleSize"
                             app:layout_constraintEnd_toEndOf="@id/textSeekAllahGuidance"
                             app:layout_constraintStart_toStartOf="@id/textSeekAllahGuidance"
-                            app:layout_constraintTop_toBottomOf="@id/textSeekAllahGuidance" />
-
-                        <TextView
-                            android:id="@+id/textAyahTranslation"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_4sdp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Translation"
-                            android:textColor="?colorOnSurface"
-                            android:textSize="@dimen/textSize"
-                            app:layout_constraintEnd_toEndOf="@id/textSeekAllahGuidance"
-                            app:layout_constraintStart_toStartOf="@id/textSeekAllahGuidance"
-                            app:layout_constraintTop_toBottomOf="@id/tvAyahOfDayArabic" />
+                            app:layout_constraintTop_toBottomOf="@id/textSeekAllahGuidance"
+                            tools:text="يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ وَكُونُوا مَعَ الصَّادِقِينَ." />
 
                         <TextView
                             android:id="@+id/textAyahOfDayTranslation"
@@ -314,7 +326,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_4sdp"
                             android:fontFamily="@font/montserrat_semibold"
-                            android:text="Translation"
+                            android:text="@string/translation"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSize"
                             app:layout_constraintEnd_toEndOf="@id/textSeekAllahGuidance"
@@ -328,12 +340,13 @@
                             android:layout_marginTop="@dimen/_4sdp"
                             android:fontFamily="@font/montserrat_medium"
                             android:gravity="start"
-                            android:text="O you who believe! be careful of (your duty to) Allah and be with the true ones."
+                            android:text="@{randomEmotionData.ayah.ayahEnglish}"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSize"
                             app:layout_constraintEnd_toEndOf="@id/textAyahOfDayTranslation"
                             app:layout_constraintStart_toStartOf="@id/textAyahOfDayTranslation"
-                            app:layout_constraintTop_toBottomOf="@id/textAyahOfDayTranslation" />
+                            app:layout_constraintTop_toBottomOf="@id/textAyahOfDayTranslation"
+                            tools:text="O you who believe! be careful of (your duty to) Allah and be with the true ones." />
 
                         <TextView
                             android:id="@+id/tvAyahOfDayReference"
@@ -342,21 +355,22 @@
                             android:layout_marginTop="@dimen/_4sdp"
                             android:fontFamily="@font/montserrat_semibold"
                             android:gravity="center"
-                            android:text="(Surah Tawbah 9:119)"
+                            android:text="@{randomEmotionData.ayah.ayahReference}"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSize"
                             app:layout_constraintEnd_toEndOf="@id/tvAyahOfDayTranslation"
                             app:layout_constraintStart_toStartOf="@id/tvAyahOfDayTranslation"
-                            app:layout_constraintTop_toBottomOf="@id/tvAyahOfDayTranslation" />
+                            app:layout_constraintTop_toBottomOf="@id/tvAyahOfDayTranslation"
+                            tools:text="(Surah Tawbah 9:119)" />
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnShareAyahOfDay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_8sdp"
                             android:backgroundTint="@color/gray"
                             android:fontFamily="@font/montserrat_bold"
-                            android:text="Share"
+                            android:text="@string/share"
                             android:textColor="@color/blue"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -371,6 +385,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_16sdp"
+                    android:visibility="@{isLoading?View.GONE:View.VISIBLE}"
                     app:cardCornerRadius="@dimen/_8sdp"
                     app:cardElevation="@dimen/_8sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -391,7 +406,7 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/montserrat_bold"
                             android:maxLines="1"
-                            android:text="Hadith Of Day"
+                            android:text="@string/hadith_of_day"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSubTitleSize"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -406,12 +421,13 @@
                             android:layout_marginTop="@dimen/_4sdp"
                             android:fontFamily="@font/montserrat_medium"
                             android:gravity="start"
-                            android:text="O you who believe! be careful of (your duty to) Allah and be with the true ones."
+                            android:text="@{randomEmotionData.hadith.hadith}"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSize"
                             app:layout_constraintEnd_toEndOf="@id/textHadithOfDay"
                             app:layout_constraintStart_toStartOf="@id/textHadithOfDay"
-                            app:layout_constraintTop_toBottomOf="@id/textHadithOfDay" />
+                            app:layout_constraintTop_toBottomOf="@id/textHadithOfDay"
+                            tools:text="O you who believe! be careful of (your duty to) Allah and be with the true ones." />
 
                         <TextView
                             android:id="@+id/tvHadithOfDayReference"
@@ -420,21 +436,22 @@
                             android:layout_marginTop="@dimen/_4sdp"
                             android:fontFamily="@font/montserrat_semibold"
                             android:gravity="center"
-                            android:text="(Surah Tawbah 9:119)"
+                            android:text="@{randomEmotionData.hadith.hadithReference}"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSize"
                             app:layout_constraintEnd_toEndOf="@id/tvHadithOfDay"
                             app:layout_constraintStart_toStartOf="@id/tvHadithOfDay"
-                            app:layout_constraintTop_toBottomOf="@id/tvHadithOfDay" />
+                            app:layout_constraintTop_toBottomOf="@id/tvHadithOfDay"
+                            tools:text="(Surah Tawbah 9:119)" />
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnShareHadithOfDay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_8sdp"
                             android:backgroundTint="@color/gray"
                             android:fontFamily="@font/montserrat_bold"
-                            android:text="Share"
+                            android:text="@string/share"
                             android:textColor="@color/blue"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -449,6 +466,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_16sdp"
+                    android:visibility="@{isLoading?View.GONE:View.VISIBLE}"
                     app:cardCornerRadius="@dimen/_8sdp"
                     app:cardElevation="@dimen/_8sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -466,6 +484,7 @@
                             android:id="@+id/ivIslamicIncidenceOfDay"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_120sdp"
+                            android:importantForAccessibility="no"
                             android:scaleType="centerCrop"
                             android:src="@drawable/islamic_incident_2"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -480,12 +499,26 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/montserrat_bold"
                             android:maxLines="1"
-                            android:text="Islamic Incident Of Day"
+                            android:text="@string/islamic_incident_of_day"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSubTitleSize"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/ivIslamicIncidenceOfDay" />
+
+                        <TextView
+                            android:id="@+id/tvIncidentReference"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:fontFamily="@font/montserrat_semibold"
+                            android:text="@{randomEmotionData.incident.incidentReference}"
+                            android:textColor="?colorOnSurface"
+                            android:textSize="@dimen/textSize"
+                            app:layout_constraintEnd_toEndOf="@id/textIslamicIncidenceOfDay"
+                            app:layout_constraintStart_toStartOf="@id/textIslamicIncidenceOfDay"
+                            app:layout_constraintTop_toBottomOf="@id/textIslamicIncidenceOfDay"
+                            tools:text="Incident Reference" />
 
                         <TextView
                             android:id="@+id/tvIslamicIncidenceOfDay"
@@ -494,21 +527,22 @@
                             android:layout_marginTop="@dimen/_4sdp"
                             android:fontFamily="@font/montserrat_medium"
                             android:gravity="start"
-                            android:text="The Liberation of Makkah: When Prophet Muhammad (pbuh) and his companions successfully conquered Makkah without bloodshed, it brought immense joy and happiness to the Muslims and the people of Makkah. This incident teaches forgiveness, mercy, and the eventual triumph of truth over falsehood."
+                            android:text="@{randomEmotionData.incident.incident}"
                             android:textColor="?colorOnSurface"
                             android:textSize="@dimen/textSize"
                             app:layout_constraintEnd_toEndOf="@id/textIslamicIncidenceOfDay"
                             app:layout_constraintStart_toStartOf="@id/textIslamicIncidenceOfDay"
-                            app:layout_constraintTop_toBottomOf="@id/textIslamicIncidenceOfDay" />
+                            app:layout_constraintTop_toBottomOf="@id/tvIncidentReference"
+                            tools:text="The Liberation of Makkah: When Prophet Muhammad (pbuh) and his companions successfully conquered Makkah without bloodshed, it brought immense joy and happiness to the Muslims and the people of Makkah. This incident teaches forgiveness, mercy, and the eventual triumph of truth over falsehood." />
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnShareIslamicIncidentOfDay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_8sdp"
                             android:backgroundTint="@color/gray"
                             android:fontFamily="@font/montserrat_bold"
-                            android:text="Share"
+                            android:text="@string/share"
                             android:textColor="@color/blue"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -540,6 +574,7 @@
             android:layout_marginBottom="@dimen/_16sdp"
             android:backgroundTint="@color/blue"
             android:clickable="true"
+            android:contentDescription="@string/click_to_either_select_pick_an_image_from_gallery_or_take_a_picture"
             android:focusable="true"
             app:fabSize="normal"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -554,6 +589,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_16sdp"
             android:backgroundTint="@color/blue"
+            android:contentDescription="@string/take_a_picture"
             android:visibility="@{areAllFabVisible?View.VISIBLE:View.GONE}"
             app:fabSize="mini"
             app:layout_constraintBottom_toTopOf="@+id/fabAdd"
@@ -578,7 +614,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
                 android:padding="@dimen/_4sdp"
-                android:text="Take a Picture"
+                android:text="@string/take_a_picture"
                 android:textColor="?colorOnSurface"
                 android:textSize="@dimen/smallTextSize" />
 
@@ -591,6 +627,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_16sdp"
             android:backgroundTint="@color/blue"
+            android:contentDescription="@string/pick_a_photo"
             android:visibility="@{areAllFabVisible?View.VISIBLE:View.GONE}"
             app:fabSize="mini"
             app:layout_constraintBottom_toTopOf="@+id/fabCamera"
@@ -616,7 +653,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
                 android:padding="@dimen/_4sdp"
-                android:text="Pick a Photo"
+                android:text="@string/pick_a_photo"
                 android:textColor="?colorOnSurface"
                 android:textSize="@dimen/smallTextSize" />
 

@@ -6,4 +6,5 @@ sealed class MainEvent {
     object OnMainFabClick : MainEvent()
     class OnImageResult(val uri: Uri) : MainEvent()
     object OnGetLastEmotionResult : MainEvent()
+    object OnGetRandomIslamicData : MainEvent()
 }

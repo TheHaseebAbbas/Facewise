@@ -23,7 +23,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/facewise_privacy_policy_tittle" />
+            tools:text="@string/facewise_privacy_policy_title" />
 
         <TextView
             android:id="@+id/tvPrivacyAndTerms"
