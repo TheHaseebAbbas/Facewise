@@ -10,4 +10,5 @@ object AppConstants {
 
     const val KEY_FILE_PROVIDER_AUTHORITY = "com.kuro.facewise.fileProvider"
 
+    const val APP_DATE_FORMAT = "dd MMM yyyy"
 }

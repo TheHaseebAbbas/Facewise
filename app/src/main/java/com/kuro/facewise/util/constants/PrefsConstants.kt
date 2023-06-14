@@ -3,8 +3,6 @@ package com.kuro.facewise.util.constants
 object PrefsConstants {
     const val ONBOARDING_COMPLETED = "ONBOARDING_COMPLETED"
 
-    const val KEY_ISLAMIC_DATA = "islamicData"
-
     const val KEY_AYAH_ID = "ayahId"
 
     const val KEY_AYAH_ARABIC = "ayahArabic"
@@ -24,4 +22,6 @@ object PrefsConstants {
     const val KEY_INCIDENT = "incident"
 
     const val KEY_INCIDENT_REFERENCE = "incidentReference"
+
+    const val KEY_LAST_ISLAMIC_DATA_DATE = "lastIslamicDateDate"
 }

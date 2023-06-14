@@ -60,7 +60,7 @@ class MainViewModel @Inject constructor(
             MainEvent.OnGetRandomIslamicData -> {
                 viewModelScope.launch {
                     _state.value = _state.value.copy(
-                        isLoading = _state.value.isLoading.not()
+                        isLoading = true
                     )
                     repository.getRandomIslamicData()
                         .collectLatest { result ->

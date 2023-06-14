@@ -39,7 +39,8 @@ class EmotionResultViewModel @Inject constructor(
 
                                 is Resource.Error -> {
                                     _state.value = _state.value.copy(
-                                        error = UiText.DynamicString(result.message!!)
+                                        error = UiText.DynamicString(result.message!!),
+                                        isLoading = false
                                     )
                                 }
 

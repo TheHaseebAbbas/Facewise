@@ -19,7 +19,7 @@ import com.kuro.facewise.util.constants.PrefsConstants.KEY_INCIDENT_ID
 import com.kuro.facewise.util.constants.PrefsConstants.KEY_INCIDENT_REFERENCE
 
 
-class PrefsProvider(context: Context) {
+class PrefsProvider(val context: Context) {
     companion object {
         const val PREF_NAME = "FaceWiseApp"
     }
@@ -65,7 +65,7 @@ class PrefsProvider(context: Context) {
             .apply()
     }
 
-    fun setIslamicData(key: String, value: IslamicData) {
+    fun setIslamicData(value: IslamicData) {
         with(
             sharedPreferences.edit()
         ) {
@@ -85,7 +85,7 @@ class PrefsProvider(context: Context) {
         }
     }
 
-    fun getIslamicData(key: String): IslamicData {
+    fun getIslamicData(): IslamicData {
         return with(sharedPreferences) {
             val ayah = Ayah(
                 ayahId = getString(KEY_AYAH_ID, "")!!,
@@ -105,7 +105,7 @@ class PrefsProvider(context: Context) {
                 incident = getString(KEY_INCIDENT, "")!!,
                 incidentReference = getString(KEY_INCIDENT_REFERENCE, "")!!
             )
-            IslamicData(ayah,hadith,incident)
+            IslamicData(ayah, hadith, incident)
         }
     }
 

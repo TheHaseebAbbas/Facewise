@@ -1,5 +1,6 @@
 package com.kuro.facewise.domain.model
 
+import org.threeten.bp.LocalDate
 import java.util.Date
 
 data class EmotionResult(

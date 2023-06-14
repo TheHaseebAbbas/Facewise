@@ -37,6 +37,10 @@
             name="isLoading"
             type="boolean" />
 
+        <variable
+            name="isError"
+            type="boolean" />
+
         <import type="android.view.View" />
     </data>
 
@@ -277,7 +281,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_16sdp"
-                    android:visibility="@{isLoading?View.GONE:View.VISIBLE}"
+                    android:visibility="@{isLoading || isError?View.GONE:View.VISIBLE}"
                     app:cardCornerRadius="@dimen/_8sdp"
                     app:cardElevation="@dimen/_8sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -385,7 +389,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_16sdp"
-                    android:visibility="@{isLoading?View.GONE:View.VISIBLE}"
+                    android:visibility="@{isLoading || isError?View.GONE:View.VISIBLE}"
                     app:cardCornerRadius="@dimen/_8sdp"
                     app:cardElevation="@dimen/_8sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -466,7 +470,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_16sdp"
-                    android:visibility="@{isLoading?View.GONE:View.VISIBLE}"
+                    android:visibility="@{isLoading || isError?View.GONE:View.VISIBLE}"
                     app:cardCornerRadius="@dimen/_8sdp"
                     app:cardElevation="@dimen/_8sdp"
                     app:layout_constraintBottom_toBottomOf="parent"

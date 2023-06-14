@@ -26,7 +26,9 @@ import com.kuro.facewise.presentation.main.dialog.ConfirmationDialogFragment
 import com.kuro.facewise.util.PrefsProvider
 import com.kuro.facewise.util.click
 import com.kuro.facewise.util.constants.AppConstants
+import com.kuro.facewise.util.constants.AppConstants.APP_DATE_FORMAT
 import com.kuro.facewise.util.constants.PrefsConstants
+import com.kuro.facewise.util.constants.PrefsConstants.KEY_LAST_ISLAMIC_DATA_DATE
 import com.kuro.facewise.util.createImageUri
 import com.kuro.facewise.util.getSimpleDateFormat
 import com.kuro.facewise.util.shareImageFromView
@@ -103,26 +105,27 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private fun getRandomIslamicDataOnNextDay() {
         val currentDay = LocalDate.now()
 
-        if (prefsProvider.getString("lastIslamicDateDate").isNullOrEmpty()) {
+        if (prefsProvider.getString(KEY_LAST_ISLAMIC_DATA_DATE).isNullOrEmpty()) {
             prefsProvider.setString(
-                "lastIslamicDateDate",
-                currentDay.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
+                KEY_LAST_ISLAMIC_DATA_DATE,
+                currentDay.format(DateTimeFormatter.ofPattern(APP_DATE_FORMAT))
             )
             viewModel.onEvent(MainEvent.OnGetRandomIslamicData)
-        } else if (currentDay > LocalDate.parse(
-                prefsProvider.getString("lastIslamicDateDate")!!,
-                DateTimeFormatter.ofPattern("dd MMM yyyy")
+        } else if (currentDay.isAfter(
+                LocalDate.parse(
+                    prefsProvider.getString(KEY_LAST_ISLAMIC_DATA_DATE)!!,
+                    DateTimeFormatter.ofPattern(APP_DATE_FORMAT)
+                )
             )
         ) {
             prefsProvider.setString(
-                "lastIslamicDateDate",
-                currentDay.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
+                KEY_LAST_ISLAMIC_DATA_DATE,
+                currentDay.format(DateTimeFormatter.ofPattern(APP_DATE_FORMAT))
             )
             viewModel.onEvent(MainEvent.OnGetRandomIslamicData)
         } else {
-
             binding.randomEmotionData =
-                prefsProvider.getIslamicData(PrefsConstants.KEY_ISLAMIC_DATA)
+                prefsProvider.getIslamicData()
         }
 
     }
@@ -138,17 +141,17 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             true
         }
 
-
     private fun setObservers() {
         lifecycleScope.launch {
             viewModel.state.collectLatest {
                 binding.areAllFabVisible = it.areAllFabVisible
                 imageUri = it.imageUri
                 binding.isLoading = it.isLoading
+                binding.isError = false
                 if (it.islamicData != null) {
                     Log.d("TAG", "setObservers: ${it.islamicData}")
                     binding.randomEmotionData = it.islamicData
-                    prefsProvider.setIslamicData(PrefsConstants.KEY_ISLAMIC_DATA, it.islamicData)
+                    prefsProvider.setIslamicData(it.islamicData)
                 }
                 if (it.lastEmotionResult != null) {
                     Log.d("TAG", "setObservers: ${it.lastEmotionResult}")
@@ -163,6 +166,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 }
                 if (it.error != null) {
                     binding.root.showLongSnackBar(it.error.asString(requireActivity()))
+                    binding.isError = true
                 }
             }
         }

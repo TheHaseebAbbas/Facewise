@@ -67,6 +67,7 @@ class EmotionResultFragment : Fragment(R.layout.fragment_emotion_result) {
         lifecycleScope.launch {
             viewModel.state.collectLatest {
                 binding.isLoading = it.isLoading
+                binding.isError = false
 
                 if (it.isSuccess) {
                     // emotion data uploaded to the server
@@ -76,6 +77,7 @@ class EmotionResultFragment : Fragment(R.layout.fragment_emotion_result) {
                 }
                 if (it.error != null) {
                     binding.root.showLongSnackBar(it.error.asString(requireActivity()))
+                    binding.isError = true
                 }
             }
         }
