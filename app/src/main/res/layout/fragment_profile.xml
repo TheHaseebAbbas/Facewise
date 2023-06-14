@@ -70,10 +70,10 @@
                 android:layout_gravity="end|top"
                 android:layout_margin="@dimen/_2sdp"
                 android:background="@drawable/btn_edit_profile_image_bg"
+                android:contentDescription="@string/change_profile_picture_either_from_gallery_or_camera_or_remove_picture"
                 android:padding="@dimen/_3sdp"
                 android:src="@drawable/ic_edit_profile_image"
-                app:tint="@color/white"
-                android:contentDescription="@string/change_profile_picture_either_from_gallery_or_camera_or_remove_picture" />
+                app:tint="@color/white" />
 
         </FrameLayout>
 
@@ -149,6 +149,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/montserrat_medium"
                 android:inputType="textPassword"
+                android:text="@{viewModel.userPassword}"
                 android:textSize="@dimen/textSize" />
 
         </com.google.android.material.textfield.TextInputLayout>

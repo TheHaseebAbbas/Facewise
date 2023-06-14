@@ -30,6 +30,7 @@ class ProfileViewModel @Inject constructor(
 
     val userEmail = currentUser!!.email
 
+    val userPassword = currentUser!!.uid
     fun onEvent(event: ProfileEvent) {
         when (event) {
             is ProfileEvent.OnUpdateClicked -> {
